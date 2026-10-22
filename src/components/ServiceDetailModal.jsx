@@ -1,0 +1,87 @@
+import React from 'react';
+import { clinicInfo } from '../data/clinicData';
+
+export default function ServiceDetailModal({ isOpen, onClose, service, onBookService }) {
+  if (!isOpen || !service) return null;
+
+  const getIconClass = (icon) => {
+    switch (icon) {
+      case 'droplet': return 'fa-solid fa-bottle-droplet';
+      case 'syringe': return 'fa-solid fa-syringe';
+      case 'vial': return 'fa-solid fa-vial';
+      case 'radiation': return 'fa-solid fa-radiation';
+      case 'first-aid': return 'fa-solid fa-kit-medical';
+      case 'lungs': return 'fa-solid fa-lungs';
+      default: return 'fa-solid fa-notes-medical';
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-100 p-5 sm:p-6 space-y-4 text-xs animate-in slide-in-from-bottom"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-3">
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold ${service.iconColor}`}>
+              <i className={getIconClass(service.icon)}></i>
+            </div>
+            <div>
+              <h3 className="font-bold text-base text-slate-900 font-display">{service.title}</h3>
+              <span className="text-[10px] font-bold bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full">
+                {service.badge}
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition"
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+          {service.detailedDesc}
+        </p>
+
+        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
+          <p className="font-bold text-slate-800 text-xs uppercase tracking-wider">Facility Highlights:</p>
+          <ul className="space-y-1.5 text-slate-600 text-xs">
+            {service.highlights.map((h, idx) => (
+              <li key={idx} className="flex items-start gap-2">
+                <i className="fa-solid fa-circle-check text-emerald-500 text-xs mt-0.5 shrink-0"></i>
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 pt-1">
+          <a
+            href={`tel:${clinicInfo.phone}`}
+            className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-3 rounded-2xl transition text-xs sm:text-sm"
+          >
+            <i className="fa-solid fa-phone text-emerald-600"></i>
+            <span>Call: {clinicInfo.phone}</span>
+          </a>
+          <button
+            onClick={() => {
+              onClose();
+              onBookService(service.title);
+            }}
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-bold py-3 rounded-2xl transition shadow text-xs sm:text-sm"
+          >
+            <i className="fa-regular fa-calendar-check"></i>
+            <span>Book / Enquire</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}

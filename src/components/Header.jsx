@@ -15,43 +15,43 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-royal-border shadow-sm transition-all">
       {/* Topmost emergency / contact strip */}
-      <div className="bg-gradient-to-r from-royal-dark via-royal to-purple-900 text-white px-4 md:px-8 py-2 text-xs flex justify-between items-center">
-        <div className="flex items-center gap-2 truncate">
-          <i className="fa-solid fa-location-dot text-purple-300"></i>
-          <span className="truncate font-medium">{clinicInfo.address}</span>
+      <div className="bg-gradient-to-r from-royal-dark via-royal to-purple-900 text-white px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 text-xs flex justify-between items-center gap-2">
+        <div className="flex items-center gap-1.5 truncate min-w-0">
+          <i className="fa-solid fa-location-dot text-purple-300 text-xs shrink-0"></i>
+          <span className="truncate font-medium text-[11px] sm:text-xs">ECIL South Kamala Nagar, Hyderabad</span>
         </div>
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           <span className="hidden sm:inline-flex items-center gap-1.5 text-purple-200 text-[11px] font-semibold bg-white/10 px-2.5 py-0.5 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 24/7 Pharmacy & Diagnostics
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span> 24/7 Pharmacy & Diagnostics
           </span>
           <a
             href={`tel:${clinicInfo.phone}`}
-            className="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 active:scale-95 text-white font-bold px-3 py-1 rounded-full text-xs transition shadow-sm border border-purple-400/40"
+            className="flex items-center gap-1 bg-purple-600 hover:bg-purple-500 active:scale-95 text-white font-bold px-2.5 py-1 rounded-full text-[11px] sm:text-xs transition shadow-sm border border-purple-400/40"
           >
-            <i className="fa-solid fa-phone text-[10px]"></i>
+            <i className="fa-solid fa-phone text-[9px]"></i>
             <span>{clinicInfo.phone}</span>
           </a>
         </div>
       </div>
 
       {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-2 sm:py-3 flex items-center justify-between gap-2">
         {/* Brand Logo */}
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-royal-dark via-royal to-purple-600 flex items-center justify-center text-white text-2xl shadow-md shadow-royal/30">
+        <div className="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-royal-dark via-royal to-purple-600 flex items-center justify-center text-white text-lg sm:text-2xl shadow-md shadow-royal/30 shrink-0">
             <i className="fa-solid fa-notes-medical"></i>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl md:text-2xl font-black tracking-tight text-royal-dark font-display">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="text-base sm:text-xl md:text-2xl font-black tracking-tight text-royal-dark font-display truncate">
                 {clinicInfo.name}
               </span>
-              <span className="bg-purple-100 text-royal-dark text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider border border-purple-200">
+              <span className="hidden md:inline-block bg-purple-100 text-royal-dark text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider border border-purple-200 shrink-0">
                 Clinic • Diagnostics • Pharmacy
               </span>
             </div>
-            <p className="text-[11px] md:text-xs text-purple-700/80 font-medium">
-              Multi-Speciality Healthcare & 24/7 Pharmacy @ ECIL
+            <p className="text-[10px] sm:text-xs text-purple-700/80 font-medium truncate">
+              Specialist Doctors & 24/7 Pharmacy @ ECIL
             </p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden sm:flex items-center gap-2.5">
+        <div className="hidden sm:flex items-center gap-2.5 shrink-0">
           <button
             onClick={() => onPharmacyClick()}
             className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
@@ -94,7 +94,7 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 bg-royal-subtle hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
           >
-            <i className="fa-brands fa-whatsapp text-emerald-600 text-base"></i>
+            <i className="fa-brands fa-whatsapp text-royal text-base"></i>
             <span>WhatsApp</span>
           </a>
 
@@ -107,17 +107,18 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
           </button>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <div className="flex items-center gap-2 lg:hidden">
+        {/* Mobile Actions: Compact Book + Hamburger */}
+        <div className="flex items-center gap-1.5 lg:hidden shrink-0">
           <button
             onClick={() => onBookClick('General Consultation')}
-            className="sm:hidden bg-royal text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm"
+            className="bg-royal active:scale-95 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-xl shadow-sm transition flex items-center gap-1"
           >
-            Book
+            <i className="fa-regular fa-calendar-check text-[10px]"></i>
+            <span>Book</span>
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-9 h-9 rounded-xl bg-purple-50 hover:bg-purple-100 text-royal-dark flex items-center justify-center text-sm border border-purple-200"
+            className="w-8 h-8 rounded-xl bg-purple-50 hover:bg-purple-100 active:scale-95 text-royal-dark flex items-center justify-center text-xs border border-purple-200"
             aria-label="Toggle Menu"
           >
             <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>

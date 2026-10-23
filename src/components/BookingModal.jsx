@@ -96,7 +96,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService }) {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block font-bold text-royal-dark mb-1">Preferred Date</label>
               <input
@@ -120,7 +120,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block font-bold text-royal-dark mb-1">Mobile Number</label>
               <input

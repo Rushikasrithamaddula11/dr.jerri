@@ -62,7 +62,7 @@ export default function ServiceDetailModal({ isOpen, onClose, service, onBookSer
           </ul>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 pt-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
           <a
             href={`tel:${clinicInfo.phone}`}
             className="flex items-center justify-center gap-2 bg-purple-50 hover:bg-purple-100 text-royal-dark font-bold py-3 rounded-2xl transition text-xs sm:text-sm border border-purple-200"
@@ -75,7 +75,7 @@ export default function ServiceDetailModal({ isOpen, onClose, service, onBookSer
               onClose();
               onBookService(service.title);
             }}
-            className="flex items-center justify-center gap-2 bg-royal hover:bg-royal-dark text-white font-bold py-3 rounded-2xl transition shadow text-xs sm:text-sm"
+            className="flex items-center justify-center gap-2 bg-royal hover:bg-royal-dark text-white font-bold py-3 rounded-2xl transition shadow text-xs sm:text-sm active:scale-95"
           >
             <i className="fa-regular fa-calendar-check"></i>
             <span>Book / Enquire</span>

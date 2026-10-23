@@ -20,10 +20,10 @@ export default function PharmacySection({ onOpenPharmacyOrder }) {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               onClick={() => onOpenPharmacyOrder()}
-              className="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-1.5"
+              className="w-full sm:w-auto bg-royal hover:bg-royal-dark active:scale-95 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-royal/20 transition flex items-center justify-center gap-1.5"
             >
               <i className="fa-brands fa-whatsapp text-sm"></i>
               <span>Send Prescription on WhatsApp</span>
@@ -52,7 +52,7 @@ export default function PharmacySection({ onOpenPharmacyOrder }) {
 
               <div className="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] font-bold text-royal">
                 <span>Available In-Store</span>
-                <i className="fa-solid fa-check text-emerald-500 ml-1.5"></i>
+                <i className="fa-solid fa-check text-royal ml-1.5"></i>
               </div>
             </div>
           ))}
@@ -66,10 +66,10 @@ export default function PharmacySection({ onOpenPharmacyOrder }) {
             
             <div className="md:col-span-8 space-y-2.5">
               <div className="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-semibold text-purple-200 border border-white/15">
-                <i className="fa-solid fa-bolt text-emerald-400"></i> Fast Pharmacy Order & Pickup
+                <i className="fa-solid fa-bolt text-purple-300"></i> Fast Pharmacy Order & Pickup
               </div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-black font-display text-white">
-                Have a Prescription? WhatsApp it to <span className="text-emerald-400">{clinicInfo.phone}</span>
+                Have a Prescription? WhatsApp it to <span className="text-purple-200">{clinicInfo.phone}</span>
               </h3>
               <p className="text-xs sm:text-sm text-purple-100 max-w-xl leading-relaxed">
                 Take a quick photo of your doctor's slip or list your medicines. Our licensed pharmacist will verify, pack, and confirm your order immediately.
@@ -79,9 +79,9 @@ export default function PharmacySection({ onOpenPharmacyOrder }) {
             <div className="md:col-span-4 flex flex-col gap-2.5">
               <button
                 onClick={() => onOpenPharmacyOrder()}
-                className="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-black py-3.5 px-5 rounded-2xl text-xs sm:text-sm transition shadow-lg flex items-center justify-center gap-2"
+                className="w-full bg-white text-royal-dark hover:bg-purple-50 active:scale-95 font-black py-3.5 px-5 rounded-2xl text-xs sm:text-sm transition shadow-lg flex items-center justify-center gap-2"
               >
-                <i className="fa-brands fa-whatsapp text-lg"></i>
+                <i className="fa-brands fa-whatsapp text-lg text-royal"></i>
                 <span>Order Prescription on WhatsApp</span>
               </button>
 

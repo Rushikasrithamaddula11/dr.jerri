@@ -20,10 +20,10 @@ export default function DiagnosticsSection({ onBookDiagnostics }) {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               onClick={() => onBookDiagnostics('Diagnostics / Lab Test')}
-              className="bg-royal hover:bg-royal-dark text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-royal/20 transition flex items-center gap-1.5"
+              className="w-full sm:w-auto bg-royal hover:bg-royal-dark active:scale-95 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-royal/20 transition flex items-center justify-center gap-1.5"
             >
               <i className="fa-solid fa-calendar-check"></i>
               <span>Book Lab Test / Scan</span>
@@ -32,44 +32,44 @@ export default function DiagnosticsSection({ onBookDiagnostics }) {
         </div>
 
         {/* Feature Badges Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <div className="bg-royal-subtle p-3.5 rounded-2xl border border-purple-200 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-sm">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+          <div className="bg-royal-subtle p-3 sm:p-3.5 rounded-2xl border border-purple-200 flex items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-xs sm:text-sm">
               <i className="fa-solid fa-clock-rotate-left"></i>
             </div>
-            <div>
-              <h4 className="font-bold text-xs text-royal-dark">Same-Day Reports</h4>
-              <p className="text-[11px] text-slate-500">Fast digital delivery</p>
+            <div className="min-w-0">
+              <h4 className="font-bold text-xs text-royal-dark truncate">Same-Day Reports</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 truncate">Fast digital delivery</p>
             </div>
           </div>
 
-          <div className="bg-royal-subtle p-3.5 rounded-2xl border border-purple-200 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-sm">
+          <div className="bg-royal-subtle p-3 sm:p-3.5 rounded-2xl border border-purple-200 flex items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-xs sm:text-sm">
               <i className="fa-solid fa-house-medical"></i>
             </div>
-            <div>
-              <h4 className="font-bold text-xs text-royal-dark">Home Sample Pickup</h4>
-              <p className="text-[11px] text-slate-500">Across ECIL & Kamala Nagar</p>
+            <div className="min-w-0">
+              <h4 className="font-bold text-xs text-royal-dark truncate">Home Sample Pickup</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 truncate">ECIL & Kamala Nagar</p>
             </div>
           </div>
 
-          <div className="bg-royal-subtle p-3.5 rounded-2xl border border-purple-200 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-sm">
+          <div className="bg-royal-subtle p-3 sm:p-3.5 rounded-2xl border border-purple-200 flex items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-xs sm:text-sm">
               <i className="fa-solid fa-radiation"></i>
             </div>
-            <div>
-              <h4 className="font-bold text-xs text-royal-dark">Ultrasound Scans</h4>
-              <p className="text-[11px] text-slate-500">Abdomen, Pelvic & Pregnancy</p>
+            <div className="min-w-0">
+              <h4 className="font-bold text-xs text-royal-dark truncate">Ultrasound Scans</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 truncate">Abdomen, Pelvic & Pregnancy</p>
             </div>
           </div>
 
-          <div className="bg-royal-subtle p-3.5 rounded-2xl border border-purple-200 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-sm">
+          <div className="bg-royal-subtle p-3 sm:p-3.5 rounded-2xl border border-purple-200 flex items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0 text-xs sm:text-sm">
               <i className="fa-solid fa-shield-halved"></i>
             </div>
-            <div>
-              <h4 className="font-bold text-xs text-royal-dark">100% Sterile & Precise</h4>
-              <p className="text-[11px] text-slate-500">Calibrated equipment</p>
+            <div className="min-w-0">
+              <h4 className="font-bold text-xs text-royal-dark truncate">100% Sterile & Precise</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 truncate">Calibrated equipment</p>
             </div>
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function DiagnosticsSection({ onBookDiagnostics }) {
             rel="noopener noreferrer"
             className="w-full sm:w-auto text-center bg-white hover:bg-purple-50 text-royal-dark font-black py-3 px-6 rounded-2xl text-xs sm:text-sm transition shadow shrink-0"
           >
-            <i className="fa-brands fa-whatsapp text-emerald-600 text-base mr-1.5"></i>
+            <i className="fa-brands fa-whatsapp text-royal text-base mr-1.5"></i>
             <span>Book Home Collection</span>
           </a>
         </div>

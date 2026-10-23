@@ -82,7 +82,7 @@ export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClic
               {clinicInfo.address}
             </p>
             <p className="text-xs text-white font-bold">
-              <i className="fa-solid fa-phone mr-1.5 text-emerald-400"></i>
+              <i className="fa-solid fa-phone mr-1.5 text-purple-300"></i>
               <a href={`tel:${clinicInfo.phone}`}>{clinicInfo.phone}</a>
             </p>
             <p className="text-xs text-purple-300">

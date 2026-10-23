@@ -39,12 +39,12 @@ export default function ServicesSection({ onSelectService, onBookService, filter
           </div>
         </div>
 
-        {/* Services Grid (Responsive: 2 columns on mobile, 3 on tablet, 3/4 on desktop) */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3.5 sm:gap-6">
+        {/* Services Grid (Responsive: 1 column on mobile, 2 on tablet, 3 on desktop) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredServices.map((service) => (
             <div
               key={service.id}
-              className="bg-white rounded-3xl p-4 sm:p-6 border border-purple-200 shadow-sm hover:shadow-lg hover:border-royal transition-all flex flex-col justify-between group"
+              className="bg-white rounded-3xl p-5 sm:p-6 border border-purple-200 shadow-sm hover:shadow-lg hover:border-royal transition-all flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-start justify-between mb-3">
@@ -56,10 +56,10 @@ export default function ServicesSection({ onSelectService, onBookService, filter
                   </span>
                 </div>
 
-                <h3 className="font-black text-sm sm:text-base text-royal-dark mb-1 font-display">
+                <h3 className="font-black text-sm sm:text-base text-royal-dark mb-1.5 font-display">
                   {service.title}
                 </h3>
-                <p className="text-xs text-slate-500 leading-relaxed mb-3">
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
                   {service.shortDesc}
                 </p>
               </div>
@@ -67,16 +67,17 @@ export default function ServicesSection({ onSelectService, onBookService, filter
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
                 <button
                   onClick={() => onSelectService(service)}
-                  className="text-xs font-bold text-royal hover:text-royal-dark flex items-center gap-1 transition"
+                  className="text-xs font-bold text-royal hover:text-royal-dark flex items-center gap-1 transition py-1"
                 >
-                  <span>Details</span>
+                  <span>Details & Highlights</span>
                   <i className="fa-solid fa-arrow-right text-[10px]"></i>
                 </button>
                 <button
                   onClick={() => onBookService(service.title)}
-                  className="bg-purple-50 hover:bg-royal hover:text-white text-royal-dark text-[11px] font-bold px-3 py-1.5 rounded-xl border border-purple-200 transition"
+                  className="bg-royal hover:bg-royal-dark text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-sm active:scale-95 flex items-center gap-1"
                 >
-                  Avail Service
+                  <i className="fa-regular fa-calendar-check text-[10px]"></i>
+                  <span>Avail Service</span>
                 </button>
               </div>
             </div>

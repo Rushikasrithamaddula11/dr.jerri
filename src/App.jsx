@@ -97,12 +97,12 @@ export default function App() {
   }, [searchQuery]);
 
   return (
-    <div className={`min-h-screen bg-purple-950/20 ${viewMode === 'mobile-preview' ? 'py-4 md:py-8' : ''}`}>
+    <div className={`min-h-screen bg-purple-950/20 w-full overflow-x-hidden ${viewMode === 'mobile-preview' ? 'py-4 md:py-8' : ''}`}>
       
       {/* Desktop Preview Mode Switcher (Visible on desktop) */}
       <div className="hidden lg:flex justify-between items-center bg-royal-deep text-purple-200 px-6 py-2 text-xs border-b border-purple-900">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span className="w-2 h-2 rounded-full bg-purple-400"></span>
           <span className="font-bold text-white">Drjerrri Poly Clinic, Diagnostics & Pharmacy</span>
           <span className="text-purple-300">| Royal Purple Medical Suite (#3a2081)</span>
         </div>
@@ -119,10 +119,10 @@ export default function App() {
 
       {/* Main App Container */}
       <div
-        className={`bg-white transition-all duration-300 ${
+        className={`bg-white transition-all duration-300 w-full overflow-x-hidden ${
           viewMode === 'mobile-preview'
-            ? 'max-w-md mx-auto shadow-2xl rounded-3xl border border-purple-300 overflow-hidden relative'
-            : 'w-full'
+            ? 'max-w-md mx-auto shadow-2xl rounded-3xl border border-purple-300 relative'
+            : ''
         }`}
       >
         <Header

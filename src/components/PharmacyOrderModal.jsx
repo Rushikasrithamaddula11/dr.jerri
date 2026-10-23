@@ -50,7 +50,7 @@ export default function PharmacyOrderModal({ isOpen, onClose }) {
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 overflow-y-auto space-y-3.5 text-xs">
           
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block font-bold text-royal-dark mb-1">Your Name</label>
               <input
@@ -116,7 +116,7 @@ export default function PharmacyOrderModal({ isOpen, onClose }) {
             </button>
             <button
               type="submit"
-              className="w-2/3 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md transition flex items-center justify-center gap-2"
+              className="w-2/3 py-3 rounded-xl bg-royal hover:bg-royal-dark text-white font-bold shadow-md shadow-royal/30 transition flex items-center justify-center gap-2"
             >
               <i className="fa-brands fa-whatsapp text-base"></i>
               <span>Send Order to WhatsApp</span>

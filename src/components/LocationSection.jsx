@@ -33,7 +33,7 @@ export default function LocationSection() {
               </div>
 
               <div className="flex items-center gap-3.5 text-slate-800 pt-3 border-t border-purple-200">
-                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-royal text-white flex items-center justify-center shrink-0">
                   <i className="fa-solid fa-phone"></i>
                 </div>
                 <div>
@@ -55,12 +55,12 @@ export default function LocationSection() {
               </div>
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-3">
+            <div className="pt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
               <a
                 href="https://maps.google.com/?q=ECIL+South+Kamala+Nagar+Hyderabad"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-royal hover:bg-royal-dark text-white font-bold py-3.5 px-6 rounded-2xl text-xs sm:text-sm transition shadow-md shadow-royal/20"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-royal hover:bg-royal-dark active:scale-95 text-white font-bold py-3 px-6 rounded-2xl text-xs sm:text-sm transition shadow-md shadow-royal/20"
               >
                 <i className="fa-solid fa-map-location-dot"></i>
                 <span>Open in Google Maps</span>
@@ -68,7 +68,7 @@ export default function LocationSection() {
 
               <a
                 href={`tel:${clinicInfo.phone}`}
-                className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-5 rounded-2xl text-xs sm:text-sm transition shadow"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-royal-dark hover:bg-royal active:scale-95 text-white font-bold py-3 px-5 rounded-2xl text-xs sm:text-sm transition shadow-md shadow-royal/20"
               >
                 <i className="fa-solid fa-phone"></i>
                 <span>Call: 9533551700</span>

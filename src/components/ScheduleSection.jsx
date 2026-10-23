@@ -57,7 +57,7 @@ export default function ScheduleSection({ onBookClick, onScrollToDoctor }) {
                   </td>
                   <td className="py-4 px-6 text-slate-600">
                     <span className="flex items-center gap-1.5 font-bold text-royal-dark">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      <span className="w-2 h-2 rounded-full bg-royal"></span>
                       {doc.availability}
                     </span>
                   </td>
@@ -82,7 +82,7 @@ export default function ScheduleSection({ onBookClick, onScrollToDoctor }) {
         </div>
 
         {/* Mobile Schedule Cards */}
-        <div className="md:hidden space-y-2.5">
+        <div className="md:hidden space-y-3">
           {doctors.map((doc) => (
             <div
               key={doc.id}
@@ -95,11 +95,18 @@ export default function ScheduleSection({ onBookClick, onScrollToDoctor }) {
                   className="w-12 h-14 rounded-xl object-cover object-top border border-purple-200 shrink-0"
                 />
                 <div className="min-w-0">
-                  <h4 className="font-black text-xs text-royal-dark truncate">{doc.name}</h4>
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="font-black text-xs text-royal-dark truncate">{doc.name}</h4>
+                    <span className="bg-purple-100 text-royal px-1.5 py-0.2 rounded text-[9px] font-bold shrink-0">{doc.qualifications}</span>
+                  </div>
                   <p className="text-[11px] text-purple-700 font-semibold truncate">{doc.specialty}</p>
-                  <p className="text-[11px] font-bold text-royal mt-1 flex items-center gap-1">
+                  <p className="text-[11px] font-bold text-royal mt-0.5 flex items-center gap-1">
                     <i className="fa-regular fa-clock text-[10px]"></i>
-                    <span>{doc.timings}</span>
+                    <span className="truncate">{doc.timings}</span>
+                  </p>
+                  <p className="text-[10px] text-slate-500 flex items-center gap-1 mt-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-royal shrink-0"></span>
+                    <span className="truncate">{doc.availability}</span>
                   </p>
                 </div>
               </div>
@@ -107,13 +114,13 @@ export default function ScheduleSection({ onBookClick, onScrollToDoctor }) {
               <div className="shrink-0 flex flex-col gap-1.5">
                 <button
                   onClick={() => onBookClick(`${doc.name} (${doc.timings})`)}
-                  className="bg-royal hover:bg-royal-dark text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-sm transition"
+                  className="bg-royal hover:bg-royal-dark active:scale-95 text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-sm transition"
                 >
                   Book
                 </button>
                 <button
                   onClick={() => onScrollToDoctor(doc.id)}
-                  className="bg-purple-50 text-royal font-bold text-[11px] px-2 py-1 rounded-lg text-center border border-purple-100"
+                  className="bg-purple-50 text-royal font-bold text-[11px] px-2 py-1 rounded-lg text-center border border-purple-100 active:scale-95"
                 >
                   View
                 </button>

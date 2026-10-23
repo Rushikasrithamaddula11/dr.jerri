@@ -35,45 +35,47 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
       </div>
 
       {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-2 sm:py-3 flex items-center justify-between gap-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-4">
         {/* Brand Logo */}
-        <div className="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-royal-dark via-royal to-purple-600 flex items-center justify-center text-white text-lg sm:text-2xl shadow-md shadow-royal/30 shrink-0">
+        <div className="flex items-center gap-2.5 sm:gap-3 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-royal flex items-center justify-center text-white text-xl sm:text-2xl shadow-md shadow-royal/30 shrink-0">
             <i className="fa-solid fa-notes-medical"></i>
           </div>
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <span className="text-base sm:text-xl md:text-2xl font-black tracking-tight text-royal-dark font-display truncate">
+          <div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-royal-dark font-display">
                 {clinicInfo.name}
               </span>
-              <span className="hidden md:inline-block bg-purple-100 text-royal-dark text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider border border-purple-200 shrink-0">
-                Clinic • Diagnostics • Pharmacy
+              <span className="text-xs sm:text-sm font-bold text-royal font-display">
+                Poly Clinic
               </span>
             </div>
-            <p className="text-[10px] sm:text-xs text-purple-700/80 font-medium truncate">
-              Specialist Doctors & 24/7 Pharmacy @ ECIL
+            <p className="text-[10px] sm:text-xs text-purple-800 font-semibold tracking-tight">
+              Diagnostics & 24/7 Pharmacy • ECIL
             </p>
           </div>
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-6 text-xs font-bold text-royal-dark">
-          <button onClick={() => scrollToSection('services-section')} className="hover:text-purple-600 transition">
+        <nav className="hidden xl:flex items-center gap-7 text-xs font-bold text-slate-700">
+          <button onClick={() => scrollToSection('services-section')} className="hover:text-royal transition">
             Services
           </button>
-          <button onClick={() => scrollToSection('diagnostics-section')} className="hover:text-purple-600 transition flex items-center gap-1 text-royal font-extrabold">
-            <i className="fa-solid fa-microscope text-purple-600"></i> Diagnostics Lab
+          <button onClick={() => scrollToSection('diagnostics-section')} className="hover:text-royal transition flex items-center gap-1.5">
+            <i className="fa-solid fa-microscope text-royal"></i>
+            <span>Diagnostics Lab</span>
           </button>
-          <button onClick={() => scrollToSection('pharmacy-section')} className="hover:text-purple-600 transition flex items-center gap-1 text-royal font-extrabold">
-            <i className="fa-solid fa-pills text-purple-600"></i> 24/7 Pharmacy
+          <button onClick={() => scrollToSection('pharmacy-section')} className="hover:text-royal transition flex items-center gap-1.5">
+            <i className="fa-solid fa-pills text-royal"></i>
+            <span>24/7 Pharmacy</span>
           </button>
-          <button onClick={() => scrollToSection('doctors-section')} className="hover:text-purple-600 transition">
+          <button onClick={() => scrollToSection('doctors-section')} className="hover:text-royal transition">
             Doctors
           </button>
-          <button onClick={() => scrollToSection('schedule-section')} className="hover:text-purple-600 transition">
+          <button onClick={() => scrollToSection('schedule-section')} className="hover:text-royal transition">
             OPD Timings
           </button>
-          <button onClick={() => scrollToSection('contact-section')} className="hover:text-purple-600 transition">
+          <button onClick={() => scrollToSection('contact-section')} className="hover:text-royal transition">
             Location
           </button>
         </nav>
@@ -84,7 +86,7 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
             onClick={() => onPharmacyClick()}
             className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
           >
-            <i className="fa-solid fa-prescription text-purple-600"></i>
+            <i className="fa-solid fa-prescription text-royal"></i>
             <span>Order Meds</span>
           </button>
 
@@ -92,23 +94,23 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
             href={`https://wa.me/${clinicInfo.whatsapp}?text=Hello%20Drjerrri%20Poly%20Clinic,%20I%20would%20like%20to%20consult%20a%20doctor`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 bg-royal-subtle hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
+            className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
           >
             <i className="fa-brands fa-whatsapp text-royal text-base"></i>
-            <span>WhatsApp</span>
+            <span className="hidden md:inline">WhatsApp</span>
           </a>
 
           <button
             onClick={() => onBookClick('General Consultation')}
-            className="bg-gradient-to-r from-royal via-royal-light to-purple-600 hover:opacity-95 active:scale-95 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md shadow-royal/20 transition flex items-center gap-1.5"
+            className="bg-royal hover:bg-royal-dark active:scale-95 text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow-md shadow-royal/25 transition flex items-center gap-1.5"
           >
             <i className="fa-regular fa-calendar-check"></i>
-            <span>Book Token</span>
+            <span>Book Appointment</span>
           </button>
         </div>
 
         {/* Mobile Actions: Compact Book + Hamburger */}
-        <div className="flex items-center gap-1.5 lg:hidden shrink-0">
+        <div className="flex items-center gap-1.5 xl:hidden shrink-0">
           <button
             onClick={() => onBookClick('General Consultation')}
             className="bg-royal active:scale-95 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-xl shadow-sm transition flex items-center gap-1"

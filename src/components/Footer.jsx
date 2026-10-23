@@ -1,14 +1,14 @@
 import React from 'react';
 import { clinicInfo, doctors } from '../data/clinicData';
 
-export default function Footer({ onBookClick }) {
+export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClick }) {
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-400 text-xs py-12 md:py-16 pb-24 md:pb-16 border-t border-slate-800">
+    <footer className="bg-royal-deep text-purple-200 text-xs py-12 md:py-16 pb-24 md:pb-16 border-t border-purple-900/50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
@@ -16,48 +16,48 @@ export default function Footer({ onBookClick }) {
           {/* Brand Col */}
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-teal-600 flex items-center justify-center text-white text-lg">
+              <div className="w-10 h-10 rounded-2xl bg-royal-light flex items-center justify-center text-white text-xl">
                 <i className="fa-solid fa-notes-medical"></i>
               </div>
               <span className="text-xl font-black text-white font-display">{clinicInfo.name}</span>
             </div>
-            <p className="text-slate-400 text-xs leading-relaxed">
-              Your trusted multi-speciality neighborhood polyclinic providing dedicated doctor OPDs, emergency saline, injections, blood testing and scanning.
+            <p className="text-purple-300 text-xs leading-relaxed">
+              Multi-Speciality Clinic, Advanced Diagnostic Lab, Ultrasound Scanning, and 24/7 In-House Pharmacy serving ECIL and South Kamala Nagar.
             </p>
             <div className="pt-1">
-              <span className="bg-emerald-950 text-emerald-400 border border-emerald-800 px-3 py-1 rounded-full text-[11px] font-bold">
+              <span className="bg-purple-900/60 text-purple-200 border border-purple-700/60 px-3 py-1 rounded-full text-[11px] font-bold">
                 Healthy You Always
               </span>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Core Facilities */}
           <div className="space-y-2.5">
-            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Quick Links</h4>
+            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Core Facilities</h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => scrollTo('services-section')} className="hover:text-teal-400 transition">
-                  Clinical Services & Procedures
+                <button onClick={() => onDiagnosticsClick('Diagnostics')} className="hover:text-white transition flex items-center gap-1.5">
+                  <i className="fa-solid fa-microscope text-purple-400"></i> Diagnostic Lab & Scans
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollTo('doctors-section')} className="hover:text-teal-400 transition">
-                  Specialist Doctors
+                <button onClick={() => onPharmacyClick()} className="hover:text-white transition flex items-center gap-1.5">
+                  <i className="fa-solid fa-pills text-purple-400"></i> 24/7 In-House Pharmacy
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollTo('schedule-section')} className="hover:text-teal-400 transition">
-                  Daily OPD Schedule
+                <button onClick={() => scrollTo('services-section')} className="hover:text-white transition flex items-center gap-1.5">
+                  <i className="fa-solid fa-bottle-droplet text-purple-400"></i> Saline & IV Fluid Therapy
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollTo('reviews-section')} className="hover:text-teal-400 transition">
-                  Patient Reviews & Ratings
+                <button onClick={() => scrollTo('services-section')} className="hover:text-white transition flex items-center gap-1.5">
+                  <i className="fa-solid fa-syringe text-purple-400"></i> Injections & Vaccinations
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollTo('contact-section')} className="hover:text-teal-400 transition">
-                  Clinic Location & Map
+                <button onClick={() => scrollTo('services-section')} className="hover:text-white transition flex items-center gap-1.5">
+                  <i className="fa-solid fa-kit-medical text-purple-400"></i> First Aid & Wound Dressing
                 </button>
               </li>
             </ul>
@@ -65,10 +65,10 @@ export default function Footer({ onBookClick }) {
 
           {/* Specialist Doctors */}
           <div className="space-y-2.5">
-            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Our Doctors</h4>
+            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Specialist Doctors</h4>
             <ul className="space-y-1.5 text-xs">
               {doctors.map(d => (
-                <li key={d.id} className="text-slate-300">
+                <li key={d.id} className="text-purple-300">
                   <span className="font-semibold text-white">{d.name}</span> ({d.specialty})
                 </li>
               ))}
@@ -77,21 +77,21 @@ export default function Footer({ onBookClick }) {
 
           {/* Contact & Hours */}
           <div className="space-y-2.5">
-            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Emergency & Location</h4>
-            <p className="text-xs leading-relaxed text-slate-300">
+            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Contact & Location</h4>
+            <p className="text-xs leading-relaxed text-purple-300">
               {clinicInfo.address}
             </p>
-            <p className="text-xs text-emerald-400 font-bold">
-              <i className="fa-solid fa-phone mr-1.5"></i>
+            <p className="text-xs text-white font-bold">
+              <i className="fa-solid fa-phone mr-1.5 text-emerald-400"></i>
               <a href={`tel:${clinicInfo.phone}`}>{clinicInfo.phone}</a>
             </p>
-            <p className="text-xs text-slate-400">
-              <i className="fa-regular fa-clock mr-1.5 text-teal-400"></i> Open 7 Days a Week
+            <p className="text-xs text-purple-300">
+              <i className="fa-regular fa-clock mr-1.5 text-purple-400"></i> Open 7 Days • Emergency Care Active
             </p>
             <div className="pt-2">
               <button
                 onClick={() => onBookClick('General Consultation')}
-                className="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 rounded-xl text-xs transition shadow"
+                className="w-full bg-royal hover:bg-royal-light text-white font-bold py-2.5 rounded-xl text-xs transition shadow border border-purple-400/30"
               >
                 Book Appointment Token
               </button>
@@ -100,10 +100,10 @@ export default function Footer({ onBookClick }) {
 
         </div>
 
-        <div className="pt-8 border-t border-slate-800 text-center text-slate-400 text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p>© 2026 {clinicInfo.name}. All Rights Reserved.</p>
-          <p className="text-slate-400">
-            ECIL South Kamala Nagar, Hyderabad • Healthy You Always
+        <div className="pt-8 border-t border-purple-900/50 text-center text-purple-400 text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© 2026 {clinicInfo.fullName}. All Rights Reserved.</p>
+          <p className="text-purple-300">
+            ECIL South Kamala Nagar, Hyderabad • Your Health Our Priority
           </p>
         </div>
 

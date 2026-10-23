@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { clinicInfo } from '../data/clinicData';
 
-export default function Header({ onBookClick }) {
+export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClick }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id) => {
@@ -13,20 +13,20 @@ export default function Header({ onBookClick }) {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-royal-border shadow-sm transition-all">
       {/* Topmost emergency / contact strip */}
-      <div className="bg-gradient-to-r from-teal-900 via-teal-800 to-cyan-900 text-white px-4 md:px-8 py-2 text-xs flex justify-between items-center">
+      <div className="bg-gradient-to-r from-royal-dark via-royal to-purple-900 text-white px-4 md:px-8 py-2 text-xs flex justify-between items-center">
         <div className="flex items-center gap-2 truncate">
-          <i className="fa-solid fa-location-dot text-emerald-400"></i>
+          <i className="fa-solid fa-location-dot text-purple-300"></i>
           <span className="truncate font-medium">{clinicInfo.address}</span>
         </div>
         <div className="flex items-center gap-4 shrink-0">
-          <span className="hidden sm:inline-block text-teal-200 text-[11px]">
-            <i className="fa-solid fa-clock text-emerald-400 mr-1"></i> Open Daily
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-purple-200 text-[11px] font-semibold bg-white/10 px-2.5 py-0.5 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 24/7 Pharmacy & Diagnostics
           </span>
           <a
             href={`tel:${clinicInfo.phone}`}
-            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-bold px-3 py-1 rounded-full text-xs transition shadow-sm"
+            className="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 active:scale-95 text-white font-bold px-3 py-1 rounded-full text-xs transition shadow-sm border border-purple-400/40"
           >
             <i className="fa-solid fa-phone text-[10px]"></i>
             <span>{clinicInfo.phone}</span>
@@ -38,57 +38,69 @@ export default function Header({ onBookClick }) {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
         {/* Brand Logo */}
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-teal-600 to-emerald-500 flex items-center justify-center text-white text-2xl shadow-md shadow-teal-600/20">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-royal-dark via-royal to-purple-600 flex items-center justify-center text-white text-2xl shadow-md shadow-royal/30">
             <i className="fa-solid fa-notes-medical"></i>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xl md:text-2xl font-black tracking-tight text-slate-900 font-display">
-                Drjerrri
+              <span className="text-xl md:text-2xl font-black tracking-tight text-royal-dark font-display">
+                {clinicInfo.name}
               </span>
-              <span className="bg-emerald-100 text-emerald-800 text-[10px] md:text-xs font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                Poly Clinic
+              <span className="bg-purple-100 text-royal-dark text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full uppercase tracking-wider border border-purple-200">
+                Clinic • Diagnostics • Pharmacy
               </span>
             </div>
-            <p className="text-[11px] md:text-xs text-slate-500 font-medium">
-              Multi-Speciality Healthcare & Diagnostics @ ECIL
+            <p className="text-[11px] md:text-xs text-purple-700/80 font-medium">
+              Multi-Speciality Healthcare & 24/7 Pharmacy @ ECIL
             </p>
           </div>
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-7 text-xs font-bold text-slate-700">
-          <button onClick={() => scrollToSection('services-section')} className="hover:text-teal-700 transition">
-            Services & Procedures
+        <nav className="hidden lg:flex items-center gap-6 text-xs font-bold text-royal-dark">
+          <button onClick={() => scrollToSection('services-section')} className="hover:text-purple-600 transition">
+            Services
           </button>
-          <button onClick={() => scrollToSection('doctors-section')} className="hover:text-teal-700 transition">
-            Doctors & Specialists
+          <button onClick={() => scrollToSection('diagnostics-section')} className="hover:text-purple-600 transition flex items-center gap-1 text-royal font-extrabold">
+            <i className="fa-solid fa-microscope text-purple-600"></i> Diagnostics Lab
           </button>
-          <button onClick={() => scrollToSection('schedule-section')} className="hover:text-teal-700 transition">
+          <button onClick={() => scrollToSection('pharmacy-section')} className="hover:text-purple-600 transition flex items-center gap-1 text-royal font-extrabold">
+            <i className="fa-solid fa-pills text-purple-600"></i> 24/7 Pharmacy
+          </button>
+          <button onClick={() => scrollToSection('doctors-section')} className="hover:text-purple-600 transition">
+            Doctors
+          </button>
+          <button onClick={() => scrollToSection('schedule-section')} className="hover:text-purple-600 transition">
             OPD Timings
           </button>
-          <button onClick={() => scrollToSection('reviews-section')} className="hover:text-teal-700 transition">
-            Reviews
-          </button>
-          <button onClick={() => scrollToSection('contact-section')} className="hover:text-teal-700 transition">
-            Location & Contact
+          <button onClick={() => scrollToSection('contact-section')} className="hover:text-purple-600 transition">
+            Location
           </button>
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden sm:flex items-center gap-2.5">
+          <button
+            onClick={() => onPharmacyClick()}
+            className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
+          >
+            <i className="fa-solid fa-prescription text-purple-600"></i>
+            <span>Order Meds</span>
+          </button>
+
           <a
             href={`https://wa.me/${clinicInfo.whatsapp}?text=Hello%20Drjerrri%20Poly%20Clinic,%20I%20would%20like%20to%20consult%20a%20doctor`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold px-3.5 py-2 rounded-xl text-xs transition"
+            className="flex items-center gap-1.5 bg-royal-subtle hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
           >
             <i className="fa-brands fa-whatsapp text-emerald-600 text-base"></i>
             <span>WhatsApp</span>
           </a>
+
           <button
             onClick={() => onBookClick('General Consultation')}
-            className="bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 active:scale-95 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md shadow-teal-700/20 transition flex items-center gap-1.5"
+            className="bg-gradient-to-r from-royal via-royal-light to-purple-600 hover:opacity-95 active:scale-95 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md shadow-royal/20 transition flex items-center gap-1.5"
           >
             <i className="fa-regular fa-calendar-check"></i>
             <span>Book Token</span>
@@ -99,13 +111,13 @@ export default function Header({ onBookClick }) {
         <div className="flex items-center gap-2 lg:hidden">
           <button
             onClick={() => onBookClick('General Consultation')}
-            className="sm:hidden bg-teal-600 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm"
+            className="sm:hidden bg-royal text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm"
           >
             Book
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center text-sm"
+            className="w-9 h-9 rounded-xl bg-purple-50 hover:bg-purple-100 text-royal-dark flex items-center justify-center text-sm border border-purple-200"
             aria-label="Toggle Menu"
           >
             <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
@@ -115,51 +127,61 @@ export default function Header({ onBookClick }) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 text-sm font-semibold text-slate-800 shadow-xl animate-in slide-in-from-top">
+        <div className="lg:hidden bg-white border-b border-royal-border px-4 py-4 space-y-3 text-sm font-semibold text-royal-dark shadow-xl animate-in slide-in-from-top">
+          <button
+            onClick={() => scrollToSection('diagnostics-section')}
+            className="block w-full text-left py-2 px-3 rounded-xl bg-purple-50 text-royal font-bold"
+          >
+            <i className="fa-solid fa-microscope text-purple-600 mr-2"></i> Diagnostics & Scanning Center
+          </button>
+          <button
+            onClick={() => scrollToSection('pharmacy-section')}
+            className="block w-full text-left py-2 px-3 rounded-xl bg-purple-50 text-royal font-bold"
+          >
+            <i className="fa-solid fa-pills text-purple-600 mr-2"></i> In-House 24/7 Pharmacy
+          </button>
           <button
             onClick={() => scrollToSection('services-section')}
             className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
           >
-            <i className="fa-solid fa-notes-medical text-teal-600 mr-2"></i> Clinic Services (Saline, Tests, Scans)
+            <i className="fa-solid fa-notes-medical text-royal mr-2"></i> Clinic Services (Saline, Injections, First Aid)
           </button>
           <button
             onClick={() => scrollToSection('doctors-section')}
             className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
           >
-            <i className="fa-solid fa-user-doctor text-teal-600 mr-2"></i> Doctors & Specialists
+            <i className="fa-solid fa-user-doctor text-royal mr-2"></i> Specialist Doctors & Timings
           </button>
           <button
             onClick={() => scrollToSection('schedule-section')}
             className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
           >
-            <i className="fa-regular fa-clock text-teal-600 mr-2"></i> Daily OPD Timings
-          </button>
-          <button
-            onClick={() => scrollToSection('reviews-section')}
-            className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
-          >
-            <i className="fa-solid fa-star text-amber-400 mr-2"></i> Patient Reviews
+            <i className="fa-regular fa-clock text-royal mr-2"></i> Daily OPD Schedule
           </button>
           <button
             onClick={() => scrollToSection('contact-section')}
             className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
           >
-            <i className="fa-solid fa-map-location-dot text-teal-600 mr-2"></i> Directions & Location
+            <i className="fa-solid fa-map-location-dot text-royal mr-2"></i> Location & Google Map
           </button>
+
           <div className="pt-2 grid grid-cols-2 gap-2">
-            <a
-              href={`tel:${clinicInfo.phone}`}
-              className="flex items-center justify-center gap-2 bg-slate-100 py-2.5 rounded-xl font-bold text-xs text-slate-800"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onPharmacyClick();
+              }}
+              className="flex items-center justify-center gap-1.5 bg-purple-100 text-royal font-bold py-2.5 rounded-xl text-xs"
             >
-              <i className="fa-solid fa-phone text-emerald-600"></i> Call: 9533551700
-            </a>
+              <i className="fa-solid fa-prescription"></i> Order Meds
+            </button>
             <a
               href={`https://wa.me/${clinicInfo.whatsapp}?text=Hello%20Drjerrri%20Poly%20Clinic`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-emerald-600 text-white py-2.5 rounded-xl font-bold text-xs"
+              className="flex items-center justify-center gap-1.5 bg-royal text-white font-bold py-2.5 rounded-xl text-xs"
             >
-              <i className="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+              <i className="fa-brands fa-whatsapp"></i> WhatsApp
             </a>
           </div>
         </div>

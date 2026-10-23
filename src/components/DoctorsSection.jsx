@@ -18,20 +18,20 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
   });
 
   return (
-    <section id="doctors-section" className="py-8 md:py-14 bg-slate-50 border-b border-slate-200">
+    <section id="doctors-section" className="py-8 md:py-14 bg-royal-subtle border-b border-royal-border">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         
         {/* Section Heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 md:mb-8 gap-3">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-3">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-full uppercase tracking-wider mb-2">
-              <i className="fa-solid fa-user-doctor text-[10px]"></i> Medical Team
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-royal bg-white px-3 py-1 rounded-full uppercase tracking-wider mb-2 border border-purple-200">
+              <i className="fa-solid fa-user-doctor text-royal"></i> Qualified Specialists
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 font-display tracking-tight">
-              Our Expert Doctors & Specialists
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-royal-dark font-display tracking-tight">
+              Consult Our Expert Doctors
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Experienced consultants available every day for your family's complete medical care.
+              Daily OPD consultations with experienced General Physicians, Gynaecologists, Dermatologists, and Pediatricians.
             </p>
           </div>
         </div>
@@ -42,10 +42,10 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all shadow-sm ${
+              className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all shadow-sm ${
                 activeCategory === cat.id
-                  ? 'bg-teal-700 text-white shadow-teal-700/20'
-                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                  ? 'bg-royal text-white shadow-royal/30'
+                  : 'bg-white text-royal-dark hover:bg-purple-100 border border-purple-200'
               }`}
             >
               {cat.label}
@@ -59,43 +59,43 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
             <div
               key={doc.id}
               id={doc.id}
-              className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between group"
+              className="bg-white rounded-3xl border border-purple-200 shadow-sm hover:shadow-xl hover:border-royal transition-all overflow-hidden flex flex-col justify-between group"
             >
               <div>
                 {/* Doctor Head Info */}
                 <div className="p-5 flex gap-4 items-start">
-                  <div className="relative w-24 h-32 rounded-2xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200 shadow-inner">
+                  <div className="relative w-24 h-32 rounded-2xl overflow-hidden bg-purple-50 shrink-0 border border-purple-200 shadow-inner">
                     <img
                       src={doc.photo}
                       alt={doc.name}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                     />
-                    <span className="absolute bottom-1.5 left-1.5 bg-slate-900/85 backdrop-blur-sm text-white text-[9px] font-bold px-2 py-0.5 rounded-md">
+                    <span className="absolute bottom-1.5 left-1.5 bg-royal/90 backdrop-blur-sm text-white text-[9px] font-bold px-2 py-0.5 rounded-md">
                       {doc.qualifications}
                     </span>
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-teal-800 bg-teal-50 px-2 py-0.5 rounded-md truncate">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-royal bg-purple-100 px-2.5 py-0.5 rounded-md truncate border border-purple-200">
                         {doc.categoryLabel}
                       </span>
                       {doc.regNo && (
-                        <span className="text-[10px] text-slate-400 font-mono shrink-0">
+                        <span className="text-[10px] text-purple-700 font-mono shrink-0">
                           {doc.regNo}
                         </span>
                       )}
                     </div>
 
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 font-display leading-snug">
+                    <h3 className="text-base sm:text-lg font-black text-royal-dark font-display leading-snug">
                       {doc.name}
                     </h3>
-                    <p className="text-xs text-slate-600 font-medium">
+                    <p className="text-xs text-purple-800 font-semibold">
                       {doc.specialty}
                     </p>
 
-                    <div className="mt-2.5 inline-flex items-center gap-1.5 bg-slate-100 text-slate-800 text-[11px] font-bold px-2.5 py-1 rounded-lg">
-                      <i className="fa-regular fa-clock text-teal-600"></i>
+                    <div className="mt-2.5 inline-flex items-center gap-1.5 bg-purple-50 text-royal-dark text-[11px] font-bold px-2.5 py-1 rounded-lg border border-purple-200">
+                      <i className="fa-regular fa-clock text-royal"></i>
                       <span>{doc.timings}</span>
                     </div>
 
@@ -107,7 +107,7 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
                 </div>
 
                 {/* Subtitle / Quote */}
-                <div className="px-5 pb-2 text-[11px] text-teal-800 italic font-medium">
+                <div className="px-5 pb-2 text-[11px] text-purple-900 italic font-medium">
                   "{doc.subtitle}"
                 </div>
 
@@ -120,7 +120,7 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
                     {doc.treatments.map((t, idx) => (
                       <span
                         key={idx}
-                        className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] px-2.5 py-0.5 rounded-md transition"
+                        className="bg-royal-subtle hover:bg-purple-100 text-royal-dark text-[11px] font-medium px-2.5 py-0.5 rounded-md border border-purple-100 transition"
                       >
                         {t}
                       </span>
@@ -130,10 +130,10 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
               </div>
 
               {/* Card Footer Actions */}
-              <div className="bg-slate-50 border-t border-slate-100 p-3.5 px-5 flex items-center justify-between gap-2">
+              <div className="bg-purple-50/70 border-t border-purple-100 p-3.5 px-5 flex items-center justify-between gap-2">
                 <button
                   onClick={() => onViewFlyer(doc.flyer, `${doc.name} - ${doc.specialty}`)}
-                  className="text-xs font-bold text-teal-700 hover:text-teal-900 flex items-center gap-1.5 py-1.5 px-2 rounded-lg hover:bg-teal-50 transition"
+                  className="text-xs font-bold text-royal hover:text-royal-dark flex items-center gap-1.5 py-1.5 px-2 rounded-lg hover:bg-white transition"
                 >
                   <i className="fa-regular fa-image"></i>
                   <span>View Poster</span>
@@ -142,14 +142,14 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
                 <div className="flex items-center gap-2">
                   <a
                     href={`tel:${clinicInfo.phone}`}
-                    className="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-teal-700 hover:border-teal-400 flex items-center justify-center text-xs transition shadow-sm"
+                    className="w-8 h-8 rounded-xl bg-white border border-purple-200 text-royal hover:bg-royal hover:text-white flex items-center justify-center text-xs transition shadow-sm"
                     title="Call Clinic"
                   >
                     <i className="fa-solid fa-phone"></i>
                   </a>
                   <button
                     onClick={() => onBookClick(`${doc.name} (${doc.specialty} - ${doc.timings})`)}
-                    className="bg-teal-600 hover:bg-teal-700 active:scale-95 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5"
+                    className="bg-royal hover:bg-royal-dark active:scale-95 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5"
                   >
                     <i className="fa-regular fa-calendar-check text-[11px]"></i>
                     <span>Book Token</span>

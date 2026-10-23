@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import DiagnosticsSection from './components/DiagnosticsSection';
+import PharmacySection from './components/PharmacySection';
 import ServicesSection from './components/ServicesSection';
 import ScheduleSection from './components/ScheduleSection';
 import DoctorsSection from './components/DoctorsSection';
@@ -10,6 +12,7 @@ import LocationSection from './components/LocationSection';
 import Footer from './components/Footer';
 import MobileBottomBar from './components/MobileBottomBar';
 import BookingModal from './components/BookingModal';
+import PharmacyOrderModal from './components/PharmacyOrderModal';
 import FlyerModal from './components/FlyerModal';
 import ServiceDetailModal from './components/ServiceDetailModal';
 import { doctors, clinicalServices } from './data/clinicData';
@@ -18,6 +21,8 @@ export default function App() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [preselectedService, setPreselectedService] = useState('');
   
+  const [pharmacyModalOpen, setPharmacyModalOpen] = useState(false);
+
   const [flyerModalOpen, setFlyerModalOpen] = useState(false);
   const [flyerData, setFlyerData] = useState(null);
 
@@ -31,6 +36,17 @@ export default function App() {
   const handleOpenBooking = (serviceName = 'General Consultation') => {
     setPreselectedService(serviceName);
     setBookingModalOpen(true);
+  };
+
+  // Diagnostics booking
+  const handleOpenDiagnostics = (pkgName = 'Diagnostics / Lab Test') => {
+    setPreselectedService(pkgName);
+    setBookingModalOpen(true);
+  };
+
+  // Pharmacy order handler
+  const handleOpenPharmacy = () => {
+    setPharmacyModalOpen(true);
   };
 
   // Flyer preview handler
@@ -50,8 +66,8 @@ export default function App() {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      el.classList.add('ring-4', 'ring-teal-500');
-      setTimeout(() => el.classList.remove('ring-4', 'ring-teal-500'), 2500);
+      el.classList.add('ring-4', 'ring-purple-500');
+      setTimeout(() => el.classList.remove('ring-4', 'ring-purple-500'), 2500);
     }
   };
 
@@ -81,19 +97,19 @@ export default function App() {
   }, [searchQuery]);
 
   return (
-    <div className={`min-h-screen bg-slate-100 ${viewMode === 'mobile-preview' ? 'py-4 md:py-8' : ''}`}>
+    <div className={`min-h-screen bg-purple-950/20 ${viewMode === 'mobile-preview' ? 'py-4 md:py-8' : ''}`}>
       
       {/* Desktop Preview Mode Switcher (Visible on desktop) */}
-      <div className="hidden lg:flex justify-between items-center bg-slate-900 text-slate-300 px-6 py-2 text-xs border-b border-slate-800">
+      <div className="hidden lg:flex justify-between items-center bg-royal-deep text-purple-200 px-6 py-2 text-xs border-b border-purple-900">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span className="font-semibold text-white">Drjerrri Poly Clinic React Application</span>
-          <span className="text-slate-400">| Fully responsive for both Desktop & Mobile</span>
+          <span className="font-bold text-white">Drjerrri Poly Clinic, Diagnostics & Pharmacy</span>
+          <span className="text-purple-300">| Royal Purple Medical Suite (#3a2081)</span>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={() => setViewMode(viewMode === 'full' ? 'mobile-preview' : 'full')}
-            className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded-full transition border border-slate-700 text-xs font-medium"
+            className="flex items-center gap-1.5 bg-royal hover:bg-royal-light text-white px-3.5 py-1 rounded-full transition border border-purple-400/30 text-xs font-semibold"
           >
             <i className={`fa-solid ${viewMode === 'full' ? 'fa-mobile-screen-button' : 'fa-desktop'}`}></i>
             <span>{viewMode === 'full' ? 'Preview Mobile Frame' : 'Full Desktop View'}</span>
@@ -105,46 +121,75 @@ export default function App() {
       <div
         className={`bg-white transition-all duration-300 ${
           viewMode === 'mobile-preview'
-            ? 'max-w-md mx-auto shadow-2xl rounded-3xl border border-slate-300 overflow-hidden relative'
+            ? 'max-w-md mx-auto shadow-2xl rounded-3xl border border-purple-300 overflow-hidden relative'
             : 'w-full'
         }`}
       >
-        <Header onBookClick={handleOpenBooking} />
+        <Header
+          onBookClick={handleOpenBooking}
+          onPharmacyClick={handleOpenPharmacy}
+          onDiagnosticsClick={handleOpenDiagnostics}
+        />
         
         <main>
           <Hero
             onBookClick={handleOpenBooking}
+            onPharmacyClick={handleOpenPharmacy}
+            onDiagnosticsClick={handleOpenDiagnostics}
             onSearch={setSearchQuery}
             searchQuery={searchQuery}
           />
 
+          {/* Diagnostics Section */}
+          <DiagnosticsSection
+            onBookDiagnostics={handleOpenDiagnostics}
+          />
+
+          {/* Pharmacy Section */}
+          <PharmacySection
+            onOpenPharmacyOrder={handleOpenPharmacy}
+          />
+
+          {/* Clinical Procedures & Services Section */}
           <ServicesSection
             filteredServices={filteredServices}
             onSelectService={handleSelectService}
             onBookService={handleOpenBooking}
           />
 
+          {/* Specialist Doctors Section */}
           <DoctorsSection
             doctors={filteredDoctors}
             onBookClick={handleOpenBooking}
             onViewFlyer={handleViewFlyer}
           />
 
+          {/* Daily OPD Timings Matrix */}
           <ScheduleSection
             onBookClick={handleOpenBooking}
             onScrollToDoctor={handleScrollToDoctor}
           />
 
+          {/* Patient Reviews Section */}
           <ReviewsSection />
 
+          {/* FAQ Section */}
           <FAQSection />
 
+          {/* Location & Contact Section */}
           <LocationSection />
         </main>
 
-        <Footer onBookClick={handleOpenBooking} />
+        <Footer
+          onBookClick={handleOpenBooking}
+          onPharmacyClick={handleOpenPharmacy}
+          onDiagnosticsClick={handleOpenDiagnostics}
+        />
 
-        <MobileBottomBar onBookClick={handleOpenBooking} />
+        <MobileBottomBar
+          onBookClick={handleOpenBooking}
+          onPharmacyClick={handleOpenPharmacy}
+        />
       </div>
 
       {/* Modals */}
@@ -152,6 +197,11 @@ export default function App() {
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         preselectedService={preselectedService}
+      />
+
+      <PharmacyOrderModal
+        isOpen={pharmacyModalOpen}
+        onClose={() => setPharmacyModalOpen(false)}
       />
 
       <FlyerModal

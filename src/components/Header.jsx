@@ -35,29 +35,29 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
       </div>
 
       {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo */}
-        <div className="flex items-center gap-2.5 sm:gap-3 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-royal flex items-center justify-center text-white text-xl sm:text-2xl shadow-md shadow-royal/30 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-royal flex items-center justify-center text-white text-lg sm:text-2xl shadow-md shadow-royal/30 shrink-0">
             <i className="fa-solid fa-notes-medical"></i>
           </div>
-          <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-royal-dark font-display">
+          <div className="min-w-0">
+            <div className="flex items-baseline gap-1 truncate">
+              <span className="text-lg sm:text-2xl font-black tracking-tight text-royal-dark font-display">
                 {clinicInfo.name}
               </span>
-              <span className="text-xs sm:text-sm font-bold text-royal font-display">
+              <span className="text-xs sm:text-sm font-bold text-royal font-display truncate">
                 Poly Clinic
               </span>
             </div>
-            <p className="text-[10px] sm:text-xs text-purple-800 font-semibold tracking-tight">
+            <p className="text-[10px] sm:text-xs text-purple-800 font-semibold tracking-tight truncate">
               Diagnostics & 24/7 Pharmacy • ECIL
             </p>
           </div>
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-7 text-xs font-bold text-slate-700">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-bold text-slate-700">
           <button onClick={() => scrollToSection('services-section')} className="hover:text-royal transition">
             Services
           </button>
@@ -81,7 +81,7 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden sm:flex items-center gap-2.5 shrink-0">
+        <div className="hidden lg:flex items-center gap-2.5 shrink-0">
           <button
             onClick={() => onPharmacyClick()}
             className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
@@ -97,7 +97,7 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
             className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
           >
             <i className="fa-brands fa-whatsapp text-royal text-base"></i>
-            <span className="hidden md:inline">WhatsApp</span>
+            <span>WhatsApp</span>
           </a>
 
           <button
@@ -110,7 +110,7 @@ export default function Header({ onBookClick, onPharmacyClick, onDiagnosticsClic
         </div>
 
         {/* Mobile Actions: Compact Book + Hamburger */}
-        <div className="flex items-center gap-1.5 xl:hidden shrink-0">
+        <div className="flex items-center gap-1.5 lg:hidden shrink-0">
           <button
             onClick={() => onBookClick('General Consultation')}
             className="bg-royal active:scale-95 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-xl shadow-sm transition flex items-center gap-1"

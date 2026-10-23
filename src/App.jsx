@@ -30,7 +30,6 @@ export default function App() {
   const [selectedService, setSelectedService] = useState(null);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState('full'); // 'full' or 'mobile-preview'
 
   // Booking action handler
   const handleOpenBooking = (serviceName = 'General Consultation') => {
@@ -97,41 +96,14 @@ export default function App() {
   }, [searchQuery]);
 
   return (
-    <div className={`min-h-screen bg-purple-950/20 w-full overflow-x-hidden ${viewMode === 'mobile-preview' ? 'py-4 md:py-8' : ''}`}>
+    <div className="min-h-screen bg-white w-full overflow-x-hidden text-slate-800">
+      <Header
+        onBookClick={handleOpenBooking}
+        onPharmacyClick={handleOpenPharmacy}
+        onDiagnosticsClick={handleOpenDiagnostics}
+      />
       
-      {/* Desktop Preview Mode Switcher (Visible on desktop) */}
-      <div className="hidden lg:flex justify-between items-center bg-royal-deep text-purple-200 px-6 py-2 text-xs border-b border-purple-900">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-purple-400"></span>
-          <span className="font-bold text-white">Drjerrri Poly Clinic, Diagnostics & Pharmacy</span>
-          <span className="text-purple-300">| Royal Purple Medical Suite (#3a2081)</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setViewMode(viewMode === 'full' ? 'mobile-preview' : 'full')}
-            className="flex items-center gap-1.5 bg-royal hover:bg-royal-light text-white px-3.5 py-1 rounded-full transition border border-purple-400/30 text-xs font-semibold"
-          >
-            <i className={`fa-solid ${viewMode === 'full' ? 'fa-mobile-screen-button' : 'fa-desktop'}`}></i>
-            <span>{viewMode === 'full' ? 'Preview Mobile Frame' : 'Full Desktop View'}</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Main App Container */}
-      <div
-        className={`bg-white transition-all duration-300 w-full overflow-x-hidden ${
-          viewMode === 'mobile-preview'
-            ? 'max-w-md mx-auto shadow-2xl rounded-3xl border border-purple-300 relative'
-            : ''
-        }`}
-      >
-        <Header
-          onBookClick={handleOpenBooking}
-          onPharmacyClick={handleOpenPharmacy}
-          onDiagnosticsClick={handleOpenDiagnostics}
-        />
-        
-        <main>
+      <main className="pb-16 lg:pb-0">
           <Hero
             onBookClick={handleOpenBooking}
             onPharmacyClick={handleOpenPharmacy}
@@ -190,7 +162,6 @@ export default function App() {
           onBookClick={handleOpenBooking}
           onPharmacyClick={handleOpenPharmacy}
         />
-      </div>
 
       {/* Modals */}
       <BookingModal

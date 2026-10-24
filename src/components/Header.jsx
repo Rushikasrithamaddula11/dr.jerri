@@ -8,11 +8,11 @@ export default function Header({
   cartCount = 0,
   onOpenCart,
   currentUser,
-  onOpenAuthModal,
   onLogout
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Pure patient navigation items (no admin in public navbar)
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'doctors', label: 'Doctors' },
@@ -20,8 +20,7 @@ export default function Header({
     { id: 'logistics', label: 'Track Order' },
     { id: 'diagnostics', label: 'Lab Tests' },
     { id: 'services', label: 'Services' },
-    { id: 'contact', label: 'Contact' },
-    { id: 'admin', label: 'Admin Portal', icon: 'fa-solid fa-shield-halved' }
+    { id: 'contact', label: 'Contact' }
   ];
 
   const handleNavClick = (pageId) => {
@@ -86,18 +85,15 @@ export default function Header({
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-2 rounded-xl transition flex items-center gap-1.5 ${
+                className={`px-3 py-2 rounded-xl transition ${
                   isActive
                     ? 'bg-royal text-white shadow-xs'
-                    : item.id === 'admin'
-                    ? 'text-purple-700 bg-purple-50 hover:bg-purple-100 font-extrabold'
                     : item.highlight
                     ? 'text-royal font-extrabold hover:bg-purple-50'
                     : 'text-slate-600 hover:text-royal hover:bg-purple-50/50'
                 }`}
               >
-                {item.icon && <i className={`${item.icon} text-[10px]`}></i>}
-                <span>{item.label}</span>
+                {item.label}
               </button>
             );
           })}
@@ -106,11 +102,26 @@ export default function Header({
         {/* Actions Desktop */}
         <div className="hidden lg:flex items-center gap-2 shrink-0">
           
+          {/* If Logged in as Admin, show Admin Badge */}
+          {currentUser?.role === 'admin' && (
+            <button
+              onClick={() => handleNavClick('admin')}
+              className={`text-xs font-extrabold px-3 py-2 rounded-xl transition flex items-center gap-1.5 ${
+                activePage === 'admin'
+                  ? 'bg-purple-900 text-white'
+                  : 'bg-purple-100 text-purple-900 hover:bg-purple-200'
+              }`}
+            >
+              <i className="fa-solid fa-shield-halved"></i>
+              <span>Admin Portal</span>
+            </button>
+          )}
+
           {/* User Auth Info / Login Button */}
           {currentUser ? (
             <div className="flex items-center gap-1.5 bg-purple-50 border border-purple-200 px-2.5 py-1.5 rounded-xl text-xs">
               <div className="w-6 h-6 rounded-full bg-royal text-white flex items-center justify-center text-[10px] font-bold">
-                {currentUser.name ? currentUser.name.charAt(0) : 'U'}
+                {currentUser.name ? currentUser.name.charAt(0) : 'P'}
               </div>
               <span className="font-bold text-royal-dark truncate max-w-[90px]">
                 {currentUser.name.split(' ')[0]}
@@ -125,8 +136,12 @@ export default function Header({
             </div>
           ) : (
             <button
-              onClick={onOpenAuthModal}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-royal-dark hover:bg-purple-50 text-xs font-bold border border-purple-200 transition"
+              onClick={() => handleNavClick('login')}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition ${
+                activePage === 'login'
+                  ? 'bg-royal text-white border-royal'
+                  : 'text-royal-dark hover:bg-purple-50 border-purple-200'
+              }`}
             >
               <i className="fa-regular fa-user text-royal"></i>
               <span>Sign In</span>
@@ -160,12 +175,14 @@ export default function Header({
         <div className="flex items-center gap-2 lg:hidden">
           {/* Quick User / Auth Icon on Mobile */}
           <button
-            onClick={currentUser ? () => handleNavClick('admin') : onOpenAuthModal}
-            className="w-8 h-8 rounded-xl bg-purple-50 text-royal flex items-center justify-center text-xs border border-purple-200"
+            onClick={() => handleNavClick(currentUser ? 'home' : 'login')}
+            className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs border ${
+              activePage === 'login' ? 'bg-royal text-white border-royal' : 'bg-purple-50 text-royal border-purple-200'
+            }`}
             aria-label="Account"
             title={currentUser ? currentUser.name : 'Sign In'}
           >
-            <i className={`fa-solid ${currentUser?.role === 'admin' ? 'fa-shield-halved' : 'fa-user'}`}></i>
+            <i className={`fa-solid ${currentUser ? 'fa-user-check' : 'fa-user'}`}></i>
           </button>
 
           {/* Cart Icon on Mobile */}
@@ -220,11 +237,11 @@ export default function Header({
               </div>
             ) : (
               <button
-                onClick={() => { setMobileMenuOpen(false); onOpenAuthModal(); }}
+                onClick={() => handleNavClick('login')}
                 className="w-full bg-purple-50 text-royal font-bold py-2 rounded-xl border border-purple-200 text-xs flex items-center justify-center gap-1.5"
               >
                 <i className="fa-regular fa-user"></i>
-                <span>Sign In / Create Account</span>
+                <span>Sign In / Register Account</span>
               </button>
             )}
           </div>
@@ -236,15 +253,23 @@ export default function Header({
               className={`w-full text-left py-2 px-3 rounded-xl transition flex items-center justify-between ${
                 activePage === item.id
                   ? 'bg-royal text-white font-bold'
-                  : item.id === 'admin'
-                  ? 'text-purple-800 bg-purple-50 font-bold'
                   : 'text-slate-700 hover:bg-purple-50'
               }`}
             >
               <span>{item.label}</span>
-              {item.id === 'admin' && <span className="text-[10px] bg-purple-200 text-purple-900 px-2 py-0.5 rounded-full uppercase">Staff</span>}
             </button>
           ))}
+
+          {/* Admin link only for logged in admin */}
+          {currentUser?.role === 'admin' && (
+            <button
+              onClick={() => handleNavClick('admin')}
+              className="w-full text-left py-2 px-3 rounded-xl transition flex items-center justify-between bg-purple-50 text-purple-900 font-bold"
+            >
+              <span>Admin Portal</span>
+              <span className="text-[10px] bg-purple-200 px-2 py-0.5 rounded-full">Staff</span>
+            </button>
+          )}
 
           <div className="pt-2 flex gap-2">
             <a

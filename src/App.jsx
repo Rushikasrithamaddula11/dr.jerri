@@ -8,9 +8,8 @@ import BookingModal from './components/BookingModal';
 import PharmacyOrderModal from './components/PharmacyOrderModal';
 import FlyerModal from './components/FlyerModal';
 import ServiceDetailModal from './components/ServiceDetailModal';
-import AuthModal from './components/AuthModal';
 
-// Pages
+// Dedicated Separate Pages
 import HomePage from './pages/HomePage';
 import PharmacyStorePage from './pages/PharmacyStorePage';
 import LogisticsPage from './pages/LogisticsPage';
@@ -18,13 +17,14 @@ import DoctorsPage from './pages/DoctorsPage';
 import DiagnosticsPage from './pages/DiagnosticsPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
+import AuthPage from './pages/AuthPage';
 import AdminPortalPage from './pages/AdminPortalPage';
 
 import { doctors, clinicalServices } from './data/clinicData';
 import { medicinesList } from './data/medicinesData';
 
 export default function App() {
-  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact' | 'admin'
+  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact' | 'login' | 'signup' | 'admin'
   const getPageFromHash = () => {
     const hash = window.location.hash.replace('#/', '').replace('#', '').trim().toLowerCase();
     if (['store', 'pharmacy'].includes(hash)) return 'store';
@@ -33,6 +33,8 @@ export default function App() {
     if (['diagnostics', 'scans'].includes(hash)) return 'diagnostics';
     if (['services', 'procedures'].includes(hash)) return 'services';
     if (['contact', 'location'].includes(hash)) return 'contact';
+    if (['login', 'signin', 'auth'].includes(hash)) return 'login';
+    if (['signup', 'register'].includes(hash)) return 'signup';
     if (['admin', 'dashboard', 'portal'].includes(hash)) return 'admin';
     return 'home';
   };
@@ -64,21 +66,19 @@ export default function App() {
     }
   });
 
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-
   const handleLoginSuccess = (user) => {
     setCurrentUser(user);
     if (user.role === 'admin') {
       handleNavigate('admin');
+    } else {
+      handleNavigate('store');
     }
   };
 
   const handleLogout = () => {
     localStorage.removeItem('drjerri_auth');
     setCurrentUser(null);
-    if (currentPage === 'admin') {
-      handleNavigate('home');
-    }
+    handleNavigate('home');
   };
 
   // Custom Medicines State (added via Admin Portal)
@@ -210,7 +210,7 @@ export default function App() {
     setCart([]);
   };
 
-  // Order Success -> Sets order and redirects or opens logistics tracking
+  // Order Success -> Sets order and redirects to live logistics tracking
   const handleOrderSuccess = (newOrder) => {
     setActiveOrder(newOrder);
     setCart([]);
@@ -295,12 +295,12 @@ export default function App() {
         cartCount={cartCount}
         onOpenCart={() => setCartDrawerOpen(true)}
         currentUser={currentUser}
-        onOpenAuthModal={() => setAuthModalOpen(true)}
         onLogout={handleLogout}
       />
 
-      {/* Dynamic Page Views */}
+      {/* Dynamic Dedicated Separate Pages */}
       <main className="flex-1">
+        {/* PAGE 1: CLINIC HOME */}
         {currentPage === 'home' && (
           <HomePage
             onBookClick={handleOpenBooking}
@@ -318,6 +318,7 @@ export default function App() {
           />
         )}
 
+        {/* PAGE 2: MEDICINE STORE (PROTECTED: REQUIRES LOGIN) */}
         {currentPage === 'store' && (
           <PharmacyStorePage
             medicines={allMedicines}
@@ -328,15 +329,19 @@ export default function App() {
             onOpenTracker={() => handleNavigate('logistics')}
             onOpenPharmacyModal={handleOpenPharmacy}
             onNavigate={handleNavigate}
+            currentUser={currentUser}
+            onLoginSuccess={handleLoginSuccess}
           />
         )}
 
+        {/* PAGE 3: REALTIME LOGISTICS TRACKER */}
         {currentPage === 'logistics' && (
           <LogisticsPage
             onNavigate={handleNavigate}
           />
         )}
 
+        {/* PAGE 4: SPECIALIST DOCTORS OPD */}
         {currentPage === 'doctors' && (
           <DoctorsPage
             onBookClick={handleOpenBooking}
@@ -345,6 +350,7 @@ export default function App() {
           />
         )}
 
+        {/* PAGE 5: DIAGNOSTICS & SCANS */}
         {currentPage === 'diagnostics' && (
           <DiagnosticsPage
             onBookDiagnostics={handleOpenDiagnostics}
@@ -352,6 +358,7 @@ export default function App() {
           />
         )}
 
+        {/* PAGE 6: CLINICAL SERVICES & PROCEDURES */}
         {currentPage === 'services' && (
           <ServicesPage
             onSelectService={handleSelectService}
@@ -359,6 +366,7 @@ export default function App() {
           />
         )}
 
+        {/* PAGE 7: CONTACT & MAP */}
         {currentPage === 'contact' && (
           <ContactPage
             onBookClick={handleOpenBooking}
@@ -366,12 +374,33 @@ export default function App() {
           />
         )}
 
+        {/* PAGE 8: PATIENT SIGN IN (SEPARATE PAGE, NO ADMIN ACCESS SHOWN) */}
+        {currentPage === 'login' && (
+          <AuthPage
+            initialMode="signin"
+            onLoginSuccess={handleLoginSuccess}
+            onNavigate={handleNavigate}
+            returnPage="store"
+          />
+        )}
+
+        {/* PAGE 9: PATIENT SIGN UP (SEPARATE PAGE, NO ADMIN ACCESS SHOWN) */}
+        {currentPage === 'signup' && (
+          <AuthPage
+            initialMode="signup"
+            onLoginSuccess={handleLoginSuccess}
+            onNavigate={handleNavigate}
+            returnPage="store"
+          />
+        )}
+
+        {/* PAGE 10: DEDICATED STAFF & ADMIN PORTAL */}
         {currentPage === 'admin' && (
           <AdminPortalPage
             currentUser={currentUser}
+            onLoginSuccess={handleLoginSuccess}
             onLogout={handleLogout}
             onNavigate={handleNavigate}
-            onOpenAuthModal={() => setAuthModalOpen(true)}
             customMedicines={customMedicines}
             onAddMedicine={handleAddMedicine}
             onDeleteMedicine={handleDeleteMedicine}
@@ -396,7 +425,7 @@ export default function App() {
         cartCount={cartCount}
       />
 
-      {/* Shopping Cart & UPI Payment Gateway Drawer */}
+      {/* Shopping Cart & UPI Payment Gateway Drawer (Secured with Login) */}
       <MedicineCartDrawer
         isOpen={cartDrawerOpen}
         onClose={() => setCartDrawerOpen(false)}
@@ -405,6 +434,8 @@ export default function App() {
         onRemoveItem={handleRemoveFromCart}
         onClearCart={handleClearCart}
         onOrderSuccess={handleOrderSuccess}
+        currentUser={currentUser}
+        onNavigate={handleNavigate}
       />
 
       {/* Realtime Logistics Tracker Modal */}
@@ -440,13 +471,6 @@ export default function App() {
         onClose={() => setServiceDetailModalOpen(false)}
         service={selectedService}
         onBookService={handleOpenBooking}
-      />
-
-      {/* Patient & Admin Authentication Modal */}
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        onLoginSuccess={handleLoginSuccess}
       />
 
     </div>

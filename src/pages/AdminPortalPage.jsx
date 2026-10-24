@@ -6,7 +6,7 @@ export default function AdminPortalPage({
   currentUser,
   onLogout,
   onNavigate,
-  onOpenAuthModal,
+  onLoginSuccess,
   customMedicines,
   onAddMedicine,
   onDeleteMedicine,
@@ -14,6 +14,43 @@ export default function AdminPortalPage({
 }) {
   // If not logged in as admin, show clean lock / authorization screen
   const isAdmin = currentUser && currentUser.role === 'admin';
+
+  // Admin login states
+  const [adminUsername, setAdminUsername] = useState('admin');
+  const [adminPassword, setAdminPassword] = useState('drjerri@2026');
+  const [adminAuthError, setAdminAuthError] = useState('');
+
+  const handleAdminAuthSubmit = (e) => {
+    e.preventDefault();
+    setAdminAuthError('');
+    if (adminUsername.trim().toLowerCase() === 'admin' && adminPassword.trim() === 'drjerri@2026') {
+      const adminObj = {
+        name: 'Dr. Jerri Admin Desk',
+        username: 'admin',
+        role: 'admin',
+        phone: '9533551700'
+      };
+      localStorage.setItem('drjerri_auth', JSON.stringify(adminObj));
+      if (onLoginSuccess) {
+        onLoginSuccess(adminObj);
+      }
+    } else {
+      setAdminAuthError('Invalid credentials. Use username: admin and password: drjerri@2026');
+    }
+  };
+
+  const handleQuickAdminDemo = () => {
+    const adminObj = {
+      name: 'Dr. Jerri Admin Desk',
+      username: 'admin',
+      role: 'admin',
+      phone: '9533551700'
+    };
+    localStorage.setItem('drjerri_auth', JSON.stringify(adminObj));
+    if (onLoginSuccess) {
+      onLoginSuccess(adminObj);
+    }
+  };
 
   // Active Admin Tabs: 'dashboard' | 'medicines' | 'payments' | 'logistics' | 'users'
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -254,9 +291,9 @@ export default function AdminPortalPage({
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-purple-200 shadow-xl text-center space-y-5">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-purple-200 shadow-xl text-center space-y-4">
           <div className="w-16 h-16 rounded-3xl bg-royal text-white flex items-center justify-center text-2xl mx-auto shadow-md">
-            <i className="fa-solid fa-lock"></i>
+            <i className="fa-solid fa-shield-halved"></i>
           </div>
           <div>
             <span className="text-xs font-bold text-royal bg-purple-100 px-3 py-1 rounded-full uppercase tracking-wider">
@@ -266,33 +303,64 @@ export default function AdminPortalPage({
               Dr. Jerri Admin Portal
             </h2>
             <p className="text-xs text-slate-600 mt-1">
-              Authorized access to manage medicine inventory, verify online payments, assign delivery riders, and view registered patients.
+              Internal clinic management: stock inventory, verify payments, assign riders, and view patient database.
             </p>
           </div>
 
-          <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200 text-left text-xs space-y-1.5">
-            <span className="font-bold text-royal-dark block">Demo Login Credentials:</span>
-            <div className="flex justify-between font-mono text-slate-700">
-              <span>Username:</span>
-              <strong className="text-royal">admin</strong>
+          {adminAuthError && (
+            <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-bold">
+              {adminAuthError}
             </div>
-            <div className="flex justify-between font-mono text-slate-700">
-              <span>Password:</span>
-              <strong className="text-royal">drjerri@2026</strong>
-            </div>
-          </div>
+          )}
 
-          <div className="space-y-2 pt-2">
+          <form onSubmit={handleAdminAuthSubmit} className="space-y-3 text-xs text-left">
+            <div>
+              <label className="block font-bold text-slate-700 mb-1">Admin Username</label>
+              <input
+                type="text"
+                required
+                value={adminUsername}
+                onChange={(e) => setAdminUsername(e.target.value)}
+                placeholder="admin"
+                className="w-full px-3 py-2 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-royal bg-purple-50/30 text-xs font-mono font-bold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-slate-700 mb-1">Admin Password</label>
+              <input
+                type="password"
+                required
+                value={adminPassword}
+                onChange={(e) => setAdminPassword(e.target.value)}
+                placeholder="drjerri@2026"
+                className="w-full px-3 py-2 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-royal bg-purple-50/30 text-xs font-mono font-bold"
+              />
+            </div>
+
             <button
-              onClick={onOpenAuthModal}
-              className="w-full bg-royal hover:bg-royal-dark text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2"
+              type="submit"
+              className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2 mt-2"
             >
-              <i className="fa-solid fa-key"></i>
+              <i className="fa-solid fa-lock text-xs"></i>
               <span>Sign In as Admin</span>
             </button>
+          </form>
+
+          <div className="pt-2 border-t border-purple-100 space-y-2">
             <button
+              type="button"
+              onClick={handleQuickAdminDemo}
+              className="w-full bg-purple-100 hover:bg-purple-200 active:scale-95 text-purple-900 font-bold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5"
+            >
+              <i className="fa-solid fa-bolt text-royal"></i>
+              <span>⚡ 1-Click Instant Staff Access</span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => onNavigate('home')}
-              className="w-full text-slate-500 hover:text-royal font-bold py-2 text-xs transition"
+              className="text-slate-400 hover:text-royal font-bold text-xs block mx-auto pt-1"
             >
               ← Return to Clinic Home
             </button>

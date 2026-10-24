@@ -9,7 +9,9 @@ export default function MedicineCartDrawer({
   onUpdateQty,
   onRemoveItem,
   onClearCart,
-  onOrderSuccess
+  onOrderSuccess,
+  currentUser,
+  onNavigate
 }) {
   if (!isOpen) return null;
 
@@ -18,15 +20,27 @@ export default function MedicineCartDrawer({
 
   // Customer Delivery Info
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    address: '',
+    name: currentUser?.name || '',
+    phone: currentUser?.phone || '',
+    address: currentUser?.area ? `${currentUser.area}` : '',
     landmark: '',
-    area: 'ECIL South Kamala Nagar',
+    area: currentUser?.area || 'ECIL South Kamala Nagar',
     deliveryMode: 'express', // express | standard | pickup
     prescriptionFile: null,
     prescriptionNote: 'Doctor Consultation @ Dr. Jerri'
   });
+
+  // Sync user profile when currentUser changes
+  useEffect(() => {
+    if (currentUser) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || currentUser.name || '',
+        phone: prev.phone || currentUser.phone || '',
+        area: prev.area || currentUser.area || 'ECIL South Kamala Nagar'
+      }));
+    }
+  }, [currentUser]);
 
   // Payment Options
   const [paymentMethod, setPaymentMethod] = useState('upi'); // upi | cod | clinic
@@ -312,13 +326,26 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => setStep('checkout')}
-                    className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
-                  >
-                    <span>Proceed to Delivery & Payment</span>
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </button>
+                  {currentUser ? (
+                    <button
+                      onClick={() => setStep('checkout')}
+                      className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
+                    >
+                      <span>Proceed to Delivery & Payment</span>
+                      <i className="fa-solid fa-arrow-right"></i>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        onClose();
+                        if (onNavigate) onNavigate('login');
+                      }}
+                      className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
+                    >
+                      <i className="fa-regular fa-user"></i>
+                      <span>Sign In to Checkout (Required)</span>
+                    </button>
+                  )}
                 </div>
               </>
             )}

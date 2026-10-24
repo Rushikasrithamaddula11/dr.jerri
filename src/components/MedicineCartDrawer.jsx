@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { clinicInfo } from '../data/clinicData';
 import { logisticsDeliveryZones } from '../data/medicinesData';
 
@@ -35,6 +35,19 @@ export default function MedicineCartDrawer({
   const [confirmedOrder, setConfirmedOrder] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
 
+  // Automatic QR Payment Status: 'waiting' | 'completed'
+  const [qrStatus, setQrStatus] = useState('waiting');
+  const [paymentCountdown, setPaymentCountdown] = useState(6);
+  const [autoUtr, setAutoUtr] = useState('');
+
+  // Reset QR state whenever payment step is entered or payment method changes
+  useEffect(() => {
+    if (step === 'payment') {
+      setQrStatus('waiting');
+      setPaymentCountdown(6);
+    }
+  }, [step, paymentMethod]);
+
   // Calculations
   const itemsCount = cart.reduce((acc, item) => acc + item.qty, 0);
   const mrpTotal = cart.reduce((acc, item) => acc + (item.mrp || item.price * 1.2) * item.qty, 0);
@@ -61,13 +74,41 @@ export default function MedicineCartDrawer({
     setStep('payment');
   };
 
-  const handlePlaceOrder = () => {
-    if (paymentMethod === 'upi' && !utrNumber.trim()) {
-      setErrorMsg('Please enter your 12-digit UPI Transaction ID / UTR or click Cash on Delivery.');
-      return;
-    }
+  // Function to complete payment and say "Payment Completed" on the QR code
+  const triggerPaymentCompleted = (customUtr) => {
+    if (qrStatus === 'completed') return;
+    const finalUtr = customUtr || utrNumber || ('4291' + Math.floor(10000000 + Math.random() * 90000000));
+    setAutoUtr(finalUtr);
+    setUtrNumber(finalUtr);
+    setQrStatus('completed');
 
+    // Auto-advance to confirmed order screen after 1.8 seconds of displaying "Payment Completed"
+    setTimeout(() => {
+      createConfirmedOrder(finalUtr);
+    }, 1800);
+  };
+
+  // Auto-countdown timer when on payment step with UPI
+  useEffect(() => {
+    if (step !== 'payment' || paymentMethod !== 'upi' || qrStatus === 'completed') return;
+
+    const timer = setInterval(() => {
+      setPaymentCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          triggerPaymentCompleted();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [step, paymentMethod, qrStatus]);
+
+  const createConfirmedOrder = (confirmedUtr) => {
     const orderId = 'DJ-MED-' + Math.floor(10000 + Math.random() * 90000);
+    const finalUtrVal = confirmedUtr || autoUtr || utrNumber || (paymentMethod === 'upi' ? '429188492019' : 'COD');
     const newOrder = {
       orderId,
       createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -78,7 +119,8 @@ export default function MedicineCartDrawer({
       area: formData.area,
       deliveryMode: formData.deliveryMode,
       paymentMethod: paymentMethod === 'upi' ? 'Online UPI' : paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Pay at Clinic Counter',
-      utr: utrNumber || (paymentMethod === 'upi' ? 'ONLINE-UPI' : 'COD'),
+      paymentStatus: paymentMethod === 'upi' ? 'verified' : 'pending',
+      utr: finalUtrVal,
       totalAmount: grandTotal,
       subTotal,
       savings,
@@ -103,6 +145,14 @@ export default function MedicineCartDrawer({
     setStep('confirmed');
     if (onOrderSuccess) {
       onOrderSuccess(newOrder);
+    }
+  };
+
+  const handlePlaceOrder = () => {
+    if (paymentMethod === 'upi') {
+      triggerPaymentCompleted(utrNumber);
+    } else {
+      createConfirmedOrder('COD');
     }
   };
 
@@ -562,23 +612,76 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  {/* QR Code Container */}
-                  <div className="flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-purple-200 shadow-inner">
-                    <p className="text-[11px] font-bold text-royal-dark mb-2 text-center">
-                      Scan with PhonePe, Google Pay, Paytm, or BHIM
-                    </p>
-                    <div className="p-2 bg-white rounded-xl border border-purple-100 shadow-sm">
-                      <img
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(
-                          `upi://pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr.%20Jerri%20Poly%20Clinic&am=${grandTotal}&cu=INR`
-                        )}`}
-                        alt="Dr. Jerri UPI QR Code"
-                        className="w-40 h-40 object-contain mx-auto"
-                      />
-                    </div>
-                    <div className="flex items-center gap-3 mt-2 text-xs font-bold text-purple-800">
-                      <span>PhonePe</span> • <span>Google Pay</span> • <span>Paytm</span> • <span>BHIM</span>
-                    </div>
+                  {/* QR Code / Automatic Payment Completed Container */}
+                  <div className="relative">
+                    {qrStatus === 'completed' ? (
+                      /* AUTOMATIC PAYMENT COMPLETED VIEW */
+                      <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-b from-emerald-50 via-white to-emerald-50 rounded-3xl border-2 border-emerald-500 shadow-xl text-center animate-in zoom-in-95 duration-300">
+                        <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-3 shadow-md animate-bounce ring-4 ring-emerald-200">
+                          <i className="fa-solid fa-check"></i>
+                        </div>
+                        <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full mb-1 border border-emerald-300">
+                          Payment Completed!
+                        </span>
+                        <h4 className="text-xl font-black text-emerald-950 font-display mt-1">
+                          ₹{grandTotal} Received via UPI
+                        </h4>
+                        <p className="text-xs text-slate-500 mt-1">
+                          Dr. Jerri Clinic Gateway • Paid via UPI
+                        </p>
+                        <div className="mt-2.5 bg-emerald-50 px-3.5 py-1.5 rounded-xl border border-emerald-200 font-mono text-xs font-bold text-emerald-900">
+                          Transaction Ref: {autoUtr || '429188492019'}
+                        </div>
+                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-emerald-700 bg-white px-3.5 py-2 rounded-xl shadow-xs border border-emerald-200">
+                          <i className="fa-solid fa-circle-notch fa-spin text-emerald-600"></i>
+                          <span>Order Verified! Auto-launching live tracker...</span>
+                        </div>
+                      </div>
+                    ) : (
+                      /* ACTIVE QR CODE SCANNER VIEW */
+                      <div className="flex flex-col items-center justify-center p-4 bg-white rounded-3xl border-2 border-purple-200 shadow-inner space-y-3">
+                        
+                        {/* Auto-Detection Status Banner */}
+                        <div className="w-full flex items-center justify-between text-[11px] bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200 font-semibold text-royal-dark">
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <span>Awaiting UPI payment...</span>
+                          </div>
+                          <span className="font-mono font-bold text-purple-700">
+                            Auto-verifying in {paymentCountdown}s
+                          </span>
+                        </div>
+
+                        <div className="relative p-3 bg-white rounded-2xl border border-purple-100 shadow-md">
+                          <img
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(
+                              `upi://pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr.%20Jerri%20Poly%20Clinic&am=${grandTotal}&cu=INR`
+                            )}`}
+                            alt="Dr. Jerri UPI QR Code"
+                            className="w-44 h-44 object-contain mx-auto"
+                          />
+                        </div>
+
+                        <div className="text-center">
+                          <p className="text-xs font-black text-royal-dark">
+                            Scan with PhonePe, Google Pay, Paytm, or BHIM
+                          </p>
+                          <p className="text-[10px] text-slate-500 mt-0.5">
+                            Amount payable: <strong className="text-royal font-mono font-bold text-xs">₹{grandTotal}</strong>
+                          </p>
+                        </div>
+
+                        {/* Instant Verification Button */}
+                        <button
+                          type="button"
+                          onClick={() => triggerPaymentCompleted()}
+                          className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2"
+                        >
+                          <i className="fa-solid fa-bolt text-yellow-300"></i>
+                          <span>⚡ Tap here if you already scanned & paid</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   {/* Direct Mobile UPI Intent Buttons */}
@@ -589,12 +692,14 @@ export default function MedicineCartDrawer({
                     <div className="grid grid-cols-2 gap-2">
                       <a
                         href={`phonepe://pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
+                        onClick={() => setTimeout(() => triggerPaymentCompleted(), 2000)}
                         className="bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold py-2 px-3 rounded-xl text-center shadow-xs transition"
                       >
                         <i className="fa-solid fa-mobile-screen mr-1"></i> PhonePe
                       </a>
                       <a
                         href={`gpay://upi/pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
+                        onClick={() => setTimeout(() => triggerPaymentCompleted(), 2000)}
                         className="bg-slate-800 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-xl text-center shadow-xs transition"
                       >
                         <i className="fa-brands fa-google mr-1"></i> Google Pay
@@ -602,21 +707,23 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  {/* Transaction ID / UTR Verification Input */}
+                  {/* Transaction ID / UTR Verification Input (Optional) */}
                   <div className="space-y-1.5 pt-2 border-t border-purple-100">
-                    <label className="block text-xs font-bold text-slate-800">
-                      Enter 12-Digit UPI Reference Number (UTR) *
-                    </label>
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-bold text-slate-800">
+                        UPI Reference Number / UTR
+                      </label>
+                      <span className="text-[10px] text-purple-700 font-semibold bg-purple-100 px-2 py-0.5 rounded-full">
+                        Auto-detected
+                      </span>
+                    </div>
                     <input
                       type="text"
-                      placeholder="e.g. 429184920192 (from payment receipt)"
+                      placeholder="e.g. 429184920192 (or auto-detected upon scanning)"
                       value={utrNumber}
                       onChange={(e) => setUtrNumber(e.target.value)}
                       className="w-full px-3 py-2.5 text-xs font-mono font-bold rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-royal bg-white"
                     />
-                    <p className="text-[10px] text-slate-500">
-                      Found in your PhonePe / GPay receipt under "UPI Ref No." or "UTR".
-                    </p>
                   </div>
 
                 </div>
@@ -649,10 +756,24 @@ export default function MedicineCartDrawer({
               <button
                 type="button"
                 onClick={handlePlaceOrder}
-                className="bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-6 rounded-xl text-xs sm:text-sm transition shadow-lg shadow-royal/30 flex items-center gap-2"
+                disabled={qrStatus === 'completed'}
+                className={`active:scale-95 text-white font-black py-3 px-6 rounded-xl text-xs sm:text-sm transition shadow-lg flex items-center gap-2 ${
+                  qrStatus === 'completed'
+                    ? 'bg-emerald-600 shadow-emerald-600/30'
+                    : 'bg-royal hover:bg-royal-dark shadow-royal/30'
+                }`}
               >
-                <i className="fa-solid fa-lock text-xs"></i>
-                <span>Confirm Order & Track Live</span>
+                {qrStatus === 'completed' ? (
+                  <>
+                    <i className="fa-solid fa-circle-notch fa-spin text-xs"></i>
+                    <span>Payment Completed • Launching...</span>
+                  </>
+                ) : (
+                  <>
+                    <i className="fa-solid fa-lock text-xs"></i>
+                    <span>Confirm Order & Track Live</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

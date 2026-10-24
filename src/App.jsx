@@ -8,6 +8,7 @@ import BookingModal from './components/BookingModal';
 import PharmacyOrderModal from './components/PharmacyOrderModal';
 import FlyerModal from './components/FlyerModal';
 import ServiceDetailModal from './components/ServiceDetailModal';
+import AuthModal from './components/AuthModal';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -17,11 +18,13 @@ import DoctorsPage from './pages/DoctorsPage';
 import DiagnosticsPage from './pages/DiagnosticsPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
+import AdminPortalPage from './pages/AdminPortalPage';
 
 import { doctors, clinicalServices } from './data/clinicData';
+import { medicinesList } from './data/medicinesData';
 
 export default function App() {
-  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact'
+  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact' | 'admin'
   const getPageFromHash = () => {
     const hash = window.location.hash.replace('#/', '').replace('#', '').trim().toLowerCase();
     if (['store', 'pharmacy'].includes(hash)) return 'store';
@@ -30,6 +33,7 @@ export default function App() {
     if (['diagnostics', 'scans'].includes(hash)) return 'diagnostics';
     if (['services', 'procedures'].includes(hash)) return 'services';
     if (['contact', 'location'].includes(hash)) return 'contact';
+    if (['admin', 'dashboard', 'portal'].includes(hash)) return 'admin';
     return 'home';
   };
 
@@ -49,6 +53,85 @@ export default function App() {
     window.location.hash = page === 'home' ? '' : `#/${page}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Authentication State
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('drjerri_auth');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+    if (user.role === 'admin') {
+      handleNavigate('admin');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('drjerri_auth');
+    setCurrentUser(null);
+    if (currentPage === 'admin') {
+      handleNavigate('home');
+    }
+  };
+
+  // Custom Medicines State (added via Admin Portal)
+  const [customMedicines, setCustomMedicines] = useState(() => {
+    try {
+      const saved = localStorage.getItem('drjerri_custom_medicines');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const handleAddMedicine = (newMed) => {
+    setCustomMedicines((prev) => {
+      const updated = [newMed, ...prev];
+      try {
+        localStorage.setItem('drjerri_custom_medicines', JSON.stringify(updated));
+      } catch {
+        // Ignore
+      }
+      return updated;
+    });
+  };
+
+  const handleDeleteMedicine = (medId) => {
+    setCustomMedicines((prev) => {
+      const updated = prev.filter((m) => m.id !== medId);
+      try {
+        localStorage.setItem('drjerri_custom_medicines', JSON.stringify(updated));
+      } catch {
+        // Ignore
+      }
+      return updated;
+    });
+  };
+
+  const handleToggleMedicineStock = (medId) => {
+    setCustomMedicines((prev) => {
+      const updated = prev.map((m) =>
+        m.id === medId ? { ...m, inStock: m.inStock === false ? true : false } : m
+      );
+      try {
+        localStorage.setItem('drjerri_custom_medicines', JSON.stringify(updated));
+      } catch {
+        // Ignore
+      }
+      return updated;
+    });
+  };
+
+  const allMedicines = useMemo(() => {
+    return [...customMedicines, ...medicinesList];
+  }, [customMedicines]);
 
   // Modals state
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -211,6 +294,9 @@ export default function App() {
         onBookClick={handleOpenBooking}
         cartCount={cartCount}
         onOpenCart={() => setCartDrawerOpen(true)}
+        currentUser={currentUser}
+        onOpenAuthModal={() => setAuthModalOpen(true)}
+        onLogout={handleLogout}
       />
 
       {/* Dynamic Page Views */}
@@ -234,6 +320,7 @@ export default function App() {
 
         {currentPage === 'store' && (
           <PharmacyStorePage
+            medicines={allMedicines}
             cart={cart}
             onAddToCart={handleAddToCart}
             onUpdateQty={handleUpdateQty}
@@ -276,6 +363,19 @@ export default function App() {
           <ContactPage
             onBookClick={handleOpenBooking}
             onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentPage === 'admin' && (
+          <AdminPortalPage
+            currentUser={currentUser}
+            onLogout={handleLogout}
+            onNavigate={handleNavigate}
+            onOpenAuthModal={() => setAuthModalOpen(true)}
+            customMedicines={customMedicines}
+            onAddMedicine={handleAddMedicine}
+            onDeleteMedicine={handleDeleteMedicine}
+            onToggleMedicineStock={handleToggleMedicineStock}
           />
         )}
       </main>
@@ -340,6 +440,13 @@ export default function App() {
         onClose={() => setServiceDetailModalOpen(false)}
         service={selectedService}
         onBookService={handleOpenBooking}
+      />
+
+      {/* Patient & Admin Authentication Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
       />
 
     </div>

@@ -95,6 +95,14 @@ export default function Footer({
                   <i className="fa-solid fa-location-dot text-purple-400"></i> Contact & Location
                 </button>
               </li>
+              <li>
+                <button
+                  onClick={() => handleNav('admin')}
+                  className="hover:text-white transition flex items-center gap-1.5 text-purple-300 font-bold"
+                >
+                  <i className="fa-solid fa-shield-halved text-purple-400"></i> Staff & Admin Portal
+                </button>
+              </li>
             </ul>
           </div>
 

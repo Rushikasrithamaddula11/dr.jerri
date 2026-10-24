@@ -3,6 +3,7 @@ import { clinicInfo } from '../data/clinicData';
 import { medicineCategories, medicinesList } from '../data/medicinesData';
 
 export default function PharmacyStorePage({
+  medicines = medicinesList,
   cart,
   onAddToCart,
   onUpdateQty,
@@ -19,7 +20,8 @@ export default function PharmacyStorePage({
   };
 
   const filteredMedicines = useMemo(() => {
-    return medicinesList.filter((med) => {
+    const source = medicines && medicines.length > 0 ? medicines : medicinesList;
+    return source.filter((med) => {
       const matchesCat = selectedCategory === 'all' || med.category === selectedCategory;
       if (!matchesCat) return false;
       if (!searchQuery.trim()) return true;
@@ -30,7 +32,7 @@ export default function PharmacyStorePage({
         med.manufacturer.toLowerCase().includes(q)
       );
     });
-  }, [selectedCategory, searchQuery]);
+  }, [medicines, selectedCategory, searchQuery]);
 
   const totalCartCount = cart.reduce((acc, i) => acc + i.qty, 0);
   const totalCartAmount = cart.reduce((acc, i) => acc + i.price * i.qty, 0);

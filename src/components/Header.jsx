@@ -6,7 +6,10 @@ export default function Header({
   onNavigate,
   onBookClick,
   cartCount = 0,
-  onOpenCart
+  onOpenCart,
+  currentUser,
+  onOpenAuthModal,
+  onLogout
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -18,6 +21,7 @@ export default function Header({
     { id: 'diagnostics', label: 'Lab Tests' },
     { id: 'services', label: 'Services' },
     { id: 'contact', label: 'Contact' },
+    { id: 'admin', label: 'Admin Portal', icon: 'fa-solid fa-shield-halved' }
   ];
 
   const handleNavClick = (pageId) => {
@@ -82,22 +86,54 @@ export default function Header({
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-2 rounded-xl transition ${
+                className={`px-3 py-2 rounded-xl transition flex items-center gap-1.5 ${
                   isActive
                     ? 'bg-royal text-white shadow-xs'
+                    : item.id === 'admin'
+                    ? 'text-purple-700 bg-purple-50 hover:bg-purple-100 font-extrabold'
                     : item.highlight
                     ? 'text-royal font-extrabold hover:bg-purple-50'
                     : 'text-slate-600 hover:text-royal hover:bg-purple-50/50'
                 }`}
               >
-                {item.label}
+                {item.icon && <i className={`${item.icon} text-[10px]`}></i>}
+                <span>{item.label}</span>
               </button>
             );
           })}
         </nav>
 
-        {/* Actions */}
+        {/* Actions Desktop */}
         <div className="hidden lg:flex items-center gap-2 shrink-0">
+          
+          {/* User Auth Info / Login Button */}
+          {currentUser ? (
+            <div className="flex items-center gap-1.5 bg-purple-50 border border-purple-200 px-2.5 py-1.5 rounded-xl text-xs">
+              <div className="w-6 h-6 rounded-full bg-royal text-white flex items-center justify-center text-[10px] font-bold">
+                {currentUser.name ? currentUser.name.charAt(0) : 'U'}
+              </div>
+              <span className="font-bold text-royal-dark truncate max-w-[90px]">
+                {currentUser.name.split(' ')[0]}
+              </span>
+              <button
+                onClick={onLogout}
+                className="text-slate-400 hover:text-rose-600 transition ml-1 p-0.5"
+                title="Sign Out"
+              >
+                <i className="fa-solid fa-arrow-right-from-bracket text-[11px]"></i>
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={onOpenAuthModal}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-royal-dark hover:bg-purple-50 text-xs font-bold border border-purple-200 transition"
+            >
+              <i className="fa-regular fa-user text-royal"></i>
+              <span>Sign In</span>
+            </button>
+          )}
+
+          {/* Basket */}
           <button
             onClick={onOpenCart}
             className="relative flex items-center gap-1.5 px-3 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-royal-dark text-xs font-bold border border-purple-200 transition"
@@ -111,6 +147,7 @@ export default function Header({
             )}
           </button>
 
+          {/* Book Token */}
           <button
             onClick={() => onBookClick('General Consultation')}
             className="bg-royal hover:bg-royal-dark active:scale-95 text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow-sm transition"
@@ -121,6 +158,17 @@ export default function Header({
 
         {/* Mobile Icons */}
         <div className="flex items-center gap-2 lg:hidden">
+          {/* Quick User / Auth Icon on Mobile */}
+          <button
+            onClick={currentUser ? () => handleNavClick('admin') : onOpenAuthModal}
+            className="w-8 h-8 rounded-xl bg-purple-50 text-royal flex items-center justify-center text-xs border border-purple-200"
+            aria-label="Account"
+            title={currentUser ? currentUser.name : 'Sign In'}
+          >
+            <i className={`fa-solid ${currentUser?.role === 'admin' ? 'fa-shield-halved' : 'fa-user'}`}></i>
+          </button>
+
+          {/* Cart Icon on Mobile */}
           <button
             onClick={onOpenCart}
             className="relative w-8 h-8 rounded-xl bg-purple-50 text-royal-dark flex items-center justify-center text-xs border border-purple-200"
@@ -134,13 +182,7 @@ export default function Header({
             )}
           </button>
 
-          <button
-            onClick={() => onBookClick('General Consultation')}
-            className="bg-royal text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-xs"
-          >
-            Book
-          </button>
-
+          {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-xs"
@@ -154,20 +196,56 @@ export default function Header({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-purple-100 px-4 py-3 space-y-1 text-sm font-semibold shadow-lg">
+        <div className="lg:hidden bg-white border-b border-purple-100 px-4 py-3 space-y-1 text-sm font-semibold shadow-lg animate-in slide-in-from-top-2">
+          
+          {/* User Status Bar in Mobile Menu */}
+          <div className="pb-2 mb-2 border-b border-purple-100 flex items-center justify-between">
+            {currentUser ? (
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-royal text-white flex items-center justify-center font-bold text-xs">
+                    {currentUser.name.charAt(0)}
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-slate-800 block leading-tight">{currentUser.name}</span>
+                    <span className="text-[10px] text-purple-700 uppercase font-black">{currentUser.role || 'Patient'}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={onLogout}
+                  className="text-xs text-rose-600 font-bold bg-rose-50 px-2.5 py-1 rounded-lg"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenAuthModal(); }}
+                className="w-full bg-purple-50 text-royal font-bold py-2 rounded-xl border border-purple-200 text-xs flex items-center justify-center gap-1.5"
+              >
+                <i className="fa-regular fa-user"></i>
+                <span>Sign In / Create Account</span>
+              </button>
+            )}
+          </div>
+
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => handleNavClick(item.id)}
-              className={`w-full text-left py-2 px-3 rounded-xl transition ${
+              className={`w-full text-left py-2 px-3 rounded-xl transition flex items-center justify-between ${
                 activePage === item.id
                   ? 'bg-royal text-white font-bold'
+                  : item.id === 'admin'
+                  ? 'text-purple-800 bg-purple-50 font-bold'
                   : 'text-slate-700 hover:bg-purple-50'
               }`}
             >
-              {item.label}
+              <span>{item.label}</span>
+              {item.id === 'admin' && <span className="text-[10px] bg-purple-200 text-purple-900 px-2 py-0.5 rounded-full uppercase">Staff</span>}
             </button>
           ))}
+
           <div className="pt-2 flex gap-2">
             <a
               href={`tel:${clinicInfo.phone}`}

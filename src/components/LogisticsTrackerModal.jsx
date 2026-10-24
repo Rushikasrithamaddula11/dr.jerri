@@ -14,7 +14,7 @@ export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, on
       phone: '9949339391',
       address: 'Plot 42, South Kamala Nagar, ECIL, Hyderabad',
       area: 'ECIL South Kamala Nagar',
-      paymentMethod: 'UPI (9949339391-3@ybl)',
+      paymentMethod: 'Online UPI',
       utr: '9949339391-TXN',
       totalAmount: 505,
       items: [
@@ -55,7 +55,7 @@ export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, on
   const steps = [
     {
       title: 'Order Confirmed & Paid',
-      desc: `Verified payment via UPI: ${clinicInfo.upiId}`,
+      desc: 'Verified online payment',
       time: '10 mins ago',
       icon: 'fa-solid fa-receipt'
     },
@@ -290,7 +290,7 @@ export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, on
                 </span>
               </div>
               <span className="text-[11px] text-slate-300 font-mono">
-                Payment: <strong className="text-emerald-400 font-bold">Verified UPI ({clinicInfo.upiId})</strong>
+                Payment: <strong className="text-emerald-400 font-bold">Online Payment (Verified)</strong>
               </span>
             </div>
           </div>
@@ -375,7 +375,7 @@ export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, on
 
             <div className="mt-3 pt-2 border-t border-purple-200/60 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-600">
               <span>Delivery Address: <strong className="text-slate-800">{order.address}</strong></span>
-              <span>Payment: <strong className="text-royal font-mono">{order.paymentMethod || 'UPI: 9949339391-3@ybl'}</strong></span>
+              <span>Payment: <strong className="text-royal">{order.paymentMethod || 'Online Payment (Verified)'}</strong></span>
             </div>
           </div>
 

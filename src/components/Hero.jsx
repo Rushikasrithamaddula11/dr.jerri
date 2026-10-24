@@ -51,7 +51,7 @@ export default function Hero({ onBookClick, onNavigate, onSearch, searchQuery })
             </div>
             <div>
               <h4 className="font-black text-xs sm:text-sm text-royal-dark">Buy Medicines</h4>
-              <p className="text-[10px] text-slate-500">UPI Pay ({clinicInfo.upiId})</p>
+              <p className="text-[10px] text-slate-500">Instant Online Pay</p>
             </div>
           </button>
 

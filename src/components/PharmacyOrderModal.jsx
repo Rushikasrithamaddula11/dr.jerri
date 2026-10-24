@@ -103,7 +103,7 @@ export default function PharmacyOrderModal({ isOpen, onClose }) {
 
           <div className="bg-purple-50 rounded-2xl p-3 border border-purple-200 flex items-center gap-2.5 text-xs text-purple-950">
             <i className="fa-solid fa-camera text-royal text-sm shrink-0"></i>
-            <span>On WhatsApp, you can attach your prescription photo. Instant UPI Payment accepted on <strong>{clinicInfo.upiId}</strong>!</span>
+            <span>On WhatsApp, you can attach your prescription photo. Instant UPI & Cash payment accepted!</span>
           </div>
 
           <div className="pt-2 flex gap-3">

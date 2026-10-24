@@ -43,7 +43,7 @@ export default function HomePage({
                 Online Medicine Store
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                Genuine medicines & maternity supplies with instant UPI via {clinicInfo.upiId}.
+                Genuine medicines & maternity supplies delivered to your doorstep in 30-45 mins.
               </p>
             </div>
 

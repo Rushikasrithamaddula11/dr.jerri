@@ -49,7 +49,7 @@ export default function PharmacyStorePage({
               Online Medicine Store
             </h1>
             <p className="text-xs sm:text-sm text-purple-100 mt-1 max-w-lg">
-              Genuine medicines, maternity care, and emergency saline with instant UPI payment via <strong>{clinicInfo.upiId}</strong>.
+              Genuine medicines, maternity care, and emergency saline with fast doorstep delivery across ECIL.
             </p>
           </div>
 
@@ -222,7 +222,7 @@ export default function PharmacyStorePage({
         <div className="fixed bottom-16 lg:bottom-5 left-4 right-4 z-40 max-w-sm mx-auto bg-royal text-white p-3 rounded-2xl shadow-xl flex items-center justify-between gap-3">
           <div>
             <span className="text-xs font-bold">{totalCartCount} items • ₹{totalCartAmount}</span>
-            <p className="text-[9px] text-purple-200">Instant UPI: {clinicInfo.upiId}</p>
+            <p className="text-[9px] text-purple-200">Express 30-45m Delivery</p>
           </div>
           <button
             onClick={onOpenCart}

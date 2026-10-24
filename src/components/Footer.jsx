@@ -38,7 +38,7 @@ export default function Footer({
                 Healthy You Always
               </span>
               <span className="text-[11px] text-purple-300">
-                Official UPI Gateway: <strong className="text-white font-mono">{clinicInfo.upiId}</strong>
+                Secure Instant Payments: <strong className="text-white">PhonePe • GPay • Paytm • UPI</strong>
               </span>
             </div>
           </div>

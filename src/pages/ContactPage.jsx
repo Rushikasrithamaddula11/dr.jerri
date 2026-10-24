@@ -58,13 +58,13 @@ export default function ContactPage({ onBookClick, onNavigate }) {
 
           <div className="bg-white rounded-3xl p-6 border border-purple-200 shadow-md">
             <div className="w-12 h-12 rounded-2xl bg-purple-100 text-royal flex items-center justify-center text-xl mb-4">
-              <i className="fa-solid fa-qrcode"></i>
+              <i className="fa-solid fa-credit-card"></i>
             </div>
-            <h4 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-1">Official UPI Gateway</h4>
-            <span className="text-lg font-black text-royal font-mono block">
-              {clinicInfo.upiId}
+            <h4 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-1">Payment Modes</h4>
+            <span className="text-lg font-black text-royal font-display block">
+              Instant UPI & Cash
             </span>
-            <p className="text-xs text-slate-500 mt-1">Google Pay, PhonePe, Paytm, BHIM</p>
+            <p className="text-xs text-slate-500 mt-1">Scan & Pay via PhonePe, GPay, Paytm or Cash</p>
           </div>
 
         </div>

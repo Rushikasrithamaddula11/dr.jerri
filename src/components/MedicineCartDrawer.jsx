@@ -31,7 +31,6 @@ export default function MedicineCartDrawer({
   // Payment Options
   const [paymentMethod, setPaymentMethod] = useState('upi'); // upi | cod | clinic
   const [utrNumber, setUtrNumber] = useState('');
-  const [copiedUpi, setCopiedUpi] = useState(false);
   const [verifiedPayment, setVerifiedPayment] = useState(false);
   const [confirmedOrder, setConfirmedOrder] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
@@ -47,12 +46,6 @@ export default function MedicineCartDrawer({
   const grandTotal = Math.round(subTotal + deliveryFee);
 
   const hasRxItems = cart.some((i) => i.rxRequired);
-
-  const handleCopyUpi = () => {
-    navigator.clipboard.writeText(clinicInfo.upiId || '9949339391-3@ybl');
-    setCopiedUpi(true);
-    setTimeout(() => setCopiedUpi(false), 2500);
-  };
 
   const handleProceedToPayment = (e) => {
     e.preventDefault();
@@ -84,7 +77,7 @@ export default function MedicineCartDrawer({
       address: formData.deliveryMode === 'pickup' ? 'Self Pickup @ Dr. Jerri Clinic Counter' : `${formData.address}, ${formData.landmark ? formData.landmark + ', ' : ''}${formData.area}`,
       area: formData.area,
       deliveryMode: formData.deliveryMode,
-      paymentMethod: paymentMethod === 'upi' ? `UPI (${clinicInfo.upiId})` : paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Pay at Clinic Counter',
+      paymentMethod: paymentMethod === 'upi' ? 'Online UPI' : paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Pay at Clinic Counter',
       utr: utrNumber || (paymentMethod === 'upi' ? 'UPI-9949339391' : 'COD'),
       totalAmount: grandTotal,
       subTotal,
@@ -554,28 +547,19 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  {/* UPI ID Copy Box */}
-                  <div className="bg-white rounded-2xl p-3 border border-purple-200 flex items-center justify-between gap-2 shadow-xs">
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-400 block uppercase">
-                        Official UPI ID
-                      </span>
-                      <span className="text-xs sm:text-sm font-black font-mono text-royal-dark tracking-wide">
-                        {clinicInfo.upiId || '9949339391-3@ybl'}
-                      </span>
-                      <span className="text-[10px] text-purple-700 block font-semibold">
-                        Registered Mobile: {clinicInfo.paymentPhone || '9949339391'}
-                      </span>
+                  {/* Verified Payment Gateway Notice */}
+                  <div className="bg-purple-100/70 rounded-2xl p-3 border border-purple-200 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-royal text-white flex items-center justify-center text-sm shrink-0">
+                      <i className="fa-solid fa-shield-halved"></i>
                     </div>
-
-                    <button
-                      type="button"
-                      onClick={handleCopyUpi}
-                      className="bg-purple-100 hover:bg-royal hover:text-white active:scale-95 text-royal font-bold text-xs px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shrink-0"
-                    >
-                      <i className={`fa-solid ${copiedUpi ? 'fa-check text-emerald-600' : 'fa-copy'}`}></i>
-                      <span>{copiedUpi ? 'Copied!' : 'Copy UPI ID'}</span>
-                    </button>
+                    <div>
+                      <span className="text-[10px] font-bold text-royal uppercase tracking-wider block">
+                        Verified Instant Payment
+                      </span>
+                      <p className="text-xs font-bold text-slate-800">
+                        Scan the QR code or tap your preferred UPI app below
+                      </p>
+                    </div>
                   </div>
 
                   {/* QR Code Container */}

@@ -162,7 +162,7 @@ export const clinicalServices = [
     detailedDesc: "Complete licensed pharmacy stocking all doctor-prescribed medications, IV fluids, disposable syringes, insulin, chronic illness drugs, pediatric syrups, and maternity supplies with online order and doorstep delivery.",
     highlights: [
       "100% authentic medicines from top pharmaceutical brands",
-      "Online store with instant UPI payment via 9949339391-3@ybl",
+      "Online store with instant UPI & card payment",
       "Real-time order logistics tracking to your doorstep",
       "Special discounts on monthly maintenance medicines"
     ],
@@ -288,7 +288,7 @@ export const pharmacyFeatures = [
   },
   {
     title: "Online Store & Instant UPI Pay",
-    desc: "Browse medicines online, order instantly, and pay securely via UPI ID 9949339391-3@ybl (GPay, PhonePe, Paytm, BHIM)."
+    desc: "Browse medicines online, order instantly, and pay securely via UPI (GPay, PhonePe, Paytm, BHIM)."
   },
   {
     title: "Realtime Delivery Logistics",
@@ -306,7 +306,7 @@ export const reviews = [
     location: "South Kamala Nagar, ECIL",
     rating: 5,
     date: "2 days ago",
-    comment: "Came in for emergency fever and saline IV drip. Excellent care by Dr. Harika and nursing staff. Plus ordered medicines online with instant UPI payment to 9949339391-3@ybl and had them delivered to my doorstep in 40 minutes!"
+    comment: "Came in for emergency fever and saline IV drip. Excellent care by Dr. Harika and nursing staff. Plus ordered medicines online with instant online payment and had them delivered to my doorstep in 40 minutes!"
   },
   {
     name: "Pravallika K.",
@@ -338,7 +338,7 @@ export const faqs = [
   },
   {
     question: "How does the Online Medicine Store & UPI Payment work?",
-    answer: "You can browse our medicine catalog, add prescribed or OTC medicines to your cart, and pay instantly via UPI ID 9949339391-3@ybl using PhonePe, Google Pay, Paytm, or BHIM. You will receive an immediate order confirmation and live logistics tracking link."
+    answer: "You can browse our medicine catalog, add prescribed or OTC medicines to your cart, and pay instantly via UPI QR code or your installed UPI apps (PhonePe, Google Pay, Paytm, BHIM). You will receive an immediate order confirmation and live logistics tracking link."
   },
   {
     question: "How can I track my medicine order in real-time?",

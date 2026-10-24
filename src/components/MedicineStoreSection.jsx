@@ -51,7 +51,7 @@ export default function MedicineStoreSection({
               Order Genuine Medicines & Maternity Essentials
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
-              100% authentic pharmacy medications, Dr. Supriya recommended prenatal care, emergency saline IV bottles, fever relief, and chronic health supplies with <strong>instant UPI payment via {clinicInfo.upiId}</strong> and real-time express delivery.
+              100% authentic pharmacy medications, Dr. Supriya recommended prenatal care, emergency saline IV bottles, fever relief, and chronic health supplies with fast delivery across ECIL.
             </p>
           </div>
 
@@ -284,7 +284,7 @@ export default function MedicineStoreSection({
                 </span>
               </div>
               <p className="text-[10px] text-purple-200">
-                UPI Gateway: {clinicInfo.upiId} • 45m Express
+                Express 30-45m Doorstep Delivery
               </p>
             </div>
 

@@ -14,7 +14,7 @@ export default function LogisticsPage({ onNavigate }) {
         phone: '9949339391',
         address: 'Plot 42, South Kamala Nagar, ECIL, Hyderabad',
         area: 'ECIL South Kamala Nagar',
-        paymentMethod: 'UPI (9949339391-3@ybl)',
+        paymentMethod: 'Online UPI',
         utr: '9949339391-TXN',
         totalAmount: 505,
         items: [
@@ -68,7 +68,7 @@ export default function LogisticsPage({ onNavigate }) {
   };
 
   const steps = [
-    { title: 'Order Placed', desc: `UPI: ${clinicInfo.upiId}`, done: true },
+    { title: 'Order Placed', desc: 'Verified Online', done: true },
     { title: 'Packed', desc: 'Checked by Pharmacist', done: true },
     { title: 'Dispatched', desc: 'Assigned to Rider', done: true },
     { title: 'Out for Delivery', desc: `Live ETA: ${etaMinutes} mins`, active: true },
@@ -143,7 +143,7 @@ export default function LogisticsPage({ onNavigate }) {
 
               <div className="text-left sm:text-right">
                 <span className="text-base font-black text-royal font-mono">₹{activeOrder.totalAmount}</span>
-                <span className="text-[10px] text-slate-400 block font-semibold">UPI Paid ({clinicInfo.upiId})</span>
+                <span className="text-[10px] text-slate-400 block font-semibold">Online Payment (Verified)</span>
               </div>
             </div>
 

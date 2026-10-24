@@ -38,7 +38,7 @@ export default function Header({
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <span className="hidden md:inline text-[11px] text-purple-200">
-            UPI: <strong className="text-white font-mono">{clinicInfo.upiId}</strong>
+            Instant UPI & Cards Accepted
           </span>
           <a
             href={`tel:${clinicInfo.phone}`}

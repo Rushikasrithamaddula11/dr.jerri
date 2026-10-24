@@ -2,34 +2,45 @@ import React, { useState } from 'react';
 import { clinicInfo } from '../data/clinicData';
 
 export default function Header({
+  activePage = 'home',
+  onNavigate,
   onBookClick,
-  onPharmacyClick,
-  onDiagnosticsClick,
   cartCount = 0,
-  onOpenCart,
-  onOpenTracker
+  onOpenCart
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const scrollToSection = (id) => {
+  const navItems = [
+    { id: 'home', label: 'Home', icon: 'fa-solid fa-house' },
+    { id: 'store', label: 'Medicine Store', icon: 'fa-solid fa-store', highlight: true },
+    { id: 'logistics', label: 'Logistics & Track', icon: 'fa-solid fa-truck-fast' },
+    { id: 'doctors', label: 'Specialist Doctors', icon: 'fa-solid fa-user-doctor' },
+    { id: 'diagnostics', label: 'Diagnostics Lab', icon: 'fa-solid fa-microscope' },
+    { id: 'services', label: 'Clinical Services', icon: 'fa-solid fa-notes-medical' },
+    { id: 'contact', label: 'Contact', icon: 'fa-solid fa-location-dot' },
+  ];
+
+  const handleNavClick = (pageId) => {
     setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (onNavigate) {
+      onNavigate(pageId);
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-royal-border shadow-sm transition-all">
-      {/* Topmost emergency / contact strip */}
+      
+      {/* Topmost strip */}
       <div className="bg-gradient-to-r from-royal-dark via-royal to-purple-900 text-white px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 text-xs flex justify-between items-center gap-2">
         <div className="flex items-center gap-1.5 truncate min-w-0">
           <i className="fa-solid fa-location-dot text-purple-300 text-xs shrink-0"></i>
           <span className="truncate font-medium text-[11px] sm:text-xs">ECIL South Kamala Nagar, Hyderabad</span>
         </div>
+        
         <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           <span className="hidden sm:inline-flex items-center gap-1.5 text-purple-200 text-[11px] font-semibold bg-white/10 px-2.5 py-0.5 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span> 24/7 Pharmacy & Diagnostics
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span> 24/7 Pharmacy & In-House Lab
           </span>
           <span className="hidden md:inline-flex items-center gap-1 text-[11px] text-purple-200">
             UPI: <strong className="text-white font-mono">{clinicInfo.upiId}</strong>
@@ -46,8 +57,12 @@ export default function Header({
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-4">
+        
         {/* Brand Logo */}
-        <div className="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <div
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0"
+          onClick={() => handleNavClick('home')}
+        >
           <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-royal flex items-center justify-center text-white text-lg sm:text-2xl shadow-md shadow-royal/30 shrink-0">
             <i className="fa-solid fa-notes-medical"></i>
           </div>
@@ -66,44 +81,33 @@ export default function Header({
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs font-bold text-slate-700">
-          <button onClick={() => scrollToSection('pharmacy-store-section')} className="hover:text-royal transition flex items-center gap-1.5 text-royal font-black">
-            <i className="fa-solid fa-store"></i>
-            <span>Medicine Store</span>
-          </button>
-          <button onClick={() => scrollToSection('diagnostics-section')} className="hover:text-royal transition flex items-center gap-1.5">
-            <i className="fa-solid fa-microscope text-royal"></i>
-            <span>Diagnostics Lab</span>
-          </button>
-          <button onClick={() => scrollToSection('doctors-section')} className="hover:text-royal transition flex items-center gap-1.5">
-            <i className="fa-solid fa-user-doctor text-royal"></i>
-            <span>Specialist Doctors</span>
-          </button>
-          <button onClick={() => scrollToSection('services-section')} className="hover:text-royal transition">
-            Clinical Services
-          </button>
-          <button onClick={() => scrollToSection('schedule-section')} className="hover:text-royal transition">
-            OPD Timings
-          </button>
-          <button onClick={() => scrollToSection('contact-section')} className="hover:text-royal transition">
-            Location
-          </button>
+        {/* Desktop Multi-Page Navigation Bar */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-bold text-slate-700">
+          {navItems.map((item) => {
+            const isActive = activePage === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`px-3 py-2 rounded-xl transition flex items-center gap-1.5 ${
+                  isActive
+                    ? 'bg-royal text-white shadow-sm shadow-royal/30'
+                    : item.highlight
+                    ? 'text-royal font-black hover:bg-purple-50'
+                    : 'hover:text-royal hover:bg-purple-50/70 text-slate-700'
+                }`}
+              >
+                <i className={`${item.icon} text-[11px]`}></i>
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
-        {/* Desktop Actions */}
+        {/* Desktop Header Actions */}
         <div className="hidden lg:flex items-center gap-2.5 shrink-0">
-          {/* Realtime Logistics Tracking button */}
-          <button
-            onClick={onOpenTracker}
-            className="flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
-            title="Track Your Medicine Delivery"
-          >
-            <i className="fa-solid fa-truck-fast text-royal"></i>
-            <span>Track Order</span>
-          </button>
-
-          {/* Cart Basket Button with live counter */}
+          
+          {/* Medicine Basket Drawer button */}
           <button
             onClick={onOpenCart}
             className="relative flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-3 py-2 rounded-xl text-xs transition"
@@ -138,7 +142,7 @@ export default function Header({
           </button>
         </div>
 
-        {/* Mobile Actions: Cart + Book + Hamburger */}
+        {/* Mobile Header Actions: Basket + Book + Hamburger */}
         <div className="flex items-center gap-1.5 lg:hidden shrink-0">
           <button
             onClick={onOpenCart}
@@ -169,65 +173,36 @@ export default function Header({
             <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
           </button>
         </div>
+
       </div>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-royal-border px-4 py-4 space-y-3 text-sm font-semibold text-royal-dark shadow-xl animate-in slide-in-from-top">
-          
-          <button
-            onClick={() => scrollToSection('pharmacy-store-section')}
-            className="block w-full text-left py-2.5 px-3 rounded-xl bg-royal text-white font-bold shadow-sm"
-          >
-            <i className="fa-solid fa-store mr-2"></i> Online Medicine Store & UPI Pay
-          </button>
+        <div className="lg:hidden bg-white border-b border-royal-border px-4 py-4 space-y-2 text-sm font-semibold text-royal-dark shadow-xl animate-in slide-in-from-top">
+          {navItems.map((item) => {
+            const isActive = activePage === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`w-full text-left py-2.5 px-3 rounded-xl transition flex items-center justify-between ${
+                  isActive
+                    ? 'bg-royal text-white font-bold'
+                    : item.highlight
+                    ? 'bg-purple-50 text-royal font-bold'
+                    : 'hover:bg-slate-50 text-slate-800'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <i className={`${item.icon} text-sm ${isActive ? 'text-white' : 'text-royal'}`}></i>
+                  <span>{item.label}</span>
+                </div>
+                <i className="fa-solid fa-chevron-right text-xs opacity-60"></i>
+              </button>
+            );
+          })}
 
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenTracker();
-            }}
-            className="block w-full text-left py-2 px-3 rounded-xl bg-purple-50 text-royal font-bold"
-          >
-            <i className="fa-solid fa-truck-fast text-royal mr-2"></i> Track Live Medicine Delivery
-          </button>
-
-          <button
-            onClick={() => scrollToSection('diagnostics-section')}
-            className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
-          >
-            <i className="fa-solid fa-microscope text-royal mr-2"></i> Diagnostics & Scanning Center
-          </button>
-
-          <button
-            onClick={() => scrollToSection('doctors-section')}
-            className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
-          >
-            <i className="fa-solid fa-user-doctor text-royal mr-2"></i> Specialist Doctors & Timings
-          </button>
-
-          <button
-            onClick={() => scrollToSection('services-section')}
-            className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
-          >
-            <i className="fa-solid fa-notes-medical text-royal mr-2"></i> Clinic Services (Saline, Injections, First Aid)
-          </button>
-
-          <button
-            onClick={() => scrollToSection('schedule-section')}
-            className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
-          >
-            <i className="fa-regular fa-clock text-royal mr-2"></i> Daily OPD Schedule
-          </button>
-
-          <button
-            onClick={() => scrollToSection('contact-section')}
-            className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-50"
-          >
-            <i className="fa-solid fa-map-location-dot text-royal mr-2"></i> Location & Google Map
-          </button>
-
-          <div className="pt-2 grid grid-cols-2 gap-2">
+          <div className="pt-3 border-t border-purple-100 grid grid-cols-2 gap-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -248,6 +223,7 @@ export default function Header({
           </div>
         </div>
       )}
+
     </header>
   );
 }

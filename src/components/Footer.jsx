@@ -1,10 +1,16 @@
 import React from 'react';
 import { clinicInfo, doctors } from '../data/clinicData';
 
-export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClick, onOpenCart, onOpenTracker }) {
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+export default function Footer({
+  onBookClick,
+  onNavigate,
+  onOpenCart
+}) {
+  const handleNav = (page) => {
+    if (onNavigate) {
+      onNavigate(page);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -15,7 +21,10 @@ export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClic
           
           {/* Brand Col */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2.5">
+            <div
+              className="flex items-center gap-2.5 cursor-pointer"
+              onClick={() => handleNav('home')}
+            >
               <div className="w-10 h-10 rounded-2xl bg-royal-light flex items-center justify-center text-white text-xl">
                 <i className="fa-solid fa-notes-medical"></i>
               </div>
@@ -34,33 +43,56 @@ export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClic
             </div>
           </div>
 
-          {/* Core Facilities */}
+          {/* Core Multi-Page Navigation */}
           <div className="space-y-2.5">
-            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Core Facilities</h4>
+            <h4 className="text-white font-bold text-sm tracking-wide uppercase">Website Pages</h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => scrollTo('pharmacy-store-section')} className="hover:text-white transition flex items-center gap-1.5 font-bold text-purple-100">
-                  <i className="fa-solid fa-store text-pink-400"></i> Online Medicine Store & UPI Pay
+                <button
+                  onClick={() => handleNav('store')}
+                  className="hover:text-white transition flex items-center gap-1.5 font-bold text-pink-300"
+                >
+                  <i className="fa-solid fa-store text-pink-400"></i> Online Medicine Store
                 </button>
               </li>
               <li>
-                <button onClick={onOpenTracker} className="hover:text-white transition flex items-center gap-1.5">
-                  <i className="fa-solid fa-truck-fast text-purple-400"></i> Realtime Logistics Tracker
+                <button
+                  onClick={() => handleNav('logistics')}
+                  className="hover:text-white transition flex items-center gap-1.5 font-bold text-purple-200"
+                >
+                  <i className="fa-solid fa-truck-fast text-purple-400"></i> Realtime Logistics & Track
                 </button>
               </li>
               <li>
-                <button onClick={() => onDiagnosticsClick('Diagnostics')} className="hover:text-white transition flex items-center gap-1.5">
-                  <i className="fa-solid fa-microscope text-purple-400"></i> Diagnostic Lab & Scans
+                <button
+                  onClick={() => handleNav('doctors')}
+                  className="hover:text-white transition flex items-center gap-1.5"
+                >
+                  <i className="fa-solid fa-user-doctor text-purple-400"></i> Specialist Doctors OPD
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollTo('services-section')} className="hover:text-white transition flex items-center gap-1.5">
-                  <i className="fa-solid fa-bottle-droplet text-purple-400"></i> Saline & IV Fluid Therapy
+                <button
+                  onClick={() => handleNav('diagnostics')}
+                  className="hover:text-white transition flex items-center gap-1.5"
+                >
+                  <i className="fa-solid fa-microscope text-purple-400"></i> Diagnostics Lab & Scans
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollTo('services-section')} className="hover:text-white transition flex items-center gap-1.5">
-                  <i className="fa-solid fa-syringe text-purple-400"></i> Injections & Vaccinations
+                <button
+                  onClick={() => handleNav('services')}
+                  className="hover:text-white transition flex items-center gap-1.5"
+                >
+                  <i className="fa-solid fa-bottle-droplet text-purple-400"></i> Clinical Services (Saline & Injections)
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleNav('contact')}
+                  className="hover:text-white transition flex items-center gap-1.5"
+                >
+                  <i className="fa-solid fa-location-dot text-purple-400"></i> Contact & Location
                 </button>
               </li>
             </ul>
@@ -70,7 +102,7 @@ export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClic
           <div className="space-y-2.5">
             <h4 className="text-white font-bold text-sm tracking-wide uppercase">Specialist Doctors</h4>
             <ul className="space-y-1.5 text-xs">
-              {doctors.map(d => (
+              {doctors.map((d) => (
                 <li key={d.id} className="text-purple-300">
                   <span className="font-semibold text-white">{d.name}</span> ({d.specialty})
                 </li>

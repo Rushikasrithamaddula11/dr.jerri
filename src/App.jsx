@@ -1,26 +1,56 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import MedicineStoreSection from './components/MedicineStoreSection';
-import MedicineCartDrawer from './components/MedicineCartDrawer';
-import LogisticsTrackerModal from './components/LogisticsTrackerModal';
-import DiagnosticsSection from './components/DiagnosticsSection';
-import PharmacySection from './components/PharmacySection';
-import ServicesSection from './components/ServicesSection';
-import ScheduleSection from './components/ScheduleSection';
-import DoctorsSection from './components/DoctorsSection';
-import ReviewsSection from './components/ReviewsSection';
-import FAQSection from './components/FAQSection';
-import LocationSection from './components/LocationSection';
 import Footer from './components/Footer';
 import MobileBottomBar from './components/MobileBottomBar';
+import MedicineCartDrawer from './components/MedicineCartDrawer';
+import LogisticsTrackerModal from './components/LogisticsTrackerModal';
 import BookingModal from './components/BookingModal';
 import PharmacyOrderModal from './components/PharmacyOrderModal';
 import FlyerModal from './components/FlyerModal';
 import ServiceDetailModal from './components/ServiceDetailModal';
+
+// Pages
+import HomePage from './pages/HomePage';
+import PharmacyStorePage from './pages/PharmacyStorePage';
+import LogisticsPage from './pages/LogisticsPage';
+import DoctorsPage from './pages/DoctorsPage';
+import DiagnosticsPage from './pages/DiagnosticsPage';
+import ServicesPage from './pages/ServicesPage';
+import ContactPage from './pages/ContactPage';
+
 import { doctors, clinicalServices } from './data/clinicData';
 
 export default function App() {
+  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact'
+  const getPageFromHash = () => {
+    const hash = window.location.hash.replace('#/', '').replace('#', '').trim().toLowerCase();
+    if (['store', 'pharmacy'].includes(hash)) return 'store';
+    if (['logistics', 'track'].includes(hash)) return 'logistics';
+    if (['doctors'].includes(hash)) return 'doctors';
+    if (['diagnostics', 'scans'].includes(hash)) return 'diagnostics';
+    if (['services', 'procedures'].includes(hash)) return 'services';
+    if (['contact', 'location'].includes(hash)) return 'contact';
+    return 'home';
+  };
+
+  const [currentPage, setCurrentPage] = useState(getPageFromHash);
+
+  // Listen to hash changes (back/forward browser buttons)
+  useEffect(() => {
+    const handleHashChange = () => {
+      setCurrentPage(getPageFromHash());
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+    window.location.hash = page === 'home' ? '' : `#/${page}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Modals state
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [preselectedService, setPreselectedService] = useState('');
   
@@ -34,7 +64,7 @@ export default function App() {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  // E-Commerce Cart State
+  // Shopping Cart State
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem('drjerri_cart');
@@ -66,7 +96,7 @@ export default function App() {
     }
   }, [cart]);
 
-  // Cart Handlers
+  // Cart actions
   const handleAddToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id);
@@ -97,12 +127,12 @@ export default function App() {
     setCart([]);
   };
 
-  // Order Success Handler -> Launches Realtime Logistics Tracking
+  // Order Success -> Sets order and redirects or opens logistics tracking
   const handleOrderSuccess = (newOrder) => {
     setActiveOrder(newOrder);
     setCart([]);
     setCartDrawerOpen(false);
-    setTrackerModalOpen(true);
+    handleNavigate('logistics');
   };
 
   // Booking action handler
@@ -134,7 +164,7 @@ export default function App() {
     setServiceDetailModalOpen(true);
   };
 
-  // Smooth scroll to a doctor
+  // Smooth scroll to doctor
   const handleScrollToDoctor = (id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -172,87 +202,98 @@ export default function App() {
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
   return (
-    <div className="min-h-screen bg-white w-full overflow-x-hidden text-slate-800">
+    <div className="min-h-screen bg-white w-full overflow-x-hidden text-slate-800 flex flex-col justify-between">
+      
+      {/* Universal Top Header */}
       <Header
+        activePage={currentPage}
+        onNavigate={handleNavigate}
         onBookClick={handleOpenBooking}
-        onPharmacyClick={handleOpenPharmacy}
-        onDiagnosticsClick={handleOpenDiagnostics}
         cartCount={cartCount}
         onOpenCart={() => setCartDrawerOpen(true)}
-        onOpenTracker={() => setTrackerModalOpen(true)}
       />
-      
-      <main className="pb-16 lg:pb-0">
-        <Hero
-          onBookClick={handleOpenBooking}
-          onPharmacyClick={handleOpenPharmacy}
-          onDiagnosticsClick={handleOpenDiagnostics}
-          onSearch={setSearchQuery}
-          searchQuery={searchQuery}
-        />
 
-        {/* Online Medicine Store & E-Commerce with UPI Payment Gateway */}
-        <MedicineStoreSection
-          cart={cart}
-          onAddToCart={handleAddToCart}
-          onUpdateQty={handleUpdateQty}
-          onOpenCart={() => setCartDrawerOpen(true)}
-          onOpenTracker={() => setTrackerModalOpen(true)}
-          onOpenPharmacyModal={handleOpenPharmacy}
-        />
+      {/* Dynamic Page Views */}
+      <main className="flex-1">
+        {currentPage === 'home' && (
+          <HomePage
+            onBookClick={handleOpenBooking}
+            onPharmacyClick={handleOpenPharmacy}
+            onDiagnosticsClick={handleOpenDiagnostics}
+            onViewFlyer={handleViewFlyer}
+            onSelectService={handleSelectService}
+            onNavigate={handleNavigate}
+            onAddToCart={handleAddToCart}
+            filteredDoctors={filteredDoctors}
+            filteredServices={filteredServices}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onScrollToDoctor={handleScrollToDoctor}
+          />
+        )}
 
-        {/* Diagnostics & Lab Scans Section */}
-        <DiagnosticsSection
-          onBookDiagnostics={handleOpenDiagnostics}
-        />
+        {currentPage === 'store' && (
+          <PharmacyStorePage
+            cart={cart}
+            onAddToCart={handleAddToCart}
+            onUpdateQty={handleUpdateQty}
+            onOpenCart={() => setCartDrawerOpen(true)}
+            onOpenTracker={() => handleNavigate('logistics')}
+            onOpenPharmacyModal={handleOpenPharmacy}
+            onNavigate={handleNavigate}
+          />
+        )}
 
-        {/* 24/7 In-House Pharmacy Overview Section */}
-        <PharmacySection
-          onOpenPharmacyOrder={handleOpenPharmacy}
-        />
+        {currentPage === 'logistics' && (
+          <LogisticsPage
+            onNavigate={handleNavigate}
+          />
+        )}
 
-        {/* Specialist Doctors Section (Featuring Dr. Supriya Recommended Maternity & Prenatal Care) */}
-        <DoctorsSection
-          doctors={filteredDoctors}
-          onBookClick={handleOpenBooking}
-          onViewFlyer={handleViewFlyer}
-        />
+        {currentPage === 'doctors' && (
+          <DoctorsPage
+            onBookClick={handleOpenBooking}
+            onViewFlyer={handleViewFlyer}
+            onNavigate={handleNavigate}
+          />
+        )}
 
-        {/* Clinical Procedures & Services Section (Saline, Injections, First Aid) */}
-        <ServicesSection
-          filteredServices={filteredServices}
-          onSelectService={handleSelectService}
-          onBookService={handleOpenBooking}
-        />
+        {currentPage === 'diagnostics' && (
+          <DiagnosticsPage
+            onBookDiagnostics={handleOpenDiagnostics}
+            onNavigate={handleNavigate}
+          />
+        )}
 
-        {/* Daily OPD Timings Matrix */}
-        <ScheduleSection
-          onBookClick={handleOpenBooking}
-          onScrollToDoctor={handleScrollToDoctor}
-        />
+        {currentPage === 'services' && (
+          <ServicesPage
+            onSelectService={handleSelectService}
+            onBookService={handleOpenBooking}
+          />
+        )}
 
-        {/* Patient Reviews Section */}
-        <ReviewsSection />
-
-        {/* FAQ Section */}
-        <FAQSection />
-
-        {/* Location & Contact Section */}
-        <LocationSection />
+        {currentPage === 'contact' && (
+          <ContactPage
+            onBookClick={handleOpenBooking}
+            onNavigate={handleNavigate}
+          />
+        )}
       </main>
 
+      {/* Universal Footer */}
       <Footer
         onBookClick={handleOpenBooking}
-        onPharmacyClick={handleOpenPharmacy}
-        onDiagnosticsClick={handleOpenDiagnostics}
+        onNavigate={handleNavigate}
         onOpenCart={() => setCartDrawerOpen(true)}
-        onOpenTracker={() => setTrackerModalOpen(true)}
       />
 
+      {/* Universal Mobile Bottom Bar */}
       <MobileBottomBar
+        activePage={currentPage}
+        onNavigate={handleNavigate}
         onBookClick={handleOpenBooking}
         onOpenCart={() => setCartDrawerOpen(true)}
-        onOpenTracker={() => setTrackerModalOpen(true)}
+        cartCount={cartCount}
       />
 
       {/* Shopping Cart & UPI Payment Gateway Drawer */}
@@ -266,27 +307,27 @@ export default function App() {
         onOrderSuccess={handleOrderSuccess}
       />
 
-      {/* Realtime Logistics Tracking Screen */}
+      {/* Realtime Logistics Tracker Modal */}
       <LogisticsTrackerModal
         isOpen={trackerModalOpen}
         onClose={() => setTrackerModalOpen(false)}
         activeOrder={activeOrder}
       />
 
-      {/* Booking Modal */}
+      {/* Doctor Token Booking Modal */}
       <BookingModal
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         preselectedService={preselectedService}
       />
 
-      {/* WhatsApp Pharmacy Order Modal */}
+      {/* WhatsApp Prescription Order Modal */}
       <PharmacyOrderModal
         isOpen={pharmacyModalOpen}
         onClose={() => setPharmacyModalOpen(false)}
       />
 
-      {/* Doctor Poster Flyer Modal */}
+      {/* Doctor Flyer Preview Modal */}
       <FlyerModal
         isOpen={flyerModalOpen}
         onClose={() => setFlyerModalOpen(false)}

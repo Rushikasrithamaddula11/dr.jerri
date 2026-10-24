@@ -1,58 +1,79 @@
 import React from 'react';
-import { clinicInfo } from '../data/clinicData';
 
-export default function MobileBottomBar({ onBookClick, onOpenCart, onOpenTracker }) {
+export default function MobileBottomBar({
+  activePage = 'home',
+  onNavigate,
+  onBookClick,
+  onOpenCart,
+  cartCount = 0
+}) {
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-purple-200 shadow-[0_-4px_20px_rgba(58,32,129,0.12)] pt-2 pb-2.5 px-3 flex items-center justify-between gap-1.5">
-      {/* Call Button */}
-      <a
-        href={`tel:${clinicInfo.phone}`}
-        className="flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl bg-purple-50 hover:bg-purple-100 active:scale-95 text-royal-dark transition border border-purple-200"
-      >
-        <i className="fa-solid fa-phone text-royal text-sm mb-0.5"></i>
-        <span className="text-[10px] font-bold">Call</span>
-      </a>
-
-      {/* WhatsApp Button */}
-      <a
-        href={`https://wa.me/${clinicInfo.whatsapp}?text=Hello%20Dr.%20Jerri%20Poly%20Clinic,%20I%20would%20like%20to%20consult%20a%20doctor`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl bg-purple-50 hover:bg-purple-100 active:scale-95 text-royal-dark transition border border-purple-200"
-      >
-        <i className="fa-brands fa-whatsapp text-royal text-base mb-0.5"></i>
-        <span className="text-[10px] font-bold">WhatsApp</span>
-      </a>
-
-      {/* Online Medicine Store Button */}
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-purple-200 shadow-[0_-4px_20px_rgba(58,32,129,0.12)] pt-1.5 pb-2 px-2 flex items-center justify-around gap-1">
+      
+      {/* Home */}
       <button
-        onClick={() => {
-          const el = document.getElementById('pharmacy-store-section');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }}
-        className="flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl bg-purple-100 hover:bg-purple-200 active:scale-95 text-royal-dark transition border border-purple-300"
+        onClick={() => onNavigate('home')}
+        className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition ${
+          activePage === 'home'
+            ? 'text-royal font-black bg-purple-50'
+            : 'text-slate-600 hover:text-royal'
+        }`}
       >
-        <i className="fa-solid fa-store text-purple-700 text-sm mb-0.5"></i>
-        <span className="text-[10px] font-extrabold">Store</span>
+        <i className="fa-solid fa-house text-sm mb-0.5"></i>
+        <span className="text-[10px]">Home</span>
       </button>
 
-      {/* Live Logistics Tracker */}
+      {/* Online Medicine Store */}
       <button
-        onClick={onOpenTracker}
-        className="flex-1 flex flex-col items-center justify-center py-1.5 rounded-2xl bg-purple-50 hover:bg-purple-100 active:scale-95 text-royal-dark transition border border-purple-200"
+        onClick={() => onNavigate('store')}
+        className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition relative ${
+          activePage === 'store'
+            ? 'text-royal font-black bg-purple-50'
+            : 'text-slate-600 hover:text-royal'
+        }`}
       >
-        <i className="fa-solid fa-truck-fast text-royal text-sm mb-0.5"></i>
-        <span className="text-[10px] font-bold">Track</span>
+        <i className="fa-solid fa-store text-sm mb-0.5"></i>
+        <span className="text-[10px]">Store</span>
+        {cartCount > 0 && (
+          <span className="absolute top-0 right-2 w-2 h-2 rounded-full bg-pink-500"></span>
+        )}
+      </button>
+
+      {/* Live Logistics */}
+      <button
+        onClick={() => onNavigate('logistics')}
+        className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition ${
+          activePage === 'logistics'
+            ? 'text-royal font-black bg-purple-50'
+            : 'text-slate-600 hover:text-royal'
+        }`}
+      >
+        <i className="fa-solid fa-truck-fast text-sm mb-0.5"></i>
+        <span className="text-[10px]">Logistics</span>
+      </button>
+
+      {/* Specialist Doctors */}
+      <button
+        onClick={() => onNavigate('doctors')}
+        className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition ${
+          activePage === 'doctors'
+            ? 'text-royal font-black bg-purple-50'
+            : 'text-slate-600 hover:text-royal'
+        }`}
+      >
+        <i className="fa-solid fa-user-doctor text-sm mb-0.5"></i>
+        <span className="text-[10px]">Doctors</span>
       </button>
 
       {/* Book Token Primary Button */}
       <button
         onClick={() => onBookClick('General Consultation')}
-        className="flex-[1.4] flex items-center justify-center gap-1 py-3 rounded-2xl bg-gradient-to-r from-royal via-royal-light to-purple-700 active:scale-95 text-white font-black text-xs shadow-md shadow-royal/30 transition"
+        className="flex-[1.2] flex items-center justify-center gap-1 py-2.5 rounded-xl bg-gradient-to-r from-royal via-purple-700 to-royal-dark active:scale-95 text-white font-black text-xs shadow-md shadow-royal/30 transition"
       >
-        <i className="fa-regular fa-calendar-check text-xs"></i>
+        <i className="fa-regular fa-calendar-check text-[11px]"></i>
         <span>Book</span>
       </button>
+
     </div>
   );
 }

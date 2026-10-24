@@ -1,6 +1,6 @@
 export const medicineCategories = [
   { id: "all", label: "All Medicines", icon: "fa-solid fa-tablets" },
-  { id: "maternity", label: "Maternity & Prenatal (Recommended)", icon: "fa-solid fa-person-pregnant" },
+  { id: "maternity", label: "⭐ Maternity & Prenatal (Recommended)", icon: "fa-solid fa-person-pregnant" },
   { id: "fever-pain", label: "Fever & Pain Relief", icon: "fa-solid fa-temperature-arrow-up" },
   { id: "firstaid-iv", label: "Saline, Injections & First Aid", icon: "fa-solid fa-bottle-droplet" },
   { id: "antibiotics", label: "Antibiotics & Flu", icon: "fa-solid fa-shield-virus" },
@@ -27,6 +27,7 @@ export const medicinesList = [
     badge: "Gynecologist Recommended",
     dosage: "1 tablet daily after lunch or as advised by Dr. Supriya",
     desc: "Essential maternal bone strength, fetal skeletal growth, and neural development supplement.",
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-bone"
   },
   {
@@ -44,6 +45,7 @@ export const medicinesList = [
     badge: "Recommended: Prenatal Care",
     dosage: "1 tablet daily after food to treat & prevent gestational anemia",
     desc: "Premium rapid-absorption elemental iron for pregnant mothers and hemoglobin maintenance.",
+    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-droplet"
   },
   {
@@ -61,6 +63,7 @@ export const medicinesList = [
     badge: "Prenatal Essential",
     dosage: "1 tablet daily pre-conception and during first trimester",
     desc: "Crucial for preventing neural tube defects and supporting healthy fetal brain formation.",
+    image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-shield-heart"
   },
   {
@@ -78,6 +81,7 @@ export const medicinesList = [
     badge: "Recommended",
     dosage: "1 tablet daily with main meal",
     desc: "Comprehensive nutritional formula for all stages of pregnancy and lactation.",
+    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-person-pregnant"
   },
   {
@@ -95,6 +99,7 @@ export const medicinesList = [
     badge: "Maternity Care",
     dosage: "Gently massage over belly, hips and thighs morning and night",
     desc: "Improves skin elasticity and reduces appearance of pregnancy stretch marks safely.",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-spa"
   },
 
@@ -114,6 +119,7 @@ export const medicinesList = [
     badge: "Top Seller",
     dosage: "1 tablet every 6 to 8 hours as needed for fever and body ache",
     desc: "Gold standard antipyretic and analgesic for rapid fever and body pain relief.",
+    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-temperature-arrow-down"
   },
   {
@@ -131,6 +137,7 @@ export const medicinesList = [
     badge: "Fast Relief",
     dosage: "1 tablet after food for acute headache, dental pain or joint pain",
     desc: "Dual-action anti-inflammatory pain relief for muscular and joint aches.",
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-bolt"
   },
   {
@@ -148,6 +155,7 @@ export const medicinesList = [
     badge: "Instant Action",
     dosage: "Spray evenly from 5cm distance on affected muscles/joints 3-4 times daily",
     desc: "Instant micro-gel spray for sprains, sports injuries, lower backache and neck stiffness.",
+    image: "https://images.unsplash.com/photo-1608248597359-56cb2f2a4bc8?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-spray-can-sparkles"
   },
   {
@@ -165,6 +173,7 @@ export const medicinesList = [
     badge: "Cold & Congestion",
     dosage: "1 tablet at bedtime or twice daily under doctor guidance",
     desc: "Relieves runny nose, sneezing, nasal blockage, sinus pain and mild fever.",
+    image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-head-side-cough"
   },
 
@@ -184,6 +193,7 @@ export const medicinesList = [
     badge: "Clinic Essential",
     dosage: "Administered intravenously by Dr. Jerri clinical nurse for rehydration",
     desc: "Sterile non-pyrogenic IV fluid for immediate dehydration, weakness & electrolyte restoration.",
+    image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-bottle-droplet"
   },
   {
@@ -201,6 +211,7 @@ export const medicinesList = [
     badge: "Energy & Saline",
     dosage: "Administered intravenously under medical supervision for hypoglycemia & fluid deficit",
     desc: "Immediate caloric energy replenishment and fluid replacement drip.",
+    image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-bolt"
   },
   {
@@ -218,6 +229,7 @@ export const medicinesList = [
     badge: "Sterile & Safe",
     dosage: "Single-use disposable for intramuscular or intravenous medication administration",
     desc: "Certified hospital-grade disposable syringes with secure luer mount.",
+    image: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-syringe"
   },
   {
@@ -235,6 +247,7 @@ export const medicinesList = [
     badge: "First Aid Essential",
     dosage: "0.5ml deep intramuscular injection following cuts, rust contact or road injuries",
     desc: "Immediate active immunization against tetanus infection after wound trauma.",
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-shield-virus"
   },
   {
@@ -252,6 +265,7 @@ export const medicinesList = [
     badge: "Home Essential",
     dosage: "Keep at home / vehicle for immediate minor cut and wound disinfection",
     desc: "Complete pre-assembled family first aid kit approved by Dr. Jerri medical staff.",
+    image: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-kit-medical"
   },
 
@@ -271,6 +285,7 @@ export const medicinesList = [
     badge: "Doctor Prescribed",
     dosage: "1 tablet twice daily after meals for prescribed 5-7 days course",
     desc: "Broad spectrum antibiotic for respiratory, ENT, skin, and urinary tract infections.",
+    image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-capsules"
   },
   {
@@ -288,6 +303,7 @@ export const medicinesList = [
     badge: "Broad Spectrum",
     dosage: "1 tablet once daily 1 hour before or 2 hours after meals",
     desc: "Proven macrolide antibiotic for throat infections, bronchitis and tonsillitis.",
+    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-tablets"
   },
   {
@@ -305,6 +321,7 @@ export const medicinesList = [
     badge: "Sore Throat Relief",
     dosage: "Dilute equal parts with warm water and gargle for 30 seconds 3-4 times daily",
     desc: "Kills 99.9% bacteria and viruses causing sore throat, mouth ulcers and viral pharyngitis.",
+    image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-mouth"
   },
 
@@ -324,6 +341,7 @@ export const medicinesList = [
     badge: "Chronic Care",
     dosage: "1 tablet daily with breakfast or dinner as prescribed",
     desc: "Controls high blood sugar levels in patients with Type-2 Diabetes Mellitus.",
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-chart-line"
   },
   {
@@ -341,6 +359,7 @@ export const medicinesList = [
     badge: "BP Control",
     dosage: "1 tablet once daily morning with or without food",
     desc: "First-line angiotensin receptor blocker for long-term hypertension and heart protection.",
+    image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-heart"
   },
   {
@@ -358,6 +377,7 @@ export const medicinesList = [
     badge: "High Accuracy",
     dosage: "Use 1 strip with Accu-Chek glucometer for fasting and post-prandial blood sugar check",
     desc: "Clinically proven ISO-standard accurate self blood glucose monitoring test strips.",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-vial"
   },
 
@@ -377,6 +397,7 @@ export const medicinesList = [
     badge: "Acidity & Gas",
     dosage: "1 capsule empty stomach 30 minutes before morning breakfast",
     desc: "Immediate relief from severe acid reflux, heartburn, GERD, nausea and bloating.",
+    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-pills"
   },
   {
@@ -394,6 +415,7 @@ export const medicinesList = [
     badge: "Fast Relief",
     dosage: "2 teaspoons (10ml) after meals and at bedtime",
     desc: "Sugar-free cooling antacid suspension providing long-lasting acid neutralization.",
+    image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-glass-water"
   },
   {
@@ -411,6 +433,7 @@ export const medicinesList = [
     badge: "Electrolyte Balance",
     dosage: "Dissolve 1 sachet in 1 liter of drinking water and sip throughout the day",
     desc: "WHO standard oral rehydration salt for dehydration, vomiting, loose motions and heat stroke.",
+    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-glass-water-droplet"
   },
 
@@ -430,6 +453,7 @@ export const medicinesList = [
     badge: "Pediatric Choice",
     dosage: "Dosed strictly as per child's weight and pediatrician Dr C Rama Krishna's chart",
     desc: "Child-friendly fever and teething pain relief suspension with accurate dosing pipette.",
+    image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-baby"
   },
   {
@@ -447,6 +471,7 @@ export const medicinesList = [
     badge: "Chest Congestion",
     dosage: "2.5ml to 5ml thrice daily under doctor's guidance",
     desc: "Clears mucus and eases bronchial breathing in children suffering from wet cough.",
+    image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-lungs"
   },
 
@@ -466,6 +491,7 @@ export const medicinesList = [
     badge: "Dermatologist Pick",
     dosage: "Apply thin layer to affected skin area twice daily for 2 weeks",
     desc: "Recommended by Dr. Subash Reddy for fungal infections, itching, ringworm and skin redness.",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-hand-dots"
   },
   {
@@ -483,9 +509,53 @@ export const medicinesList = [
     badge: "Scalp Care",
     dosage: "Massage into wet scalp, leave for 3 to 5 minutes, rinse thoroughly twice weekly",
     desc: "Eliminates stubborn dandruff flaking, scalp itching, and fungal seborrhea.",
+    image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&auto=format&fit=crop&q=80",
     icon: "fa-solid fa-shower"
   }
 ];
+
+export const categoryVisuals = {
+  maternity: {
+    banner: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1000&auto=format&fit=crop&q=80",
+    title: "Maternity & Prenatal Care",
+    tagline: "Doctor Recommended Pregnancy & Fetal Growth Essentials"
+  },
+  "fever-pain": {
+    banner: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=1000&auto=format&fit=crop&q=80",
+    title: "Fever & Pain Relief",
+    tagline: "Rapid Antipyretic, Analgesic & Muscle Sprays"
+  },
+  "firstaid-iv": {
+    banner: "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=1000&auto=format&fit=crop&q=80",
+    title: "IV Fluids, Saline & Emergency First Aid",
+    tagline: "Hospital Grade Infusion Bottles & Sterile Disposable Needles"
+  },
+  antibiotics: {
+    banner: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=1000&auto=format&fit=crop&q=80",
+    title: "Antibiotics & Anti-Infectives",
+    tagline: "100% Verified Prescription Medications"
+  },
+  "diabetes-bp": {
+    banner: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1000&auto=format&fit=crop&q=80",
+    title: "Diabetes, Blood Pressure & Cardiac Support",
+    tagline: "Daily Maintenance Strips, Monitors & Tablets"
+  },
+  gastric: {
+    banner: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=1000&auto=format&fit=crop&q=80",
+    title: "Digestion, Acidity & Hydration Salts",
+    tagline: "Antacids, Pan-D, Digene & WHO Formula ORS"
+  },
+  pediatric: {
+    banner: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=1000&auto=format&fit=crop&q=80",
+    title: "Child & Baby Health",
+    tagline: "Pediatrician Formulated Drops, Syrups & Gentle Care"
+  },
+  derma: {
+    banner: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1000&auto=format&fit=crop&q=80",
+    title: "Skin, Hair & Derma Care",
+    tagline: "Medicated Shampoos, Antifungal Ointments & Sunscreens"
+  }
+};
 
 export const logisticsDeliveryZones = [
   { area: "ECIL South Kamala Nagar", etaMins: "20 - 35 mins", fee: 0, tag: "Free Instant Delivery" },

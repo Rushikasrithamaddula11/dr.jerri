@@ -78,7 +78,7 @@ export default function MedicineCartDrawer({
       area: formData.area,
       deliveryMode: formData.deliveryMode,
       paymentMethod: paymentMethod === 'upi' ? 'Online UPI' : paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Pay at Clinic Counter',
-      utr: utrNumber || (paymentMethod === 'upi' ? 'UPI-9949339391' : 'COD'),
+      utr: utrNumber || (paymentMethod === 'upi' ? 'ONLINE-UPI' : 'COD'),
       totalAmount: grandTotal,
       subTotal,
       savings,
@@ -324,7 +324,7 @@ export default function MedicineCartDrawer({
                     <input
                       type="tel"
                       required
-                      placeholder="e.g. 9949339391"
+                      placeholder="e.g. 9533551700"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full px-3 py-2 text-xs rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-royal bg-white"

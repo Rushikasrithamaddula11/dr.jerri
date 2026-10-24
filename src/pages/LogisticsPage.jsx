@@ -11,11 +11,11 @@ export default function LogisticsPage({ onNavigate }) {
         createdAt: '12:45 PM',
         date: 'Today',
         customerName: 'Patient',
-        phone: '9949339391',
+        phone: '9533551700',
         address: 'Plot 42, South Kamala Nagar, ECIL, Hyderabad',
         area: 'ECIL South Kamala Nagar',
         paymentMethod: 'Online UPI',
-        utr: '9949339391-TXN',
+        utr: 'TXN-ONLINE',
         totalAmount: 505,
         items: [
           { name: 'Shelcal XT (Calcium + Vitamin D3 + Folate)', qty: 1, price: 310, pack: 'Strip of 15 Tablets' },

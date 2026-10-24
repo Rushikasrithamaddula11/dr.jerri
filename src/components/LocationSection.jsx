@@ -18,7 +18,7 @@ export default function LocationSection() {
             </h2>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Drjerrri Poly Clinic, Diagnostics & Pharmacy is easily accessible for patients and families from South Kamala Nagar, Moula Ali, Kushaiguda, A.S. Rao Nagar, and surrounding Hyderabad localities.
+              Dr. Jerri Poly Clinic, Diagnostics & Pharmacy is easily accessible for patients and families from South Kamala Nagar, Moula Ali, Kushaiguda, A.S. Rao Nagar, and surrounding Hyderabad localities.
             </p>
 
             <div className="bg-purple-50/70 rounded-3xl p-5 border border-purple-200 space-y-3.5 text-xs sm:text-sm">
@@ -71,7 +71,7 @@ export default function LocationSection() {
                 className="w-full sm:w-auto flex items-center justify-center gap-2 bg-royal-dark hover:bg-royal active:scale-95 text-white font-bold py-3 px-5 rounded-2xl text-xs sm:text-sm transition shadow-md shadow-royal/20"
               >
                 <i className="fa-solid fa-phone"></i>
-                <span>Call: 9533551700</span>
+                <span>Call: {clinicInfo.phone}</span>
               </a>
             </div>
 
@@ -82,7 +82,7 @@ export default function LocationSection() {
             <div className="bg-white rounded-3xl p-3 border border-purple-200 shadow-xl overflow-hidden">
               <div className="rounded-2xl overflow-hidden h-72 sm:h-80 w-full relative bg-purple-50">
                 <iframe
-                  title="Drjerrri Poly Clinic Location"
+                  title="Dr. Jerri Poly Clinic Location"
                   src="https://maps.google.com/maps?q=ECIL+South+Kamala+Nagar+Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   className="w-full h-full border-0"
                   loading="lazy"

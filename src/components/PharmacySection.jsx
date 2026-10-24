@@ -13,20 +13,30 @@ export default function PharmacySection({ onOpenPharmacyOrder }) {
               <i className="fa-solid fa-pills text-purple-600"></i> 24/7 In-House Pharmacy
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-royal-dark font-display tracking-tight">
-              Drjerrri In-House Medical Pharmacy
+              Dr. Jerri In-House Medical Pharmacy & Online Store
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
               No need to wander around for medicines after doctor consultation! Get 100% genuine prescribed drugs, emergency saline, injections, surgical items, and healthcare essentials right inside our clinic.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <button
+              onClick={() => {
+                const el = document.getElementById('pharmacy-store-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full sm:w-auto bg-royal hover:bg-royal-dark active:scale-95 text-white font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-royal/20 transition flex items-center justify-center gap-1.5"
+            >
+              <i className="fa-solid fa-store"></i>
+              <span>Order Online & Pay via UPI</span>
+            </button>
             <button
               onClick={() => onOpenPharmacyOrder()}
-              className="w-full sm:w-auto bg-royal hover:bg-royal-dark active:scale-95 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-royal/20 transition flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto bg-purple-50 hover:bg-purple-100 text-royal-dark border border-purple-200 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-1.5"
             >
-              <i className="fa-brands fa-whatsapp text-sm"></i>
-              <span>Send Prescription on WhatsApp</span>
+              <i className="fa-brands fa-whatsapp text-sm text-royal"></i>
+              <span>Upload Prescription</span>
             </button>
           </div>
         </div>

@@ -3,8 +3,8 @@ import { clinicInfo } from '../data/clinicData';
 
 export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick, onSearch, searchQuery }) {
   const [opdStatus, setOpdStatus] = useState({
-    title: 'Drjerrri Poly Clinic Open Daily',
-    subtitle: 'Consultations, Diagnostics & Pharmacy Services Active'
+    title: 'Dr. Jerri Poly Clinic Open Daily',
+    subtitle: 'Consultations, Diagnostics & Online Pharmacy Active'
   });
 
   useEffect(() => {
@@ -19,8 +19,8 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
       });
     } else if (hour >= 13 && hour < 15) {
       setOpdStatus({
-        title: 'Currently in OPD: Dr. Supriya (Gynaecologist)',
-        subtitle: 'Consultation Hours: 1:00 PM - 3:00 PM • Token Available'
+        title: 'Currently in OPD: Dr. Supriya (Gynecology & Maternity)',
+        subtitle: 'Consultation Hours: 1:00 PM - 3:00 PM • Maternity & Prenatal Tokens Available'
       });
     } else if (hour >= 18 && hour < 19 && day !== 0 && day !== 3) {
       setOpdStatus({
@@ -39,11 +39,16 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
       });
     } else {
       setOpdStatus({
-        title: 'Drjerrri Poly Clinic, Diagnostics & Pharmacy',
-        subtitle: 'Diagnostics, Saline, Injections & Pharmacy open daily'
+        title: 'Dr. Jerri Poly Clinic, Diagnostics & Pharmacy',
+        subtitle: 'Diagnostics, Saline, Injections, Online Store & UPI Pay Open Daily'
       });
     }
   }, []);
+
+  const scrollToStore = () => {
+    const el = document.getElementById('pharmacy-store-section');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <div className="bg-gradient-to-b from-[#241258] via-[#3a2081] to-[#200e4e] text-white relative overflow-hidden py-8 md:py-14 border-b border-purple-900/60">
@@ -70,11 +75,11 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-display leading-[1.18] tracking-tight text-white">
                 Complete Healthcare, <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-pink-100 to-white">
-                  Diagnostics Lab & 24/7 Pharmacy
+                  Diagnostics Lab & Medicine Store
                 </span>
               </h1>
               <p className="text-xs sm:text-sm md:text-base text-purple-100/90 max-w-xl leading-relaxed pt-0.5">
-                Consult 5+ Specialist Doctors daily, book certified <b className="text-white">Blood Tests & Ultrasound Scans</b>, receive immediate <b className="text-white">Saline & Injections</b>, and get genuine medicines from our in-house pharmacy under one roof @ ECIL South Kamala Nagar.
+                Consult 5+ Specialist Doctors daily, get <b className="text-white">Maternity & Prenatal Checkups</b> with Dr. Supriya, order certified medicines online with instant UPI via <b className="text-white font-mono">{clinicInfo.upiId}</b>, and receive fast 45-min doorstep delivery in ECIL.
               </p>
             </div>
 
@@ -89,19 +94,19 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
               </button>
 
               <button
+                onClick={scrollToStore}
+                className="flex items-center justify-center gap-1.5 sm:gap-2 bg-white/20 hover:bg-white/30 active:scale-95 text-white font-black py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl sm:rounded-2xl text-[11px] sm:text-sm transition border border-white/30 backdrop-blur-md"
+              >
+                <i className="fa-solid fa-store text-pink-200 text-xs sm:text-sm"></i>
+                <span>Medicine Store</span>
+              </button>
+
+              <button
                 onClick={() => onDiagnosticsClick()}
                 className="flex items-center justify-center gap-1.5 sm:gap-2 bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl sm:rounded-2xl text-[11px] sm:text-sm transition border border-white/20 backdrop-blur-md"
               >
                 <i className="fa-solid fa-microscope text-purple-200 text-xs sm:text-sm"></i>
                 <span>Diagnostics</span>
-              </button>
-
-              <button
-                onClick={() => onPharmacyClick()}
-                className="flex items-center justify-center gap-1.5 sm:gap-2 bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl sm:rounded-2xl text-[11px] sm:text-sm transition border border-white/20 backdrop-blur-md"
-              >
-                <i className="fa-brands fa-whatsapp text-white text-xs sm:text-base"></i>
-                <span>Order Meds</span>
               </button>
 
               <a
@@ -117,15 +122,15 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
             <div className="pt-1 flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs text-purple-200">
               <div className="flex items-center gap-1.5 font-bold text-white text-[10px] sm:text-xs">
                 <i className="fa-solid fa-circle-check text-purple-300"></i>
-                <span>5 Specialist Doctors Daily</span>
+                <span>Maternity & Prenatal Care</span>
               </div>
               <div className="flex items-center gap-1.5 font-bold text-white text-[10px] sm:text-xs">
                 <i className="fa-solid fa-circle-check text-purple-300"></i>
-                <span>Walk-in Saline & Injections</span>
+                <span>UPI Pay: {clinicInfo.upiId}</span>
               </div>
               <div className="flex items-center gap-1.5 font-bold text-white text-[10px] sm:text-xs">
                 <i className="fa-solid fa-circle-check text-purple-300"></i>
-                <span>In-House 24/7 Pharmacy</span>
+                <span>Realtime Order Tracking</span>
               </div>
             </div>
 
@@ -218,7 +223,19 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
                   <i className="fa-solid fa-user-doctor"></i>
                 </div>
                 <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-purple-200 transition">Specialist Doctors</h4>
-                <p className="text-[10px] text-purple-200 mt-0.5 leading-tight">5 Daily Consultants</p>
+                <p className="text-[10px] text-purple-200 mt-0.5 leading-tight">Maternity & Gynaec</p>
+              </div>
+
+              {/* Online Store & E-Commerce */}
+              <div
+                onClick={scrollToStore}
+                className="bg-white/10 hover:bg-white/20 active:scale-95 cursor-pointer backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-white/20 transition group"
+              >
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white text-royal flex items-center justify-center text-sm sm:text-lg mb-1.5 sm:mb-2 shadow-md shadow-black/10 group-hover:scale-105 transition-transform">
+                  <i className="fa-solid fa-store"></i>
+                </div>
+                <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-purple-200 transition">Medicine Store</h4>
+                <p className="text-[10px] text-purple-200 mt-0.5 leading-tight">Instant UPI Payment</p>
               </div>
 
               {/* Diagnostics Lab */}
@@ -231,18 +248,6 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
                 </div>
                 <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-purple-200 transition">Diagnostics Lab</h4>
                 <p className="text-[10px] text-purple-200 mt-0.5 leading-tight">Blood Tests & Scans</p>
-              </div>
-
-              {/* 24/7 Pharmacy */}
-              <div
-                onClick={() => onPharmacyClick()}
-                className="bg-white/10 hover:bg-white/20 active:scale-95 cursor-pointer backdrop-blur-md rounded-2xl p-3 sm:p-3.5 border border-white/20 transition group"
-              >
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white text-royal flex items-center justify-center text-sm sm:text-lg mb-1.5 sm:mb-2 shadow-md shadow-black/10 group-hover:scale-105 transition-transform">
-                  <i className="fa-solid fa-pills"></i>
-                </div>
-                <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-purple-200 transition">24/7 Pharmacy</h4>
-                <p className="text-[10px] text-purple-200 mt-0.5 leading-tight">Genuine Medicines</p>
               </div>
 
               {/* Walk-in Saline & Injections */}
@@ -267,8 +272,8 @@ export default function Hero({ onBookClick, onPharmacyClick, onDiagnosticsClick,
               <div className="flex -space-x-1.5 shrink-0">
                 <img src="/images/dr_harika.jpg" alt="Doctor" className="w-7 h-7 rounded-full object-cover object-top border-2 border-white" />
                 <img src="/images/dr_supriya.jpg" alt="Doctor" className="w-7 h-7 rounded-full object-cover object-top border-2 border-white" />
-                <img src="/images/dr_subash_reddy.jpg" alt="Doctor" className="w-7 h-7 rounded-full object-cover object-top border-2 border-white" />
-                <img src="/images/dr_rama_krishna.jpg" alt="Doctor" className="w-7 h-7 rounded-full object-cover object-top border-2 border-white" />
+                <img src="/images/dr_subash.jpg" alt="Doctor" className="w-7 h-7 rounded-full object-cover object-top border-2 border-white" />
+                <img src="/images/dr_ramakrishna.jpg" alt="Doctor" className="w-7 h-7 rounded-full object-cover object-top border-2 border-white" />
                 <img src="/images/dr_srilekha.jpg" alt="Doctor" className="w-7 h-7 rounded-full object-cover object-top border-2 border-white" />
               </div>
               <div className="text-[10px] sm:text-[11px] text-purple-100 font-semibold truncate text-right">

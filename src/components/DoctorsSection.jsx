@@ -6,8 +6,8 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
 
   const categories = [
     { id: 'all', label: 'All Specialists' },
+    { id: 'gynaec', label: '⭐ Gynecology & Maternity (Recommended)' },
     { id: 'general', label: 'General Physicians' },
-    { id: 'gynaec', label: 'Gynaecology & Maternity' },
     { id: 'derma', label: 'Dermatology (Skin & Hair)' },
     { id: 'pediatric', label: 'Pediatrics (Child Care)' },
   ];
@@ -31,7 +31,7 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
               Consult Our Expert Doctors
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Daily OPD consultations with experienced General Physicians, Gynaecologists, Dermatologists, and Pediatricians.
+              Daily OPD consultations with experienced Gynecologists, General Physicians, Dermatologists, and Pediatricians.
             </p>
           </div>
         </div>
@@ -55,110 +55,130 @@ export default function DoctorsSection({ doctors, onBookClick, onViewFlyer }) {
 
         {/* Doctors Grid (1 col mobile, 2 col tablet, 3 col desktop) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((doc) => (
-            <div
-              key={doc.id}
-              id={doc.id}
-              className="bg-white rounded-3xl border border-purple-200 shadow-sm hover:shadow-xl hover:border-royal transition-all overflow-hidden flex flex-col justify-between group"
-            >
-              <div>
-                {/* Doctor Head Info */}
-                <div className="p-4 sm:p-5 flex gap-3 sm:gap-4 items-start">
-                  <div className="relative w-20 h-28 sm:w-24 sm:h-32 rounded-2xl overflow-hidden bg-purple-50 shrink-0 border border-purple-200 shadow-inner">
-                    <img
-                      src={doc.photo}
-                      alt={doc.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <span className="absolute bottom-1.5 left-1.5 bg-royal/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-bold px-1.5 sm:px-2 py-0.5 rounded-md">
-                      {doc.qualifications}
-                    </span>
+          {filtered.map((doc) => {
+            const isGynac = doc.id === 'dr-supriya' || doc.category === 'gynaec';
+            return (
+              <div
+                key={doc.id}
+                id={doc.id}
+                className={`bg-white rounded-3xl border shadow-sm hover:shadow-xl hover:border-royal transition-all overflow-hidden flex flex-col justify-between group relative ${
+                  isGynac ? 'border-2 border-royal shadow-purple-200/50' : 'border-purple-200'
+                }`}
+              >
+                {/* Recommended Badge for Gynecology (Dr. Supriya) */}
+                {isGynac && (
+                  <div className="bg-gradient-to-r from-royal via-purple-700 to-pink-600 text-white text-[10px] sm:text-[11px] font-black uppercase tracking-wider py-1 px-4 text-center shadow-sm flex items-center justify-center gap-1.5">
+                    <i className="fa-solid fa-star text-amber-300 text-[10px]"></i>
+                    <span>Recommended: Maternity & Prenatal Checkup</span>
                   </div>
+                )}
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-royal bg-purple-100 px-2 sm:px-2.5 py-0.5 rounded-md truncate border border-purple-200">
-                        {doc.categoryLabel}
+                <div>
+                  {/* Doctor Head Info */}
+                  <div className="p-4 sm:p-5 flex gap-3 sm:gap-4 items-start">
+                    <div className="relative w-20 h-28 sm:w-24 sm:h-32 rounded-2xl overflow-hidden bg-purple-50 shrink-0 border border-purple-200 shadow-inner">
+                      <img
+                        src={doc.photo}
+                        alt={doc.name}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <span className="absolute bottom-1.5 left-1.5 bg-royal/90 backdrop-blur-sm text-white text-[8px] sm:text-[9px] font-bold px-1.5 sm:px-2 py-0.5 rounded-md">
+                        {doc.qualifications}
                       </span>
-                      {doc.regNo && (
-                        <span className="text-[9px] sm:text-[10px] text-purple-700 font-mono shrink-0">
-                          {doc.regNo}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-royal bg-purple-100 px-2 sm:px-2.5 py-0.5 rounded-md truncate border border-purple-200">
+                          {doc.categoryLabel}
                         </span>
-                      )}
-                    </div>
+                        {doc.regNo && (
+                          <span className="text-[9px] sm:text-[10px] text-purple-700 font-mono shrink-0">
+                            {doc.regNo}
+                          </span>
+                        )}
+                      </div>
 
-                    <h3 className="text-sm sm:text-lg font-black text-royal-dark font-display leading-snug">
-                      {doc.name}
-                    </h3>
-                    <p className="text-xs text-purple-800 font-semibold truncate">
-                      {doc.specialty}
+                      <h3 className="text-sm sm:text-lg font-black text-royal-dark font-display leading-snug">
+                        {doc.name}
+                      </h3>
+                      <p className="text-xs text-purple-800 font-semibold truncate">
+                        {doc.specialty}
+                      </p>
+
+                      <div className="mt-2 inline-flex items-center gap-1.5 bg-purple-50 text-royal-dark text-[10px] sm:text-[11px] font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border border-purple-200 max-w-full">
+                        <i className="fa-regular fa-clock text-royal text-[10px] shrink-0"></i>
+                        <span className="truncate">{doc.timings}</span>
+                      </div>
+
+                      <div className="mt-1 text-[10px] text-royal font-bold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-royal shrink-0"></span>
+                        <span className="truncate">{doc.availability}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Subtitle / Quote */}
+                  <div className="px-4 sm:px-5 pb-2 text-[11px] text-purple-900 italic font-medium leading-relaxed">
+                    "{doc.subtitle}"
+                  </div>
+
+                  {/* Treatments List */}
+                  <div className="px-4 sm:px-5 pb-4">
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                      Focus Areas & Treatments:
                     </p>
-
-                    <div className="mt-2 inline-flex items-center gap-1.5 bg-purple-50 text-royal-dark text-[10px] sm:text-[11px] font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border border-purple-200 max-w-full">
-                      <i className="fa-regular fa-clock text-royal text-[10px] shrink-0"></i>
-                      <span className="truncate">{doc.timings}</span>
-                    </div>
-
-                    <div className="mt-1 text-[10px] text-royal font-bold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-royal shrink-0"></span>
-                      <span className="truncate">{doc.availability}</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {doc.treatments.map((t, idx) => {
+                        const isRecommendedItem = t.toLowerCase().includes('maternity') || t.toLowerCase().includes('prenatal');
+                        return (
+                          <span
+                            key={idx}
+                            className={`text-[10px] sm:text-[11px] font-medium px-2 sm:px-2.5 py-0.5 rounded-md border transition ${
+                              isRecommendedItem
+                                ? 'bg-purple-100 text-royal font-extrabold border-royal/40 shadow-xs ring-1 ring-royal/20'
+                                : 'bg-royal-subtle hover:bg-purple-100 text-royal-dark border-purple-100'
+                            }`}
+                          >
+                            {t}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
 
-                {/* Subtitle / Quote */}
-                <div className="px-4 sm:px-5 pb-2 text-[11px] text-purple-900 italic font-medium leading-relaxed">
-                  "{doc.subtitle}"
-                </div>
-
-                {/* Treatments List */}
-                <div className="px-4 sm:px-5 pb-4">
-                  <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-                    Focus Areas & Treatments:
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {doc.treatments.map((t, idx) => (
-                      <span
-                        key={idx}
-                        className="bg-royal-subtle hover:bg-purple-100 text-royal-dark text-[10px] sm:text-[11px] font-medium px-2 sm:px-2.5 py-0.5 rounded-md border border-purple-100 transition"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Footer Actions */}
-              <div className="bg-purple-50/70 border-t border-purple-100 p-3 sm:p-3.5 px-4 sm:px-5 flex items-center justify-between gap-2">
-                <button
-                  onClick={() => onViewFlyer(doc.flyer, `${doc.name} - ${doc.specialty}`)}
-                  className="text-xs font-bold text-royal hover:text-royal-dark flex items-center gap-1.5 py-1.5 px-2 rounded-lg hover:bg-white transition"
-                >
-                  <i className="fa-regular fa-image"></i>
-                  <span>Poster</span>
-                </button>
-
-                <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                  <a
-                    href={`tel:${clinicInfo.phone}`}
-                    className="w-8 h-8 rounded-xl bg-white border border-purple-200 text-royal hover:bg-royal hover:text-white flex items-center justify-center text-xs transition shadow-sm shrink-0"
-                    title="Call Clinic"
-                  >
-                    <i className="fa-solid fa-phone text-[11px]"></i>
-                  </a>
+                {/* Card Footer Actions */}
+                <div className="bg-purple-50/70 border-t border-purple-100 p-3 sm:p-3.5 px-4 sm:px-5 flex items-center justify-between gap-2">
                   <button
-                    onClick={() => onBookClick(`${doc.name} (${doc.specialty} - ${doc.timings})`)}
-                    className="bg-royal hover:bg-royal-dark active:scale-95 text-white text-xs font-bold px-3 sm:px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5"
+                    onClick={() => onViewFlyer(doc.flyer, `${doc.name} - ${doc.specialty}`)}
+                    className="text-xs font-bold text-royal hover:text-royal-dark flex items-center gap-1.5 py-1.5 px-2 rounded-lg hover:bg-white transition"
                   >
-                    <i className="fa-regular fa-calendar-check text-[10px]"></i>
-                    <span>Book Token</span>
+                    <i className="fa-regular fa-image"></i>
+                    <span>Poster</span>
                   </button>
-                </div>
-              </div>
 
-            </div>
-          ))}
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                    <a
+                      href={`tel:${clinicInfo.phone}`}
+                      className="w-8 h-8 rounded-xl bg-white border border-purple-200 text-royal hover:bg-royal hover:text-white flex items-center justify-center text-xs transition shadow-sm shrink-0"
+                      title="Call Clinic"
+                    >
+                      <i className="fa-solid fa-phone text-[11px]"></i>
+                    </a>
+                    <button
+                      onClick={() => onBookClick(`${doc.name} (${doc.specialty} - ${doc.timings})`)}
+                      className="bg-royal hover:bg-royal-dark active:scale-95 text-white text-xs font-bold px-3 sm:px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5"
+                    >
+                      <i className="fa-regular fa-calendar-check text-[10px]"></i>
+                      <span>Book Token</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            );
+          })}
         </div>
 
       </div>

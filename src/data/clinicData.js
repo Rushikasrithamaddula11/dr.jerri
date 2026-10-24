@@ -1,13 +1,16 @@
 export const clinicInfo = {
-  name: "Drjerrri",
-  fullName: "Drjerrri Poly Clinic, Diagnostics & Pharmacy",
+  name: "Dr. Jerri",
+  fullName: "Dr. Jerri Poly Clinic, Diagnostics & Pharmacy",
   tagline: "Your Health Our Priority",
-  subtagline: "Multi-Speciality Care, Advanced Diagnostics & 24/7 In-House Pharmacy",
+  subtagline: "Multi-Speciality Care, Advanced Diagnostics, In-House Pharmacy & Fast Delivery",
   address: "@ ECIL South Kamala Nagar, Secunderabad / Hyderabad - 500062",
-  phone: "9533551700",
-  whatsapp: "919533551700",
-  emergencyNote: "Walk-ins Welcome Daily for Saline, Injections, Blood Tests, Scanning, First Aid & Pharmacy",
-  teluguNotice: "మా వద్ద డాక్టర్ సంప్రదింపులు, సలైన్, ఇంజెక్షన్లు, అధునాతన డయాగ్నస్టిక్స్ (బ్లడ్ టెస్టులు, స్కానింగ్) మరియు 24/7 ఫార్మసీ సేవలు ప్రతిరోజూ అందుబాటులో కలవు."
+  phone: "9949339391",
+  secondaryPhone: "9533551700",
+  paymentPhone: "9949339391",
+  upiId: "9949339391-3@ybl",
+  whatsapp: "919949339391",
+  emergencyNote: "Walk-ins Welcome Daily for Saline, Injections, Blood Tests, Scanning, First Aid & Medicine Delivery",
+  teluguNotice: "మా వద్ద డాక్టర్ సంప్రదింపులు, సలైన్, ఇంజెక్షన్లు, అధునాతన డయాగ్నస్టిక్స్ (బ్లడ్ టెస్టులు, స్కానింగ్) మరియు 24/7 మెడిసిన్ డెలివరీ అందుబాటులో కలవు."
 };
 
 export const doctors = [
@@ -37,26 +40,28 @@ export const doctors = [
     id: "dr-supriya",
     name: "Dr. Supriya",
     qualifications: "MBBS, DGO",
-    specialty: "Obstetrician & Gynaecologist",
+    specialty: "Obstetrician & Gynecologist (Maternity Specialist)",
     category: "gynaec",
-    categoryLabel: "Gynaecology & Maternity",
+    categoryLabel: "Gynecology & Maternity",
+    recommendedTag: "Recommended: Maternity & Prenatal Checkup",
     regNo: "Reg No: 52206",
-    subtitle: "Compassionate Care for Every Stage of Womanhood",
+    subtitle: "Recommended Maternity & Prenatal Care | Compassionate Care for Every Stage of Womanhood",
     timings: "1:00 PM to 3:00 PM",
     availability: "Daily",
     photo: "/images/dr_supriya.jpg",
     flyer: "/images/dr_supriya_flyer.png",
     accentColor: "royal",
     treatments: [
-      "High Risk Pregnancy & Prenatal Care",
+      "Maternity & Prenatal Checkup (Recommended)",
+      "High-Risk Pregnancy & Antenatal Care",
       "PCOD / PCOS & Hormonal Balance",
-      "Infertility Evaluation (HSG, IUI)",
+      "Infertility Evaluation (HSG, IUI & Scans)",
       "Irregular Periods & Bleeding Problems",
       "Family Planning & Contraceptive Guidance",
-      "Puberty & Premenopausal Issues",
-      "Abdominal & Vaginal Gynaec Surgeries"
+      "Puberty & Premenopausal Health",
+      "Abdominal & Vaginal Gynaecological Surgeries"
     ],
-    keywords: "supriya gynaecologist pregnancy prenatal delivery period pcod pcos infertility bleeding female woman baby"
+    keywords: "supriya gynecologist gynaecologist maternity prenatal checkup pregnancy delivery period pcod pcos infertility bleeding female woman baby"
   },
   {
     id: "dr-subash",
@@ -149,19 +154,19 @@ export const clinicalServices = [
   },
   {
     id: "pharmacy",
-    title: "In-House Pharmacy",
-    shortDesc: "100% genuine prescription medicines, surgicals, and healthcare essentials.",
-    badge: "24/7 In-House Store",
+    title: "In-House Pharmacy & E-Commerce",
+    shortDesc: "100% genuine prescription medicines, surgicals, and healthcare essentials delivered fast.",
+    badge: "Online & 24/7 Store",
     icon: "pills",
     iconBg: "bg-purple-100 text-purple-800",
-    detailedDesc: "Complete licensed pharmacy stocking all doctor-prescribed medications, IV fluids, disposable syringes, insulin, chronic illness drugs, pediatric syrups, and maternity supplies.",
+    detailedDesc: "Complete licensed pharmacy stocking all doctor-prescribed medications, IV fluids, disposable syringes, insulin, chronic illness drugs, pediatric syrups, and maternity supplies with online order and doorstep delivery.",
     highlights: [
       "100% authentic medicines from top pharmaceutical brands",
-      "Stocked with Saline, Injections, Dressing & Surgical items",
-      "WhatsApp prescription upload for quick packing & delivery",
+      "Online store with instant UPI payment via 9949339391-3@ybl",
+      "Real-time order logistics tracking to your doorstep",
       "Special discounts on monthly maintenance medicines"
     ],
-    keywords: "pharmacy medicines pills medical store prescription tablets syrup injection saline drugs chemist"
+    keywords: "pharmacy medicines pills medical store prescription tablets syrup injection saline drugs chemist order online"
   },
   {
     id: "saline",
@@ -202,7 +207,7 @@ export const clinicalServices = [
     badge: "Advanced Imaging",
     icon: "radiation",
     iconBg: "bg-purple-100 text-purple-800",
-    detailedDesc: "Prompt coordination for complete ultrasound and diagnostic imaging scans prescribed by our General Physicians, Gynaecologists, and Pediatricians.",
+    detailedDesc: "Prompt coordination for complete ultrasound and diagnostic imaging scans prescribed by our General Physicians, Gynecologists, and Pediatricians.",
     highlights: [
       "Abdominal & Pelvic Ultrasound scans",
       "Antenatal / Pregnancy growth & anomaly scans",
@@ -262,10 +267,10 @@ export const diagnosticsPackages = [
   },
   {
     id: "pregnancy-scan",
-    title: "Maternity & Prenatal Diagnostics",
-    tests: "Routine Antenatal Blood Panel, Urine Micro, Pelvic & Pregnancy Ultrasound",
-    badge: "Gynaec Recommended",
-    highlight: "Safe & comprehensive baby & mother growth tracking"
+    title: "Maternity & Prenatal Checkup & Scan",
+    tests: "Routine Antenatal Blood Panel (CBC, Blood Group, Rh, Sugar, HIV, HBsAg), Urine Routine & Ultrasound",
+    badge: "Gynecology Recommended",
+    highlight: "⭐ Recommended by Gynecologist: Safe & comprehensive baby & mother growth tracking"
   },
   {
     id: "master-health",
@@ -282,16 +287,16 @@ export const pharmacyFeatures = [
     desc: "100% original medicines sourced directly from leading manufacturers with strict temperature-controlled storage."
   },
   {
+    title: "Online Store & Instant UPI Pay",
+    desc: "Browse medicines online, order instantly, and pay securely via UPI ID 9949339391-3@ybl (GPay, PhonePe, Paytm, BHIM)."
+  },
+  {
+    title: "Realtime Delivery Logistics",
+    desc: "Track your medicine order live from clinic packaging to rider dispatch and doorstep arrival in 45-60 mins."
+  },
+  {
     title: "Injections, Saline & Surgicals",
-    desc: "Readily available stock of IV fluids (NS, DNS, RL), surgical bandages, disposable syringes, and sterile wound care kits."
-  },
-  {
-    title: "Order on WhatsApp",
-    desc: "Simply take a picture of your prescription and WhatsApp it to 9533551700 for quick packing and counter pickup or local delivery."
-  },
-  {
-    title: "Chronic Care Discounts",
-    desc: "Special discounted pricing for regular monthly BP, Diabetes, Heart, and Thyroid maintenance medications."
+    desc: "Stocked with IV fluids (NS, DNS, RL), surgical bandages, disposable syringes, and sterile wound care kits."
   }
 ];
 
@@ -301,14 +306,14 @@ export const reviews = [
     location: "South Kamala Nagar, ECIL",
     rating: 5,
     date: "2 days ago",
-    comment: "Came in for emergency fever and saline IV drip. Excellent care by Dr. Harika and nursing staff. Plus got all medicines right at their in-house pharmacy without running outside!"
+    comment: "Came in for emergency fever and saline IV drip. Excellent care by Dr. Harika and nursing staff. Plus ordered medicines online with instant UPI payment to 9949339391-3@ybl and had them delivered to my doorstep in 40 minutes!"
   },
   {
     name: "Pravallika K.",
     location: "ECIL Cross Roads",
     rating: 5,
     date: "1 week ago",
-    comment: "Consulted Dr. Supriya for pregnancy guidance and scans. Very compassionate and clear explanation. Clean clinic environment, fast blood reports and well-stocked pharmacy."
+    comment: "Dr. Supriya's Maternity & Prenatal Checkup is truly exceptional. Very compassionate doctor, thorough explanation of scans, and genuine pregnancy supplements delivered right to my home."
   },
   {
     name: "Srinivas Rao",
@@ -329,22 +334,26 @@ export const reviews = [
 export const faqs = [
   {
     question: "Do you have an in-house Pharmacy and Diagnostics lab?",
-    answer: "Yes! Drjerrri Poly Clinic has a complete in-house Pharmacy and Diagnostics facility. You can consult our specialist doctors, get blood tests/scans done, and collect all prescribed medicines in one single visit without traveling anywhere else."
+    answer: "Yes! Dr. Jerri Poly Clinic has a complete in-house Pharmacy and Diagnostics facility. You can consult our specialist doctors, get blood tests/scans done, and collect or order all prescribed medicines online with instant UPI payment and doorstep delivery."
+  },
+  {
+    question: "How does the Online Medicine Store & UPI Payment work?",
+    answer: "You can browse our medicine catalog, add prescribed or OTC medicines to your cart, and pay instantly via UPI ID 9949339391-3@ybl using PhonePe, Google Pay, Paytm, or BHIM. You will receive an immediate order confirmation and live logistics tracking link."
+  },
+  {
+    question: "How can I track my medicine order in real-time?",
+    answer: "Once your order is confirmed, our Realtime Logistics Tracker displays the live progress step-by-step: Pharmacist Verification -> Order Packing -> Delivery Rider Dispatch -> Live Transit -> Doorstep Arrival with rider contact details."
+  },
+  {
+    question: "Do I need an appointment for Maternity & Prenatal Checkup with Dr. Supriya?",
+    answer: "Dr. Supriya's Gynecology & Maternity OPD runs daily from 1:00 PM to 3:00 PM. We recommend booking an OPD token online or walking in early for prenatal consultations, high-risk pregnancy guidance, and ultrasound scans."
   },
   {
     question: "Do I need an appointment for Saline, Injections, or Blood Tests?",
-    answer: "No prior appointment is needed! You can walk in directly to Drjerrri Poly Clinic during working hours for Saline IV infusion, doctor-prescribed injections, dressing, and lab sample collection."
-  },
-  {
-    question: "How can I order medicines from your Pharmacy?",
-    answer: "You can walk into our clinic pharmacy directly, or simply send a photo of your doctor's prescription via WhatsApp to 9533551700. Our pharmacists will keep your medicines packed and ready."
-  },
-  {
-    question: "How fast will I receive my Blood Test reports?",
-    answer: "Routine tests such as CBC, Blood Sugar, Dengue NS1, Malaria, and Typhoid are reported on the same day, with digital reports sent directly to your WhatsApp for convenience."
+    answer: "No prior appointment is needed! You can walk in directly to Dr. Jerri Poly Clinic during working hours for Saline IV infusion, doctor-prescribed injections, dressing, and lab sample collection."
   },
   {
     question: "Where exactly is the clinic located?",
-    answer: "Drjerrri Poly Clinic, Diagnostics & Pharmacy is located at ECIL South Kamala Nagar, Secunderabad / Hyderabad. You can click 'Get Directions' on the site to navigate directly via Google Maps."
+    answer: "Dr. Jerri Poly Clinic, Diagnostics & Pharmacy is located at ECIL South Kamala Nagar, Secunderabad / Hyderabad. You can click 'Get Directions' on the site to navigate directly via Google Maps."
   }
 ];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { clinicInfo, doctors } from '../data/clinicData';
 
-export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClick }) {
+export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClick, onOpenCart, onOpenTracker }) {
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -22,11 +22,14 @@ export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClic
               <span className="text-xl font-black text-white font-display">{clinicInfo.name}</span>
             </div>
             <p className="text-purple-300 text-xs leading-relaxed">
-              Multi-Speciality Clinic, Advanced Diagnostic Lab, Ultrasound Scanning, and 24/7 In-House Pharmacy serving ECIL and South Kamala Nagar.
+              Multi-Speciality Clinic, Advanced Diagnostic Lab, Ultrasound Scanning, and 24/7 In-House Pharmacy & Online Medicine Store serving ECIL and South Kamala Nagar.
             </p>
-            <div className="pt-1">
-              <span className="bg-purple-900/60 text-purple-200 border border-purple-700/60 px-3 py-1 rounded-full text-[11px] font-bold">
+            <div className="pt-1 flex flex-col gap-1.5">
+              <span className="bg-purple-900/60 text-purple-200 border border-purple-700/60 px-3 py-1 rounded-full text-[11px] font-bold w-fit">
                 Healthy You Always
+              </span>
+              <span className="text-[11px] text-purple-300">
+                Official UPI Gateway: <strong className="text-white font-mono">{clinicInfo.upiId}</strong>
               </span>
             </div>
           </div>
@@ -36,13 +39,18 @@ export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClic
             <h4 className="text-white font-bold text-sm tracking-wide uppercase">Core Facilities</h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onDiagnosticsClick('Diagnostics')} className="hover:text-white transition flex items-center gap-1.5">
-                  <i className="fa-solid fa-microscope text-purple-400"></i> Diagnostic Lab & Scans
+                <button onClick={() => scrollTo('pharmacy-store-section')} className="hover:text-white transition flex items-center gap-1.5 font-bold text-purple-100">
+                  <i className="fa-solid fa-store text-pink-400"></i> Online Medicine Store & UPI Pay
                 </button>
               </li>
               <li>
-                <button onClick={() => onPharmacyClick()} className="hover:text-white transition flex items-center gap-1.5">
-                  <i className="fa-solid fa-pills text-purple-400"></i> 24/7 In-House Pharmacy
+                <button onClick={onOpenTracker} className="hover:text-white transition flex items-center gap-1.5">
+                  <i className="fa-solid fa-truck-fast text-purple-400"></i> Realtime Logistics Tracker
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onDiagnosticsClick('Diagnostics')} className="hover:text-white transition flex items-center gap-1.5">
+                  <i className="fa-solid fa-microscope text-purple-400"></i> Diagnostic Lab & Scans
                 </button>
               </li>
               <li>
@@ -53,11 +61,6 @@ export default function Footer({ onBookClick, onPharmacyClick, onDiagnosticsClic
               <li>
                 <button onClick={() => scrollTo('services-section')} className="hover:text-white transition flex items-center gap-1.5">
                   <i className="fa-solid fa-syringe text-purple-400"></i> Injections & Vaccinations
-                </button>
-              </li>
-              <li>
-                <button onClick={() => scrollTo('services-section')} className="hover:text-white transition flex items-center gap-1.5">
-                  <i className="fa-solid fa-kit-medical text-purple-400"></i> First Aid & Wound Dressing
                 </button>
               </li>
             </ul>

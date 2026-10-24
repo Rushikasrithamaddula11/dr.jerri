@@ -13,7 +13,7 @@ export default function DiagnosticsSection({ onBookDiagnostics }) {
               <i className="fa-solid fa-microscope text-royal"></i> Advanced Diagnostics & Scans
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-royal-dark font-display tracking-tight">
-              Drjerrri Diagnostic Lab & Ultrasound
+              Dr. Jerri Diagnostic Lab & Ultrasound
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
               Certified automated clinical analyzers & diagnostic ultrasound imaging. Accurate results delivered quickly to your WhatsApp with free doctor review.
@@ -131,7 +131,7 @@ export default function DiagnosticsSection({ onBookDiagnostics }) {
           </div>
           
           <a
-            href={`https://wa.me/${clinicInfo.whatsapp}?text=Hello%20Drjerrri%20Diagnostics,%20I%20would%20like%20to%20book%20a%20Home%20Sample%20Collection`}
+            href={`https://wa.me/${clinicInfo.whatsapp}?text=Hello%20Dr.%20Jerri%20Diagnostics,%20I%20would%20like%20to%20book%20a%20Home%20Sample%20Collection`}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto text-center bg-white hover:bg-purple-50 text-royal-dark font-black py-3 px-6 rounded-2xl text-xs sm:text-sm transition shadow shrink-0"

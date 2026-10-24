@@ -75,7 +75,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService }) {
             >
               <optgroup label="Specialist Doctors OPD">
                 <option value="Dr. Harika (MBBS - General Physician [9 AM - 4 PM])">Dr. Harika (MBBS - General Physician [9 AM - 4 PM])</option>
-                <option value="Dr. Supriya (MBBS, DGO - Gynaecologist [1 PM - 3 PM])">Dr. Supriya (MBBS, DGO - Gynaecologist [1 PM - 3 PM])</option>
+                <option value="Dr. Supriya (MBBS, DGO - Gynecologist [1 PM - 3 PM] - Recommended: Maternity & Prenatal Checkup)">⭐ Dr. Supriya (MBBS, DGO - Gynecologist [1 PM - 3 PM] - Maternity & Prenatal Recommended)</option>
                 <option value="Dr. Subash Reddy (MD - Dermatologist [6 PM - 6:30 PM])">Dr. Subash Reddy (MD - Dermatologist [6 PM - 6:30 PM])</option>
                 <option value="Dr C Rama Krishna (MBBS, DCH - Pediatrician [7 PM - 9 PM])">Dr C Rama Krishna (MBBS, DCH - Pediatrician [7 PM - 9 PM])</option>
                 <option value="Dr. Srilekha (MBBS - General & Mother-Child [9 PM - 10 PM])">Dr. Srilekha (MBBS - General & Mother-Child [9 PM - 10 PM])</option>
@@ -83,7 +83,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService }) {
               <optgroup label="Diagnostics & Scanning">
                 <option value="Diagnostics - Complete Fever Profile">Diagnostics - Complete Fever Profile</option>
                 <option value="Diagnostics - Diabetes & Blood Sugar Care">Diagnostics - Diabetes & Blood Sugar Care</option>
-                <option value="Diagnostics - Maternity & Pregnancy Ultrasound">Diagnostics - Maternity & Pregnancy Ultrasound</option>
+                <option value="Diagnostics - Maternity & Prenatal Checkup & Ultrasound Scan">⭐ Diagnostics - Maternity & Prenatal Checkup & Ultrasound Scan (Recommended)</option>
                 <option value="Diagnostics - Executive Master Health Checkup">Diagnostics - Executive Master Health Checkup</option>
                 <option value="Diagnostics - Routine Blood Tests (CBC, Thyroid, LFT, KFT)">Diagnostics - Routine Blood Tests (CBC, Thyroid, LFT, KFT)</option>
               </optgroup>

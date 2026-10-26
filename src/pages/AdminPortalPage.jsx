@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { clinicInfo } from '../data/clinicData';
 import { medicineCategories, medicinesList } from '../data/medicinesData';
+import { broadcastRealtimeEvent, subscribeToRealtimeEvents } from '../utils/realtimeSync';
 
 export default function AdminPortalPage({
   currentUser,
@@ -140,6 +141,19 @@ export default function AdminPortalPage({
     }
   }, [orders]);
 
+  // Realtime listener for incoming patient orders & payments
+  useEffect(() => {
+    const unsub = subscribeToRealtimeEvents((event) => {
+      if (event.type === 'ORDER_CREATED' && event.payload) {
+        setOrders((prev) => {
+          if (prev.some((o) => o.orderId === event.payload.orderId)) return prev;
+          return [event.payload, ...prev];
+        });
+      }
+    });
+    return unsub;
+  }, []);
+
   // Delivery riders list
   const deliveryFleet = [
     { id: 'rider-1', name: 'Kishore Kumar', phone: '9533551700', vehicle: 'Hero Electric (TS 08 EK 4921)', status: 'Active (On Delivery)', ordersDelivered: 14 },
@@ -261,6 +275,7 @@ export default function AdminPortalPage({
           : o
       )
     );
+    broadcastRealtimeEvent('PAYMENT_VERIFIED', { orderId });
   };
 
   // Order Actions: Allocate Rider
@@ -278,6 +293,7 @@ export default function AdminPortalPage({
           : o
       )
     );
+    broadcastRealtimeEvent('RIDER_ASSIGNED', { orderId, riderName, riderPhone: rider ? rider.phone : '9533551700' });
   };
 
   // Order Actions: Update Delivery Stage
@@ -285,6 +301,7 @@ export default function AdminPortalPage({
     setOrders((prev) =>
       prev.map((o) => (o.orderId === orderId ? { ...o, step: nextStep } : o))
     );
+    broadcastRealtimeEvent('STEP_UPDATED', { orderId, nextStep });
   };
 
   // If NOT authorized as admin, display clean login prompt

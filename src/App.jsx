@@ -18,6 +18,7 @@ import DiagnosticsPage from './pages/DiagnosticsPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
 import AuthPage from './pages/AuthPage';
+import LandingPage from './pages/LandingPage';
 import AdminPortalPage from './pages/AdminPortalPage';
 
 import { doctors, clinicalServices } from './data/clinicData';
@@ -71,7 +72,7 @@ export default function App() {
     if (user.role === 'admin') {
       handleNavigate('admin');
     } else {
-      handleNavigate('store');
+      handleNavigate('home');
     }
   };
 
@@ -283,6 +284,16 @@ export default function App() {
   }, [searchQuery]);
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
+
+  // If user is not authenticated and is NOT requesting the isolated internal staff portal (#/admin),
+  // require sign in and render the dedicated Landing Page with integrated Sign In and Sign Up!
+  if (!currentUser && currentPage !== 'admin') {
+    return (
+      <LandingPage
+        onLoginSuccess={handleLoginSuccess}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white w-full overflow-x-hidden text-slate-800 flex flex-col justify-between">

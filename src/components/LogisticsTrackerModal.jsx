@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { clinicInfo } from '../data/clinicData';
+import { subscribeToRealtimeEvents } from '../utils/realtimeSync';
 
 export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, onSelectOrder }) {
   if (!isOpen) return null;
@@ -50,6 +51,38 @@ export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, on
       setProgressPercent((prev) => (prev < 92 ? prev + 1 : 92));
     }, 12000); // updates every 12 seconds
     return () => clearInterval(timer);
+  }, []);
+
+  // Realtime Live Subscription for Payment & Step Updates
+  useEffect(() => {
+    const unsub = subscribeToRealtimeEvents((event) => {
+      if (event.type === 'PAYMENT_VERIFIED' && event.payload) {
+        setOrder((prev) =>
+          prev && prev.orderId === event.payload.orderId
+            ? { ...prev, paymentStatus: 'verified', paymentMethod: 'Online UPI (Verified)' }
+            : prev
+        );
+      }
+      if (event.type === 'RIDER_ASSIGNED' && event.payload) {
+        setOrder((prev) =>
+          prev && prev.orderId === event.payload.orderId
+            ? { ...prev, riderName: event.payload.riderName, riderPhone: event.payload.riderPhone || '9533551700' }
+            : prev
+        );
+      }
+      if (event.type === 'STEP_UPDATED' && event.payload) {
+        setOrder((prev) => {
+          if (prev && prev.orderId === event.payload.orderId) {
+            const nextSt = event.payload.nextStep;
+            setCurrentStep(nextSt);
+            setProgressPercent(nextSt === 4 ? 100 : nextSt === 3 ? 72 : nextSt === 2 ? 48 : 25);
+            return { ...prev, step: nextSt };
+          }
+          return prev;
+        });
+      }
+    });
+    return unsub;
   }, []);
 
   const steps = [

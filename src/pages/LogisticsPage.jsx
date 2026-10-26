@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { clinicInfo } from '../data/clinicData';
 import { logisticsDeliveryZones } from '../data/medicinesData';
+import { subscribeToRealtimeEvents } from '../utils/realtimeSync';
 
 export default function LogisticsPage({ onNavigate }) {
   const [activeOrder, setActiveOrder] = useState(() => {
@@ -42,6 +43,37 @@ export default function LogisticsPage({ onNavigate }) {
       setProgressPercent((prev) => (prev < 94 ? prev + 1 : 94));
     }, 10000);
     return () => clearInterval(timer);
+  }, []);
+
+  // Realtime Live Subscription for Order & Payment Updates
+  useEffect(() => {
+    const unsub = subscribeToRealtimeEvents((event) => {
+      if (event.type === 'ORDER_CREATED' && event.payload) {
+        setActiveOrder(event.payload);
+      }
+      if (event.type === 'PAYMENT_VERIFIED' && event.payload) {
+        setActiveOrder((prev) =>
+          prev && prev.orderId === event.payload.orderId
+            ? { ...prev, paymentStatus: 'verified', paymentMethod: 'Online UPI (Verified)' }
+            : prev
+        );
+      }
+      if (event.type === 'RIDER_ASSIGNED' && event.payload) {
+        setActiveOrder((prev) =>
+          prev && prev.orderId === event.payload.orderId
+            ? { ...prev, riderName: event.payload.riderName, riderPhone: event.payload.riderPhone || '9533551700' }
+            : prev
+        );
+      }
+      if (event.type === 'STEP_UPDATED' && event.payload) {
+        setActiveOrder((prev) =>
+          prev && prev.orderId === event.payload.orderId
+            ? { ...prev, step: event.payload.nextStep }
+            : prev
+        );
+      }
+    });
+    return unsub;
   }, []);
 
   const handleSearchOrder = (e) => {

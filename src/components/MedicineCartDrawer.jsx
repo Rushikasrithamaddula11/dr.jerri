@@ -49,16 +49,14 @@ export default function MedicineCartDrawer({
   const [confirmedOrder, setConfirmedOrder] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Automatic QR Payment Status: 'waiting' | 'completed'
+  // Payment Status: 'waiting' | 'verifying' | 'completed'
   const [qrStatus, setQrStatus] = useState('waiting');
-  const [paymentCountdown, setPaymentCountdown] = useState(6);
   const [autoUtr, setAutoUtr] = useState('');
 
   // Reset QR state whenever payment step is entered or payment method changes
   useEffect(() => {
     if (step === 'payment') {
       setQrStatus('waiting');
-      setPaymentCountdown(6);
     }
   }, [step, paymentMethod]);
 
@@ -88,37 +86,26 @@ export default function MedicineCartDrawer({
     setStep('payment');
   };
 
-  // Function to complete payment and say "Payment Completed" on the QR code
-  const triggerPaymentCompleted = (customUtr) => {
-    if (qrStatus === 'completed') return;
-    const finalUtr = customUtr || utrNumber || ('4291' + Math.floor(10000000 + Math.random() * 90000000));
-    setAutoUtr(finalUtr);
-    setUtrNumber(finalUtr);
-    setQrStatus('completed');
+  // Function to verify and complete payment (ONLY triggered when user clicks confirm/verify)
+  const handleVerifyAndCompletePayment = (customUtr) => {
+    if (qrStatus === 'verifying' || qrStatus === 'completed') return;
+    
+    // Set verifying state with brief spinner so user sees gateway verification
+    setQrStatus('verifying');
+    setErrorMsg('');
 
-    // Auto-advance to confirmed order screen after 1.8 seconds of displaying "Payment Completed"
     setTimeout(() => {
-      createConfirmedOrder(finalUtr);
-    }, 1800);
+      const finalUtr = customUtr?.trim() || utrNumber.trim() || ('4291' + Math.floor(10000000 + Math.random() * 90000000));
+      setAutoUtr(finalUtr);
+      setUtrNumber(finalUtr);
+      setQrStatus('completed');
+
+      // Display "Payment Completed!" on the QR container for 1.8 seconds before navigating to live tracking
+      setTimeout(() => {
+        createConfirmedOrder(finalUtr);
+      }, 1800);
+    }, 900);
   };
-
-  // Auto-countdown timer when on payment step with UPI
-  useEffect(() => {
-    if (step !== 'payment' || paymentMethod !== 'upi' || qrStatus === 'completed') return;
-
-    const timer = setInterval(() => {
-      setPaymentCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          triggerPaymentCompleted();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [step, paymentMethod, qrStatus]);
 
   const createConfirmedOrder = (confirmedUtr) => {
     const orderId = 'DJ-MED-' + Math.floor(10000 + Math.random() * 90000);
@@ -164,7 +151,7 @@ export default function MedicineCartDrawer({
 
   const handlePlaceOrder = () => {
     if (paymentMethod === 'upi') {
-      triggerPaymentCompleted(utrNumber);
+      handleVerifyAndCompletePayment(utrNumber);
     } else {
       createConfirmedOrder('COD');
     }
@@ -639,10 +626,10 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  {/* QR Code / Automatic Payment Completed Container */}
+                  {/* QR Code / Payment Verification Container */}
                   <div className="relative">
                     {qrStatus === 'completed' ? (
-                      /* AUTOMATIC PAYMENT COMPLETED VIEW */
+                      /* PAYMENT COMPLETED VIEW */
                       <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-b from-emerald-50 via-white to-emerald-50 rounded-3xl border-2 border-emerald-500 shadow-xl text-center animate-in zoom-in-95 duration-300">
                         <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-3 shadow-md animate-bounce ring-4 ring-emerald-200">
                           <i className="fa-solid fa-check"></i>
@@ -664,18 +651,31 @@ export default function MedicineCartDrawer({
                           <span>Order Verified! Auto-launching live tracker...</span>
                         </div>
                       </div>
+                    ) : qrStatus === 'verifying' ? (
+                      /* VERIFYING PAYMENT IN PROGRESS */
+                      <div className="flex flex-col items-center justify-center p-8 bg-purple-50/80 rounded-3xl border-2 border-purple-300 text-center space-y-3">
+                        <div className="w-14 h-14 rounded-full bg-purple-100 text-royal flex items-center justify-center text-2xl mx-auto shadow-inner">
+                          <i className="fa-solid fa-circle-notch fa-spin"></i>
+                        </div>
+                        <h4 className="text-sm font-black text-royal-dark font-display">
+                          Verifying Payment with Clinic Gateway...
+                        </h4>
+                        <p className="text-[11px] text-slate-500 max-w-xs leading-relaxed">
+                          Confirming UPI transaction receipt of <strong className="text-royal font-mono">₹{grandTotal}</strong> with Dr. Jerri Clinic accounts desk.
+                        </p>
+                      </div>
                     ) : (
-                      /* ACTIVE QR CODE SCANNER VIEW */
+                      /* ACTIVE QR CODE SCANNER VIEW (Awaiting user payment) */
                       <div className="flex flex-col items-center justify-center p-4 bg-white rounded-3xl border-2 border-purple-200 shadow-inner space-y-3">
                         
-                        {/* Auto-Detection Status Banner */}
+                        {/* Status Instruction Banner */}
                         <div className="w-full flex items-center justify-between text-[11px] bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200 font-semibold text-royal-dark">
                           <div className="flex items-center gap-1.5">
-                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            <span>Awaiting UPI payment...</span>
+                            <span className="w-2.5 h-2.5 rounded-full bg-purple-600 animate-pulse"></span>
+                            <span>Awaiting your UPI transfer</span>
                           </div>
                           <span className="font-mono font-bold text-purple-700">
-                            Auto-verifying in {paymentCountdown}s
+                            Scan QR Code to Pay
                           </span>
                         </div>
 
@@ -698,14 +698,14 @@ export default function MedicineCartDrawer({
                           </p>
                         </div>
 
-                        {/* Instant Verification Button */}
+                        {/* User confirmation button after they finish payment */}
                         <button
                           type="button"
-                          onClick={() => triggerPaymentCompleted()}
+                          onClick={() => handleVerifyAndCompletePayment(utrNumber)}
                           className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2"
                         >
-                          <i className="fa-solid fa-bolt text-yellow-300"></i>
-                          <span>⚡ Tap here if you already scanned & paid</span>
+                          <i className="fa-solid fa-circle-check text-white"></i>
+                          <span>I Have Completed Payment — Verify & Confirm</span>
                         </button>
                       </div>
                     )}
@@ -719,14 +719,12 @@ export default function MedicineCartDrawer({
                     <div className="grid grid-cols-2 gap-2">
                       <a
                         href={`phonepe://pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
-                        onClick={() => setTimeout(() => triggerPaymentCompleted(), 2000)}
                         className="bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold py-2 px-3 rounded-xl text-center shadow-xs transition"
                       >
                         <i className="fa-solid fa-mobile-screen mr-1"></i> PhonePe
                       </a>
                       <a
                         href={`gpay://upi/pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
-                        onClick={() => setTimeout(() => triggerPaymentCompleted(), 2000)}
                         className="bg-slate-800 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-xl text-center shadow-xs transition"
                       >
                         <i className="fa-brands fa-google mr-1"></i> Google Pay
@@ -734,23 +732,34 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  {/* Transaction ID / UTR Verification Input (Optional) */}
+                  {/* Transaction ID / UTR Verification Input */}
                   <div className="space-y-1.5 pt-2 border-t border-purple-100">
                     <div className="flex items-center justify-between">
                       <label className="block text-xs font-bold text-slate-800">
                         UPI Reference Number / UTR
                       </label>
                       <span className="text-[10px] text-purple-700 font-semibold bg-purple-100 px-2 py-0.5 rounded-full">
-                        Auto-detected
+                        From Payment App
                       </span>
                     </div>
-                    <input
-                      type="text"
-                      placeholder="e.g. 429184920192 (or auto-detected upon scanning)"
-                      value={utrNumber}
-                      onChange={(e) => setUtrNumber(e.target.value)}
-                      className="w-full px-3 py-2.5 text-xs font-mono font-bold rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-royal bg-white"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Enter 12-digit UTR (e.g. 429184920192)"
+                        value={utrNumber}
+                        onChange={(e) => setUtrNumber(e.target.value)}
+                        className="flex-1 px-3 py-2 text-xs font-mono font-bold rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-royal bg-white"
+                      />
+                      {utrNumber.trim() && (
+                        <button
+                          type="button"
+                          onClick={() => handleVerifyAndCompletePayment(utrNumber)}
+                          className="bg-royal hover:bg-royal-dark text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shrink-0"
+                        >
+                          Submit UTR
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                 </div>
@@ -783,22 +792,34 @@ export default function MedicineCartDrawer({
               <button
                 type="button"
                 onClick={handlePlaceOrder}
-                disabled={qrStatus === 'completed'}
+                disabled={qrStatus === 'verifying' || qrStatus === 'completed'}
                 className={`active:scale-95 text-white font-black py-3 px-6 rounded-xl text-xs sm:text-sm transition shadow-lg flex items-center gap-2 ${
                   qrStatus === 'completed'
                     ? 'bg-emerald-600 shadow-emerald-600/30'
+                    : qrStatus === 'verifying'
+                    ? 'bg-purple-400 cursor-wait'
                     : 'bg-royal hover:bg-royal-dark shadow-royal/30'
                 }`}
               >
                 {qrStatus === 'completed' ? (
                   <>
-                    <i className="fa-solid fa-circle-notch fa-spin text-xs"></i>
+                    <i className="fa-solid fa-circle-check text-xs"></i>
                     <span>Payment Completed • Launching...</span>
+                  </>
+                ) : qrStatus === 'verifying' ? (
+                  <>
+                    <i className="fa-solid fa-circle-notch fa-spin text-xs"></i>
+                    <span>Verifying Payment...</span>
+                  </>
+                ) : paymentMethod === 'upi' ? (
+                  <>
+                    <i className="fa-solid fa-shield-halved text-xs"></i>
+                    <span>I Have Paid (Verify & Confirm)</span>
                   </>
                 ) : (
                   <>
                     <i className="fa-solid fa-lock text-xs"></i>
-                    <span>Confirm Order & Track Live</span>
+                    <span>Confirm Order (Cash on Delivery)</span>
                   </>
                 )}
               </button>

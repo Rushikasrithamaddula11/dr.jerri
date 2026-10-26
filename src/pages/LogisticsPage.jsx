@@ -143,7 +143,17 @@ export default function LogisticsPage({ onNavigate }) {
 
               <div className="text-left sm:text-right">
                 <span className="text-base font-black text-royal font-mono">₹{activeOrder.totalAmount}</span>
-                <span className="text-[10px] text-slate-400 block font-semibold">Online Payment (Verified)</span>
+                <span className={`text-[10px] block font-semibold ${
+                  activeOrder.paymentStatus === 'verified'
+                    ? 'text-emerald-700'
+                    : 'text-amber-700'
+                }`}>
+                  {activeOrder.paymentStatus === 'verified'
+                    ? '● Payment Verified'
+                    : activeOrder.paymentMethod && activeOrder.paymentMethod.includes('Cash')
+                    ? '💵 Pay on Delivery'
+                    : '⏳ Awaiting Verification'}
+                </span>
               </div>
             </div>
 

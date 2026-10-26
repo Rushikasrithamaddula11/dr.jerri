@@ -86,30 +86,37 @@ export default function MedicineCartDrawer({
     setStep('payment');
   };
 
-  // Function to verify and complete payment (ONLY triggered when user clicks confirm/verify)
+  // Function to verify and submit payment (Requires actual UTR from patient's UPI app)
   const handleVerifyAndCompletePayment = (customUtr) => {
     if (qrStatus === 'verifying' || qrStatus === 'completed') return;
     
-    // Set verifying state with brief spinner so user sees gateway verification
+    const utrToUse = (customUtr || utrNumber || '').trim();
+    if (!utrToUse) {
+      setErrorMsg('⚠️ Please enter the 12-digit UPI Reference Number (UTR) from your PhonePe/GPay app before submitting.');
+      return;
+    }
+    if (utrToUse.length < 8) {
+      setErrorMsg('⚠️ Please enter a valid UPI Reference / UTR number (8 to 12 digits).');
+      return;
+    }
+
     setQrStatus('verifying');
     setErrorMsg('');
 
     setTimeout(() => {
-      const finalUtr = customUtr?.trim() || utrNumber.trim() || ('4291' + Math.floor(10000000 + Math.random() * 90000000));
-      setAutoUtr(finalUtr);
-      setUtrNumber(finalUtr);
+      setAutoUtr(utrToUse);
       setQrStatus('completed');
 
-      // Display "Payment Completed!" on the QR container for 1.8 seconds before navigating to live tracking
+      // Order is saved as 'pending' clinic verification
       setTimeout(() => {
-        createConfirmedOrder(finalUtr);
-      }, 1800);
-    }, 900);
+        createConfirmedOrder(utrToUse);
+      }, 1400);
+    }, 700);
   };
 
   const createConfirmedOrder = (confirmedUtr) => {
     const orderId = 'DJ-MED-' + Math.floor(10000 + Math.random() * 90000);
-    const finalUtrVal = confirmedUtr || autoUtr || utrNumber || (paymentMethod === 'upi' ? '429188492019' : 'COD');
+    const finalUtrVal = confirmedUtr || utrNumber.trim() || (paymentMethod === 'upi' ? 'Awaiting UTR' : 'COD');
     const newOrder = {
       orderId,
       createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -119,8 +126,8 @@ export default function MedicineCartDrawer({
       address: formData.deliveryMode === 'pickup' ? 'Self Pickup @ Dr. Jerri Clinic Counter' : `${formData.address}, ${formData.landmark ? formData.landmark + ', ' : ''}${formData.area}`,
       area: formData.area,
       deliveryMode: formData.deliveryMode,
-      paymentMethod: paymentMethod === 'upi' ? 'Online UPI' : paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Pay at Clinic Counter',
-      paymentStatus: paymentMethod === 'upi' ? 'verified' : 'pending',
+      paymentMethod: paymentMethod === 'upi' ? 'Online UPI (Direct QR)' : paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Pay at Clinic Counter',
+      paymentStatus: 'pending', // Always pending until verified by Dr. Jerri clinic staff in Admin Portal
       utr: finalUtrVal,
       totalAmount: grandTotal,
       subTotal,
@@ -629,26 +636,23 @@ export default function MedicineCartDrawer({
                   {/* QR Code / Payment Verification Container */}
                   <div className="relative">
                     {qrStatus === 'completed' ? (
-                      /* PAYMENT COMPLETED VIEW */
-                      <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-b from-emerald-50 via-white to-emerald-50 rounded-3xl border-2 border-emerald-500 shadow-xl text-center animate-in zoom-in-95 duration-300">
-                        <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-3 shadow-md animate-bounce ring-4 ring-emerald-200">
-                          <i className="fa-solid fa-check"></i>
+                      /* PAYMENT SUBMITTED VIEW */
+                      <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-b from-amber-50 via-white to-amber-50 rounded-3xl border-2 border-amber-400 shadow-xl text-center animate-in zoom-in-95 duration-300">
+                        <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-3xl mb-3 shadow-md ring-4 ring-amber-200">
+                          <i className="fa-solid fa-clock-rotate-left"></i>
                         </div>
-                        <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full mb-1 border border-emerald-300">
-                          Payment Completed!
+                        <span className="text-[11px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-1 rounded-full mb-1 border border-amber-300">
+                          UPI Payment Submitted
                         </span>
-                        <h4 className="text-xl font-black text-emerald-950 font-display mt-1">
-                          ₹{grandTotal} Received via UPI
+                        <h4 className="text-xl font-black text-slate-900 font-display mt-1">
+                          UTR #{autoUtr || utrNumber}
                         </h4>
                         <p className="text-xs text-slate-500 mt-1">
-                          Dr. Jerri Clinic Gateway • Paid via UPI
+                          Amount: ₹{grandTotal} • Submitted for Clinic Bank Verification
                         </p>
-                        <div className="mt-2.5 bg-emerald-50 px-3.5 py-1.5 rounded-xl border border-emerald-200 font-mono text-xs font-bold text-emerald-900">
-                          Transaction Ref: {autoUtr || '429188492019'}
-                        </div>
-                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-emerald-700 bg-white px-3.5 py-2 rounded-xl shadow-xs border border-emerald-200">
-                          <i className="fa-solid fa-circle-notch fa-spin text-emerald-600"></i>
-                          <span>Order Verified! Auto-launching live tracker...</span>
+                        <div className="mt-4 flex items-center gap-2 text-xs font-bold text-amber-800 bg-white px-3.5 py-2 rounded-xl shadow-xs border border-amber-200">
+                          <i className="fa-solid fa-circle-notch fa-spin text-amber-600"></i>
+                          <span>Order Recorded! Launching live tracker...</span>
                         </div>
                       </div>
                     ) : qrStatus === 'verifying' ? (
@@ -658,10 +662,10 @@ export default function MedicineCartDrawer({
                           <i className="fa-solid fa-circle-notch fa-spin"></i>
                         </div>
                         <h4 className="text-sm font-black text-royal-dark font-display">
-                          Verifying Payment with Clinic Gateway...
+                          Submitting UPI Reference Number...
                         </h4>
                         <p className="text-[11px] text-slate-500 max-w-xs leading-relaxed">
-                          Confirming UPI transaction receipt of <strong className="text-royal font-mono">₹{grandTotal}</strong> with Dr. Jerri Clinic accounts desk.
+                          Recording transaction UTR <strong className="font-mono text-royal">{utrNumber}</strong> for Dr. Jerri Clinic bank reconciliation.
                         </p>
                       </div>
                     ) : (
@@ -672,10 +676,10 @@ export default function MedicineCartDrawer({
                         <div className="w-full flex items-center justify-between text-[11px] bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200 font-semibold text-royal-dark">
                           <div className="flex items-center gap-1.5">
                             <span className="w-2.5 h-2.5 rounded-full bg-purple-600 animate-pulse"></span>
-                            <span>Awaiting your UPI transfer</span>
+                            <span>Step 1: Scan & Transfer via UPI</span>
                           </div>
                           <span className="font-mono font-bold text-purple-700">
-                            Scan QR Code to Pay
+                            Pay ₹{grandTotal}
                           </span>
                         </div>
 
@@ -694,19 +698,9 @@ export default function MedicineCartDrawer({
                             Scan with PhonePe, Google Pay, Paytm, or BHIM
                           </p>
                           <p className="text-[10px] text-slate-500 mt-0.5">
-                            Amount payable: <strong className="text-royal font-mono font-bold text-xs">₹{grandTotal}</strong>
+                            Pay exact amount: <strong className="text-royal font-mono font-bold text-xs">₹{grandTotal}</strong>
                           </p>
                         </div>
-
-                        {/* User confirmation button after they finish payment */}
-                        <button
-                          type="button"
-                          onClick={() => handleVerifyAndCompletePayment(utrNumber)}
-                          className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2"
-                        >
-                          <i className="fa-solid fa-circle-check text-white"></i>
-                          <span>I Have Completed Payment — Verify & Confirm</span>
-                        </button>
                       </div>
                     )}
                   </div>
@@ -732,34 +726,30 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  {/* Transaction ID / UTR Verification Input */}
-                  <div className="space-y-1.5 pt-2 border-t border-purple-100">
+                  {/* Transaction ID / UTR Input Required */}
+                  <div className="space-y-2 pt-3 border-t border-purple-100 bg-purple-50/50 p-3.5 rounded-2xl border">
                     <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold text-slate-800">
-                        UPI Reference Number / UTR
+                      <label className="block text-xs font-black text-royal-dark">
+                        Step 2: Enter 12-Digit UPI Reference (UTR) *
                       </label>
-                      <span className="text-[10px] text-purple-700 font-semibold bg-purple-100 px-2 py-0.5 rounded-full">
-                        From Payment App
+                      <span className="text-[10px] text-rose-700 font-bold bg-rose-100 px-2 py-0.5 rounded-full">
+                        Required
                       </span>
                     </div>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        placeholder="Enter 12-digit UTR (e.g. 429184920192)"
-                        value={utrNumber}
-                        onChange={(e) => setUtrNumber(e.target.value)}
-                        className="flex-1 px-3 py-2 text-xs font-mono font-bold rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-royal bg-white"
-                      />
-                      {utrNumber.trim() && (
-                        <button
-                          type="button"
-                          onClick={() => handleVerifyAndCompletePayment(utrNumber)}
-                          className="bg-royal hover:bg-royal-dark text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shrink-0"
-                        >
-                          Submit UTR
-                        </button>
-                      )}
-                    </div>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. 429188492019 (from PhonePe / GPay screen)"
+                      value={utrNumber}
+                      onChange={(e) => {
+                        setUtrNumber(e.target.value);
+                        setErrorMsg('');
+                      }}
+                      className="w-full px-3 py-2 text-xs font-mono font-bold rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-royal bg-white"
+                    />
+                    <p className="text-[10px] text-slate-500 leading-snug">
+                      ℹ️ To prevent fraudulent or unconfirmed orders, you must provide the 12-digit UTR from your bank app. Our clinic staff will verify this before dispatch.
+                    </p>
                   </div>
 
                 </div>
@@ -795,7 +785,7 @@ export default function MedicineCartDrawer({
                 disabled={qrStatus === 'verifying' || qrStatus === 'completed'}
                 className={`active:scale-95 text-white font-black py-3 px-6 rounded-xl text-xs sm:text-sm transition shadow-lg flex items-center gap-2 ${
                   qrStatus === 'completed'
-                    ? 'bg-emerald-600 shadow-emerald-600/30'
+                    ? 'bg-amber-600 shadow-amber-600/30'
                     : qrStatus === 'verifying'
                     ? 'bg-purple-400 cursor-wait'
                     : 'bg-royal hover:bg-royal-dark shadow-royal/30'
@@ -803,18 +793,18 @@ export default function MedicineCartDrawer({
               >
                 {qrStatus === 'completed' ? (
                   <>
-                    <i className="fa-solid fa-circle-check text-xs"></i>
-                    <span>Payment Completed • Launching...</span>
+                    <i className="fa-solid fa-hourglass-half text-xs"></i>
+                    <span>Submitted • Launching Tracker...</span>
                   </>
                 ) : qrStatus === 'verifying' ? (
                   <>
                     <i className="fa-solid fa-circle-notch fa-spin text-xs"></i>
-                    <span>Verifying Payment...</span>
+                    <span>Submitting UTR...</span>
                   </>
                 ) : paymentMethod === 'upi' ? (
                   <>
-                    <i className="fa-solid fa-shield-halved text-xs"></i>
-                    <span>I Have Paid (Verify & Confirm)</span>
+                    <i className="fa-solid fa-check text-xs"></i>
+                    <span>Submit UTR & Confirm Order</span>
                   </>
                 ) : (
                   <>
@@ -830,19 +820,35 @@ export default function MedicineCartDrawer({
         {/* STEP 4: CONFIRMED ORDER & REALTIME LOGISTICS LAUNCH */}
         {step === 'confirmed' && confirmedOrder && (
           <div className="flex-1 flex flex-col overflow-y-auto p-5 sm:p-6 text-center space-y-5">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto shadow-md">
-              <i className="fa-solid fa-circle-check"></i>
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto shadow-md ${
+              confirmedOrder.paymentStatus === 'verified'
+                ? 'bg-emerald-100 text-emerald-600'
+                : 'bg-amber-100 text-amber-600'
+            }`}>
+              <i className={`fa-solid ${confirmedOrder.paymentStatus === 'verified' ? 'fa-circle-check' : 'fa-clock'}`}></i>
             </div>
 
             <div>
-              <span className="text-xs font-bold text-royal bg-purple-100 px-3 py-1 rounded-full uppercase tracking-wider">
-                Payment Verified & Order Confirmed
+              <span className={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${
+                confirmedOrder.paymentStatus === 'verified'
+                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                  : 'bg-amber-100 text-amber-800 border border-amber-200'
+              }`}>
+                {confirmedOrder.paymentStatus === 'verified'
+                  ? 'Payment Verified & Confirmed'
+                  : confirmedOrder.paymentMethod.includes('UPI')
+                  ? '⏳ UPI Submitted • Pending Clinic Verification'
+                  : '📦 Order Confirmed • Pay on Delivery'}
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-royal-dark font-display mt-2">
                 Order #{confirmedOrder.orderId}
               </h3>
               <p className="text-xs text-slate-600 mt-1">
-                Thank you, <strong>{confirmedOrder.customerName}</strong>! Our licensed pharmacist at Dr. Jerri Clinic is currently preparing your package.
+                {confirmedOrder.paymentMethod.includes('UPI') ? (
+                  <>Thank you, <strong>{confirmedOrder.customerName}</strong>! Your UPI UTR <strong>{confirmedOrder.utr}</strong> has been submitted. Dr. Jerri pharmacy accounts desk will verify the credit in our bank statement before medicine dispatch.</>
+                ) : (
+                  <>Thank you, <strong>{confirmedOrder.customerName}</strong>! Our licensed pharmacist at Dr. Jerri Clinic is currently preparing your package.</>
+                )}
               </p>
             </div>
 
@@ -853,12 +859,26 @@ export default function MedicineCartDrawer({
                 <span className="font-mono font-bold text-royal">{confirmedOrder.orderId}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Payment:</span>
+                <span className="text-slate-500">Payment Mode:</span>
                 <span className="font-bold text-slate-800">{confirmedOrder.paymentMethod}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Total Paid:</span>
-                <span className="font-mono font-black text-royal">₹{confirmedOrder.totalAmount}</span>
+                <span className="text-slate-500">Payment Status:</span>
+                <span className={`font-bold ${
+                  confirmedOrder.paymentStatus === 'verified' ? 'text-emerald-700' : 'text-amber-700'
+                }`}>
+                  {confirmedOrder.paymentStatus === 'verified' ? '● Verified' : '⏳ Pending Bank Verification'}
+                </span>
+              </div>
+              {confirmedOrder.utr && confirmedOrder.utr !== 'COD' && (
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Submitted UTR:</span>
+                  <span className="font-mono font-bold text-royal">{confirmedOrder.utr}</span>
+                </div>
+              )}
+              <div className="flex justify-between border-t border-purple-100 pt-1.5">
+                <span className="text-slate-700 font-bold">Total Amount:</span>
+                <span className="font-mono font-black text-royal text-sm">₹{confirmedOrder.totalAmount}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Estimated Delivery:</span>

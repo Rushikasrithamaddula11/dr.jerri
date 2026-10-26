@@ -290,7 +290,17 @@ export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, on
                 </span>
               </div>
               <span className="text-[11px] text-slate-300 font-mono">
-                Payment: <strong className="text-emerald-400 font-bold">Online Payment (Verified)</strong>
+                Payment: <strong className={`font-bold ${
+                  order.paymentStatus === 'verified'
+                    ? 'text-emerald-400'
+                    : 'text-amber-300'
+                }`}>
+                  {order.paymentStatus === 'verified'
+                    ? '● Online Payment (Verified)'
+                    : order.paymentMethod && order.paymentMethod.includes('Cash')
+                    ? '💵 Cash on Delivery'
+                    : '⏳ Pending Verification'}
+                </strong>
               </span>
             </div>
           </div>
@@ -375,7 +385,7 @@ export default function LogisticsTrackerModal({ isOpen, onClose, activeOrder, on
 
             <div className="mt-3 pt-2 border-t border-purple-200/60 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-600">
               <span>Delivery Address: <strong className="text-slate-800">{order.address}</strong></span>
-              <span>Payment: <strong className="text-royal">{order.paymentMethod || 'Online Payment (Verified)'}</strong></span>
+              <span>Payment: <strong className="text-royal">{order.paymentMethod || 'Awaiting Payment'}</strong> {order.paymentStatus === 'verified' ? <span className="text-emerald-700 font-bold">(Verified)</span> : <span className="text-amber-700 font-bold">(Pending Verification)</span>}</span>
             </div>
           </div>
 

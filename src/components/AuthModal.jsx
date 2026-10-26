@@ -23,26 +23,27 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
 
     // Check registered users or authenticate
     const storedUsers = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
-    const found = storedUsers.find(
-      (u) => u.phone === patientLoginData.phone.trim() && u.password === patientLoginData.password.trim()
+    const cleanPhone = patientLoginData.phone.replace(/[^0-9]/g, '').trim();
+    const existingUser = storedUsers.find(
+      (u) => u.phone.replace(/[^0-9]/g, '') === cleanPhone
     );
 
-    const user = found || {
-      name: 'Valued Patient',
-      phone: patientLoginData.phone.trim(),
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 1,
-      totalSpent: 450,
-      joinedDate: 'Today'
-    };
+    if (!existingUser) {
+      setErrorMsg(`❌ No account found for mobile number ${cleanPhone}. Please switch to Sign Up first.`);
+      return;
+    }
 
-    localStorage.setItem('drjerri_auth', JSON.stringify(user));
+    if (existingUser.password !== patientLoginData.password.trim()) {
+      setErrorMsg('❌ Incorrect password. Please try again.');
+      return;
+    }
+
+    localStorage.setItem('drjerri_auth', JSON.stringify(existingUser));
     setSuccessMsg('Login successful! Welcome back.');
     setTimeout(() => {
-      onLoginSuccess(user);
+      onLoginSuccess(existingUser);
       onClose();
-    }, 600);
+    }, 500);
   };
 
   const handlePatientSignup = (e) => {

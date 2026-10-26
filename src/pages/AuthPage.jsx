@@ -28,69 +28,117 @@ export default function AuthPage({
     setSuccessMsg('');
   }, [initialMode]);
 
-  // Handle Patient Sign In
+  const DEFAULT_PATIENTS = [
+    {
+      id: 'usr-1',
+      name: 'Ramesh Varma',
+      phone: '9849012345',
+      password: 'patient123',
+      area: 'ECIL South Kamala Nagar',
+      role: 'user',
+      ordersCount: 3,
+      totalSpent: 1250,
+      joinedDate: 'Oct 2026'
+    }
+  ];
+
+  const getStoredUsers = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
+      if (stored.length > 0) return stored;
+      localStorage.setItem('drjerri_users', JSON.stringify(DEFAULT_PATIENTS));
+      return DEFAULT_PATIENTS;
+    } catch {
+      return DEFAULT_PATIENTS;
+    }
+  };
+
+  // Handle Patient Sign In (Strict verification - fails if account not registered)
   const handleSignIn = (e) => {
     e.preventDefault();
     setErrorMsg('');
-    if (!signInData.phone.trim() || !signInData.password.trim()) {
+    const cleanPhone = signInData.phone.replace(/[^0-9]/g, '').trim();
+    const cleanPassword = signInData.password.trim();
+
+    if (!cleanPhone || !cleanPassword) {
       setErrorMsg('Please enter both your Mobile Number and Password.');
       return;
     }
 
-    const storedUsers = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
-    const found = storedUsers.find(
-      (u) => u.phone === signInData.phone.trim() && u.password === signInData.password.trim()
+    const storedUsers = getStoredUsers();
+    const existingUser = storedUsers.find(
+      (u) => u.phone.replace(/[^0-9]/g, '') === cleanPhone
     );
 
-    const user = found || {
-      name: 'Ramesh Varma',
-      phone: signInData.phone.trim(),
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 2,
-      totalSpent: 890,
-      joinedDate: 'Registered Patient'
-    };
+    if (!existingUser) {
+      setErrorMsg(`❌ No account found for mobile number ${cleanPhone}. Please switch to "Register" to create an account first.`);
+      return;
+    }
 
-    localStorage.setItem('drjerri_auth', JSON.stringify(user));
-    setSuccessMsg('Sign in successful! Loading your medicine store...');
+    if (existingUser.password !== cleanPassword) {
+      setErrorMsg('❌ Incorrect password. Please check and try again.');
+      return;
+    }
+
+    localStorage.setItem('drjerri_auth', JSON.stringify(existingUser));
+    setSuccessMsg(`Sign in successful! Welcome back, ${existingUser.name}.`);
     setTimeout(() => {
-      onLoginSuccess(user);
+      onLoginSuccess(existingUser);
       onNavigate(returnPage || 'store');
-    }, 600);
+    }, 500);
   };
 
   // Handle Patient Sign Up
   const handleSignUp = (e) => {
     e.preventDefault();
     setErrorMsg('');
-    if (!signUpData.name.trim() || !signUpData.phone.trim() || !signUpData.password.trim()) {
+    const cleanName = signUpData.name.trim();
+    const cleanPhone = signUpData.phone.replace(/[^0-9]/g, '').trim();
+    const cleanPassword = signUpData.password.trim();
+
+    if (!cleanName || !cleanPhone || !cleanPassword) {
       setErrorMsg('Please fill in all required fields.');
+      return;
+    }
+
+    if (cleanPhone.length < 10) {
+      setErrorMsg('Please enter a valid 10-digit mobile number.');
+      return;
+    }
+
+    const storedUsers = getStoredUsers();
+    const alreadyExists = storedUsers.find(
+      (u) => u.phone.replace(/[^0-9]/g, '') === cleanPhone
+    );
+
+    if (alreadyExists) {
+      setErrorMsg(`An account with mobile number ${cleanPhone} already exists. Please Sign In.`);
+      setMode('signin');
+      setSignInData((prev) => ({ ...prev, phone: cleanPhone }));
       return;
     }
 
     const newUser = {
       id: 'usr-' + Date.now(),
-      name: signUpData.name.trim(),
-      phone: signUpData.phone.trim(),
+      name: cleanName,
+      phone: cleanPhone,
       area: signUpData.area,
-      password: signUpData.password.trim(),
+      password: cleanPassword,
       role: 'user',
       ordersCount: 0,
       totalSpent: 0,
       joinedDate: new Date().toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })
     };
 
-    const storedUsers = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
-    storedUsers.unshift(newUser);
-    localStorage.setItem('drjerri_users', JSON.stringify(storedUsers));
+    const updated = [newUser, ...storedUsers];
+    localStorage.setItem('drjerri_users', JSON.stringify(updated));
     localStorage.setItem('drjerri_auth', JSON.stringify(newUser));
 
-    setSuccessMsg('Account created successfully! Welcome to Dr. Jerri Clinic.');
+    setSuccessMsg(`Account created successfully! Welcome to Dr. Jerri Clinic, ${newUser.name}.`);
     setTimeout(() => {
       onLoginSuccess(newUser);
       onNavigate(returnPage || 'store');
-    }, 700);
+    }, 500);
   };
 
   // 1-Click Patient Demo Login

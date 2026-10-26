@@ -20,37 +20,85 @@ export default function LandingPage({ onLoginSuccess }) {
   const [successMsg, setSuccessMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handle Patient Sign In
+  // Default Seed Patients if no users exist in localStorage yet
+  const DEFAULT_PATIENTS = [
+    {
+      id: 'usr-1',
+      name: 'Ramesh Varma',
+      phone: '9849012345',
+      password: 'patient123',
+      area: 'ECIL South Kamala Nagar',
+      role: 'user',
+      ordersCount: 3,
+      totalSpent: 1250,
+      joinedDate: 'Oct 2026'
+    },
+    {
+      id: 'usr-2',
+      name: 'Pravallika K.',
+      phone: '9440123456',
+      password: 'patient123',
+      area: 'ECIL Cross Roads',
+      role: 'user',
+      ordersCount: 1,
+      totalSpent: 388,
+      joinedDate: 'Oct 2026'
+    }
+  ];
+
+  const getRegisteredUsers = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
+      if (stored.length > 0) return stored;
+      localStorage.setItem('drjerri_users', JSON.stringify(DEFAULT_PATIENTS));
+      return DEFAULT_PATIENTS;
+    } catch {
+      return DEFAULT_PATIENTS;
+    }
+  };
+
+  // Handle Patient Sign In (Strict verification - fails if account does not exist or password wrong)
   const handleSignIn = (e) => {
     e.preventDefault();
     setErrorMsg('');
-    if (!signInData.phone.trim() || !signInData.password.trim()) {
+    setSuccessMsg('');
+
+    const cleanPhone = signInData.phone.replace(/[^0-9]/g, '').trim();
+    const cleanPassword = signInData.password.trim();
+
+    if (!cleanPhone || !cleanPassword) {
       setErrorMsg('Please enter both your Mobile Number and Password.');
       return;
     }
 
     setIsLoading(true);
     setTimeout(() => {
-      const storedUsers = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
-      const found = storedUsers.find(
-        (u) => u.phone === signInData.phone.trim() && u.password === signInData.password.trim()
+      const storedUsers = getRegisteredUsers();
+      
+      // 1. Check if user with this phone exists
+      const existingUser = storedUsers.find(
+        (u) => u.phone.replace(/[^0-9]/g, '') === cleanPhone
       );
 
-      const user = found || {
-        name: 'Ramesh Varma',
-        phone: signInData.phone.trim(),
-        area: 'ECIL South Kamala Nagar',
-        role: 'user',
-        ordersCount: 2,
-        totalSpent: 890,
-        joinedDate: 'Registered Patient'
-      };
+      if (!existingUser) {
+        setIsLoading(false);
+        setErrorMsg(`❌ No account found for mobile number ${cleanPhone}. Please click "Create Account" tab to register first.`);
+        return;
+      }
 
-      localStorage.setItem('drjerri_auth', JSON.stringify(user));
-      setSuccessMsg('Sign in successful! Unlocking Dr. Jerri Clinic...');
+      // 2. Check if password matches
+      if (existingUser.password !== cleanPassword) {
+        setIsLoading(false);
+        setErrorMsg('❌ Incorrect password. Please enter the correct password for your account.');
+        return;
+      }
+
+      // 3. Successful authentication
+      localStorage.setItem('drjerri_auth', JSON.stringify(existingUser));
+      setSuccessMsg(`Welcome back, ${existingUser.name}! Unlocking Dr. Jerri Clinic...`);
       setTimeout(() => {
         setIsLoading(false);
-        onLoginSuccess(user);
+        onLoginSuccess(existingUser);
       }, 500);
     }, 400);
   };
@@ -59,31 +107,56 @@ export default function LandingPage({ onLoginSuccess }) {
   const handleSignUp = (e) => {
     e.preventDefault();
     setErrorMsg('');
-    if (!signUpData.name.trim() || !signUpData.phone.trim() || !signUpData.password.trim()) {
-      setErrorMsg('Please fill in all required fields.');
+    setSuccessMsg('');
+
+    const cleanName = signUpData.name.trim();
+    const cleanPhone = signUpData.phone.replace(/[^0-9]/g, '').trim();
+    const cleanPassword = signUpData.password.trim();
+
+    if (!cleanName || !cleanPhone || !cleanPassword) {
+      setErrorMsg('Please fill in your Name, Mobile Number, and Password.');
+      return;
+    }
+
+    if (cleanPhone.length < 10) {
+      setErrorMsg('Please enter a valid 10-digit mobile number.');
       return;
     }
 
     setIsLoading(true);
     setTimeout(() => {
+      const storedUsers = getRegisteredUsers();
+
+      // Check if already registered
+      const alreadyExists = storedUsers.find(
+        (u) => u.phone.replace(/[^0-9]/g, '') === cleanPhone
+      );
+
+      if (alreadyExists) {
+        setIsLoading(false);
+        setErrorMsg(`An account with mobile number ${cleanPhone} already exists. Please Sign In.`);
+        setActiveTab('signin');
+        setSignInData((prev) => ({ ...prev, phone: cleanPhone }));
+        return;
+      }
+
       const newUser = {
         id: 'usr-' + Date.now(),
-        name: signUpData.name.trim(),
-        phone: signUpData.phone.trim(),
+        name: cleanName,
+        phone: cleanPhone,
         area: signUpData.area,
-        password: signUpData.password.trim(),
+        password: cleanPassword,
         role: 'user',
         ordersCount: 0,
         totalSpent: 0,
         joinedDate: new Date().toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })
       };
 
-      const storedUsers = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
-      storedUsers.unshift(newUser);
-      localStorage.setItem('drjerri_users', JSON.stringify(storedUsers));
+      const updatedUsers = [newUser, ...storedUsers];
+      localStorage.setItem('drjerri_users', JSON.stringify(updatedUsers));
       localStorage.setItem('drjerri_auth', JSON.stringify(newUser));
 
-      setSuccessMsg('Account created successfully! Welcome to Dr. Jerri Clinic.');
+      setSuccessMsg(`Account created successfully! Welcome to Dr. Jerri Clinic, ${newUser.name}.`);
       setTimeout(() => {
         setIsLoading(false);
         onLoginSuccess(newUser);
@@ -91,7 +164,7 @@ export default function LandingPage({ onLoginSuccess }) {
     }, 400);
   };
 
-  // 1-Click Patient Demo Access
+  // 1-Click Patient Demo Access (explicit button)
   const handleDemoPatientLogin = () => {
     setIsLoading(true);
     const demoPatient = {
@@ -104,7 +177,7 @@ export default function LandingPage({ onLoginSuccess }) {
       joinedDate: 'Oct 2026'
     };
     localStorage.setItem('drjerri_auth', JSON.stringify(demoPatient));
-    setSuccessMsg('Instant access granted as Ramesh Varma! Loading clinic...');
+    setSuccessMsg('Instant demo access granted as Ramesh Varma! Loading clinic...');
     setTimeout(() => {
       setIsLoading(false);
       onLoginSuccess(demoPatient);
@@ -289,9 +362,24 @@ export default function LandingPage({ onLoginSuccess }) {
                 
                 {/* Error & Success Alerts */}
                 {errorMsg && (
-                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-bold flex items-center gap-2 animate-in fade-in">
-                    <i className="fa-solid fa-circle-exclamation shrink-0"></i>
-                    <span>{errorMsg}</span>
+                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-bold space-y-1.5 animate-in fade-in">
+                    <div className="flex items-center gap-2">
+                      <i className="fa-solid fa-circle-exclamation shrink-0 text-rose-600"></i>
+                      <span>{errorMsg}</span>
+                    </div>
+                    {errorMsg.includes('Create Account') && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveTab('signup');
+                          setSignUpData((prev) => ({ ...prev, phone: signInData.phone }));
+                          setErrorMsg('');
+                        }}
+                        className="text-[11px] text-royal font-black hover:underline block text-left pt-0.5"
+                      >
+                        → Click here to Register Now with this number
+                      </button>
+                    )}
                   </div>
                 )}
 
@@ -334,6 +422,14 @@ export default function LandingPage({ onLoginSuccess }) {
                         onChange={(e) => setSignInData({ ...signInData, password: e.target.value })}
                         className="w-full px-3 py-2.5 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-royal bg-purple-50/20 text-xs font-mono"
                       />
+                    </div>
+
+                    <div className="bg-purple-50 p-2.5 rounded-xl border border-purple-100 text-[11px] text-purple-900 space-y-0.5">
+                      <span className="font-bold block text-royal">Demo Registered Patient:</span>
+                      <div className="flex justify-between font-mono text-slate-600">
+                        <span>Mobile: <strong className="text-royal">9849012345</strong></span>
+                        <span>Pass: <strong className="text-royal">patient123</strong></span>
+                      </div>
                     </div>
 
                     <button

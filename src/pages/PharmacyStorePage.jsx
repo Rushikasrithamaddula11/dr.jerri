@@ -16,23 +16,6 @@ export default function PharmacyStorePage({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // 1-Click Patient Demo Access
-  const handleDemoAccess = () => {
-    const demoPatient = {
-      name: 'Ramesh Varma',
-      phone: '9849012345',
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 3,
-      totalSpent: 1250,
-      joinedDate: 'Oct 2026'
-    };
-    localStorage.setItem('drjerri_auth', JSON.stringify(demoPatient));
-    if (onLoginSuccess) {
-      onLoginSuccess(demoPatient);
-    }
-  };
-
   // If patient is not logged in, enforce authentication before accessing medicines & payment
   if (!currentUser) {
     return (
@@ -67,18 +50,6 @@ export default function PharmacyStorePage({
               className="w-full bg-purple-50 hover:bg-purple-100 text-royal font-bold py-2.5 rounded-xl border border-purple-200 text-xs transition"
             >
               Create New Patient Account
-            </button>
-          </div>
-
-          {/* Quick Demo Access for frictionless testing */}
-          <div className="pt-3 border-t border-purple-100">
-            <button
-              type="button"
-              onClick={handleDemoAccess}
-              className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold py-2 px-3 rounded-xl border border-emerald-200 text-[11px] flex items-center justify-center gap-1.5 transition"
-            >
-              <i className="fa-solid fa-bolt text-emerald-600"></i>
-              <span>⚡ 1-Click Patient Demo Access (Ramesh Varma)</span>
             </button>
           </div>
 

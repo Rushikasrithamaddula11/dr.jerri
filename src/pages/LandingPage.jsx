@@ -20,40 +20,11 @@ export default function LandingPage({ onLoginSuccess }) {
   const [successMsg, setSuccessMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Default Seed Patients if no users exist in localStorage yet
-  const DEFAULT_PATIENTS = [
-    {
-      id: 'usr-1',
-      name: 'Ramesh Varma',
-      phone: '9849012345',
-      password: 'patient123',
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 3,
-      totalSpent: 1250,
-      joinedDate: 'Oct 2026'
-    },
-    {
-      id: 'usr-2',
-      name: 'Pravallika K.',
-      phone: '9440123456',
-      password: 'patient123',
-      area: 'ECIL Cross Roads',
-      role: 'user',
-      ordersCount: 1,
-      totalSpent: 388,
-      joinedDate: 'Oct 2026'
-    }
-  ];
-
   const getRegisteredUsers = () => {
     try {
-      const stored = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
-      if (stored.length > 0) return stored;
-      localStorage.setItem('drjerri_users', JSON.stringify(DEFAULT_PATIENTS));
-      return DEFAULT_PATIENTS;
+      return JSON.parse(localStorage.getItem('drjerri_users') || '[]');
     } catch {
-      return DEFAULT_PATIENTS;
+      return [];
     }
   };
 
@@ -161,26 +132,6 @@ export default function LandingPage({ onLoginSuccess }) {
         setIsLoading(false);
         onLoginSuccess(newUser);
       }, 500);
-    }, 400);
-  };
-
-  // 1-Click Patient Demo Access (explicit button)
-  const handleDemoPatientLogin = () => {
-    setIsLoading(true);
-    const demoPatient = {
-      name: 'Ramesh Varma',
-      phone: '9849012345',
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 3,
-      totalSpent: 1250,
-      joinedDate: 'Oct 2026'
-    };
-    localStorage.setItem('drjerri_auth', JSON.stringify(demoPatient));
-    setSuccessMsg('Instant demo access granted as Ramesh Varma! Loading clinic...');
-    setTimeout(() => {
-      setIsLoading(false);
-      onLoginSuccess(demoPatient);
     }, 400);
   };
 
@@ -424,14 +375,6 @@ export default function LandingPage({ onLoginSuccess }) {
                       />
                     </div>
 
-                    <div className="bg-purple-50 p-2.5 rounded-xl border border-purple-100 text-[11px] text-purple-900 space-y-0.5">
-                      <span className="font-bold block text-royal">Demo Registered Patient:</span>
-                      <div className="flex justify-between font-mono text-slate-600">
-                        <span>Mobile: <strong className="text-royal">9849012345</strong></span>
-                        <span>Pass: <strong className="text-royal">patient123</strong></span>
-                      </div>
-                    </div>
-
                     <button
                       type="submit"
                       disabled={isLoading}
@@ -537,22 +480,6 @@ export default function LandingPage({ onLoginSuccess }) {
                     </button>
                   </form>
                 )}
-
-                {/* 1-Click Patient Demo Access */}
-                <div className="pt-3 border-t border-purple-100 space-y-2">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 block text-center tracking-wider">
-                    Instant Demo Login (No Typing Needed)
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleDemoPatientLogin}
-                    disabled={isLoading}
-                    className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold py-2.5 px-3 rounded-xl border border-emerald-200 text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-xs"
-                  >
-                    <i className="fa-solid fa-bolt text-emerald-600"></i>
-                    <span>⚡ 1-Click Instant Demo Login (Ramesh Varma)</span>
-                  </button>
-                </div>
 
               </div>
 

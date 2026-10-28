@@ -100,39 +100,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
     }
   };
 
-  const handleQuickDemoPatient = () => {
-    const demoPatient = {
-      name: 'Ramesh Varma',
-      phone: '9849012345',
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 3,
-      totalSpent: 1250,
-      joinedDate: 'Oct 2026'
-    };
-    localStorage.setItem('drjerri_auth', JSON.stringify(demoPatient));
-    setSuccessMsg('Logged in as Patient: Ramesh Varma');
-    setTimeout(() => {
-      onLoginSuccess(demoPatient);
-      onClose();
-    }, 500);
-  };
-
-  const handleQuickDemoAdmin = () => {
-    const demoAdmin = {
-      name: 'Dr. Jerri Admin Desk',
-      username: 'admin',
-      role: 'admin',
-      phone: '9533551700'
-    };
-    localStorage.setItem('drjerri_auth', JSON.stringify(demoAdmin));
-    setSuccessMsg('Logged in as Admin successfully!');
-    setTimeout(() => {
-      onLoginSuccess(demoAdmin);
-      onClose();
-    }, 500);
-  };
-
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in">
       <div className="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-purple-200">
@@ -244,18 +211,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
               >
                 Sign In to Account
               </button>
-
-              {/* Demo 1-Click Patient Shortcut */}
-              <div className="pt-2 border-t border-purple-100 text-center">
-                <button
-                  type="button"
-                  onClick={handleQuickDemoPatient}
-                  className="w-full bg-purple-50 hover:bg-purple-100 text-royal font-bold py-2 px-3 rounded-xl border border-purple-200 transition text-[11px] flex items-center justify-center gap-1.5"
-                >
-                  <i className="fa-solid fa-bolt text-royal"></i>
-                  <span>1-Click Patient Demo Login (Ramesh Varma)</span>
-                </button>
-              </div>
             </form>
           )}
 
@@ -360,18 +315,6 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 <i className="fa-solid fa-lock text-xs"></i>
                 <span>Sign In as Admin</span>
               </button>
-
-              {/* 1-Click Admin Demo Shortcut */}
-              <div className="pt-2 border-t border-purple-100 text-center">
-                <button
-                  type="button"
-                  onClick={handleQuickDemoAdmin}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-3 rounded-xl transition text-[11px] shadow-sm flex items-center justify-center gap-1.5"
-                >
-                  <i className="fa-solid fa-bolt text-yellow-300"></i>
-                  <span>⚡ Instant Admin Login (admin / drjerri@2026)</span>
-                </button>
-              </div>
             </form>
           )}
 

@@ -40,19 +40,6 @@ export default function AdminPortalPage({
     }
   };
 
-  const handleQuickAdminDemo = () => {
-    const adminObj = {
-      name: 'Dr. Jerri Admin Desk',
-      username: 'admin',
-      role: 'admin',
-      phone: '9533551700'
-    };
-    localStorage.setItem('drjerri_auth', JSON.stringify(adminObj));
-    if (onLoginSuccess) {
-      onLoginSuccess(adminObj);
-    }
-  };
-
   // Active Admin Tabs: 'dashboard' | 'medicines' | 'payments' | 'logistics' | 'users'
   const [activeTab, setActiveTab] = useState('dashboard');
 
@@ -364,16 +351,7 @@ export default function AdminPortalPage({
             </button>
           </form>
 
-          <div className="pt-2 border-t border-purple-100 space-y-2">
-            <button
-              type="button"
-              onClick={handleQuickAdminDemo}
-              className="w-full bg-purple-100 hover:bg-purple-200 active:scale-95 text-purple-900 font-bold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5"
-            >
-              <i className="fa-solid fa-bolt text-royal"></i>
-              <span>⚡ 1-Click Instant Staff Access</span>
-            </button>
-
+          <div className="pt-2 border-t border-purple-100">
             <button
               type="button"
               onClick={() => onNavigate('home')}

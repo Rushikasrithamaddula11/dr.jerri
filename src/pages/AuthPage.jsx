@@ -28,28 +28,11 @@ export default function AuthPage({
     setSuccessMsg('');
   }, [initialMode]);
 
-  const DEFAULT_PATIENTS = [
-    {
-      id: 'usr-1',
-      name: 'Ramesh Varma',
-      phone: '9849012345',
-      password: 'patient123',
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 3,
-      totalSpent: 1250,
-      joinedDate: 'Oct 2026'
-    }
-  ];
-
   const getStoredUsers = () => {
     try {
-      const stored = JSON.parse(localStorage.getItem('drjerri_users') || '[]');
-      if (stored.length > 0) return stored;
-      localStorage.setItem('drjerri_users', JSON.stringify(DEFAULT_PATIENTS));
-      return DEFAULT_PATIENTS;
+      return JSON.parse(localStorage.getItem('drjerri_users') || '[]');
     } catch {
-      return DEFAULT_PATIENTS;
+      return [];
     }
   };
 
@@ -137,25 +120,6 @@ export default function AuthPage({
     setSuccessMsg(`Account created successfully! Welcome to Dr. Jerri Clinic, ${newUser.name}.`);
     setTimeout(() => {
       onLoginSuccess(newUser);
-      onNavigate(returnPage || 'store');
-    }, 500);
-  };
-
-  // 1-Click Patient Demo Login
-  const handleDemoPatientLogin = () => {
-    const demoPatient = {
-      name: 'Ramesh Varma',
-      phone: '9849012345',
-      area: 'ECIL South Kamala Nagar',
-      role: 'user',
-      ordersCount: 3,
-      totalSpent: 1250,
-      joinedDate: 'Oct 2026'
-    };
-    localStorage.setItem('drjerri_auth', JSON.stringify(demoPatient));
-    setSuccessMsg('Logged in as Patient: Ramesh Varma. Redirecting...');
-    setTimeout(() => {
-      onLoginSuccess(demoPatient);
       onNavigate(returnPage || 'store');
     }, 500);
   };
@@ -262,18 +226,6 @@ export default function AuthPage({
               >
                 Sign In to Medicine Store
               </button>
-
-              {/* 1-Click Patient Demo Shortcut */}
-              <div className="pt-2 border-t border-purple-100 text-center">
-                <button
-                  type="button"
-                  onClick={handleDemoPatientLogin}
-                  className="w-full bg-purple-50 hover:bg-purple-100 active:scale-95 text-royal font-bold py-2.5 px-3 rounded-xl border border-purple-200 transition text-[11px] flex items-center justify-center gap-1.5"
-                >
-                  <i className="fa-solid fa-bolt text-royal"></i>
-                  <span>⚡ 1-Click Patient Demo Access (Ramesh Varma)</span>
-                </button>
-              </div>
 
               <div className="text-center pt-2">
                 <p className="text-xs text-slate-500">

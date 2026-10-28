@@ -92,30 +92,7 @@ export default function MedicineCartDrawer({
   // Realtime Gateway Stage Message
   const [gatewayStage, setGatewayStage] = useState('');
 
-  // 1. Realtime Instant UPI Payment Gateway (Live simulation with bank webhook)
-  const handleRealtimeInstantPayment = () => {
-    if (qrStatus === 'verifying' || qrStatus === 'completed') return;
-    setQrStatus('verifying');
-    setErrorMsg('');
-    setGatewayStage('Connecting to NPCI Realtime UPI Payment Gateway...');
-
-    setTimeout(() => {
-      setGatewayStage('Direct Bank Debit Authorized • Generating UTR...');
-      setTimeout(() => {
-        const generatedUtr = '4291' + Math.floor(10000000 + Math.random() * 90000000);
-        setAutoUtr(generatedUtr);
-        setUtrNumber(generatedUtr);
-        setQrStatus('completed');
-        setGatewayStage('Payment Verified! Amount Deposited in Dr. Jerri Clinic Account.');
-
-        setTimeout(() => {
-          createConfirmedOrder(generatedUtr, true); // true: instant verified
-        }, 1200);
-      }, 1000);
-    }, 1000);
-  };
-
-  // 2. Manual UPI QR code transfer (Requires customer to enter actual UTR)
+  // UPI QR code payment verification (Requires customer to enter actual 12-digit bank UTR)
   const handleVerifyAndCompletePayment = (customUtr) => {
     if (qrStatus === 'verifying' || qrStatus === 'completed') return;
     
@@ -671,33 +648,6 @@ export default function MedicineCartDrawer({
                         Scan the QR code or tap your preferred UPI app below
                       </p>
                     </div>
-                  </div>
-
-                  {/* Realtime Instant Gateway Option */}
-                  <div className="bg-gradient-to-r from-emerald-50 via-purple-50 to-emerald-50 rounded-2xl p-3.5 border-2 border-emerald-400 shadow-sm space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md flex items-center gap-1">
-                        <i className="fa-solid fa-bolt text-emerald-600"></i> Realtime Instant Pay
-                      </span>
-                      <span className="text-[10px] font-bold text-slate-500">Live Bank Sandbox</span>
-                    </div>
-                    <p className="text-xs font-bold text-slate-800">
-                      Test instant real-time bank settlement & direct dispatch
-                    </p>
-                    <button
-                      type="button"
-                      onClick={handleRealtimeInstantPayment}
-                      className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow-md shadow-emerald-600/30 flex items-center justify-center gap-2"
-                    >
-                      <i className="fa-solid fa-bolt text-yellow-300"></i>
-                      <span>⚡ Pay & Verify Instantly in Realtime (₹{grandTotal})</span>
-                    </button>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-slate-400 text-xs my-1">
-                    <div className="h-px bg-purple-200 flex-1"></div>
-                    <span className="font-bold text-[10px] uppercase tracking-wider text-purple-800">Or Scan Real Phone QR Code Below</span>
-                    <div className="h-px bg-purple-200 flex-1"></div>
                   </div>
 
                   {/* QR Code / Payment Verification Container */}

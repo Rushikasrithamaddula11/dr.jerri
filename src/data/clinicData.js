@@ -6,8 +6,9 @@ export const clinicInfo = {
   address: "@ ECIL South Kamala Nagar, Secunderabad / Hyderabad - 500062",
   phone: "9533551700",
   secondaryPhone: "9533551700",
-  paymentPhone: "9949339391",
-  upiId: "9949339391-3@ybl",
+  paymentPhone: "9533551700",
+  upiId: "Jpkprasanth-2@ybl",
+  upiHandle: "Jpkprasanth-2",
   whatsapp: "919533551700",
   emergencyNote: "Walk-ins Welcome Daily for Saline, Injections, Blood Tests, Scanning, First Aid & Medicine Delivery",
   teluguNotice: "మా వద్ద డాక్టర్ సంప్రదింపులు, సలైన్, ఇంజెక్షన్లు, అధునాతన డయాగ్నస్టిక్స్ (బ్లడ్ టెస్టులు, స్కానింగ్) మరియు 24/7 మెడిసిన్ డెలివరీ అందుబాటులో కలవు."

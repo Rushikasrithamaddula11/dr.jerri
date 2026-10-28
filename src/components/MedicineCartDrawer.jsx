@@ -70,6 +70,8 @@ export default function MedicineCartDrawer({
   const selectedZone = logisticsDeliveryZones.find((z) => z.area === formData.area) || logisticsDeliveryZones[0];
   const deliveryFee = formData.deliveryMode === 'pickup' ? 0 : subTotal >= 300 ? 0 : selectedZone.fee || 25;
   const grandTotal = Math.round(subTotal + deliveryFee);
+  const rawUpi = clinicInfo.upiId || 'Jpkprasanth-2@ybl';
+  const activeUpiId = rawUpi.includes('@') ? rawUpi : `${rawUpi}@ybl`;
 
   const hasRxItems = cart.some((i) => i.rxRequired);
 
@@ -751,7 +753,7 @@ export default function MedicineCartDrawer({
                         <div className="relative p-3 bg-white rounded-2xl border border-purple-100 shadow-md">
                           <img
                             src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=${encodeURIComponent(
-                              `upi://pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr.%20Jerri%20Poly%20Clinic&am=${grandTotal}&cu=INR`
+                              `upi://pay?pa=${activeUpiId}&pn=Dr.%20Jerri%20Poly%20Clinic&am=${grandTotal}&cu=INR`
                             )}`}
                             alt="Dr. Jerri UPI QR Code"
                             className="w-44 h-44 object-contain mx-auto"
@@ -777,13 +779,13 @@ export default function MedicineCartDrawer({
                     </span>
                     <div className="grid grid-cols-2 gap-2">
                       <a
-                        href={`phonepe://pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
+                        href={`phonepe://pay?pa=${activeUpiId}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
                         className="bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold py-2 px-3 rounded-xl text-center shadow-xs transition"
                       >
                         <i className="fa-solid fa-mobile-screen mr-1"></i> PhonePe
                       </a>
                       <a
-                        href={`gpay://upi/pay?pa=${clinicInfo.upiId || '9949339391-3@ybl'}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
+                        href={`gpay://upi/pay?pa=${activeUpiId}&pn=Dr%20Jerri%20Pharmacy&am=${grandTotal}&cu=INR`}
                         className="bg-slate-800 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-xl text-center shadow-xs transition"
                       >
                         <i className="fa-brands fa-google mr-1"></i> Google Pay

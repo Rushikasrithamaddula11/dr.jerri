@@ -166,6 +166,25 @@ export default function MedicineCartDrawer({
     // Broadcast Realtime Event to Admin Portal and Logistics Trackers
     broadcastRealtimeEvent('ORDER_CREATED', newOrder);
 
+    // Format WhatsApp alert to Clinic
+    const itemsListText = (cart || []).map((i) => `• ${i.name} (Qty: ${i.qty}) - ₹${i.price * i.qty}`).join('\n');
+    const waText = `🏥 *DR. JERRI CLINIC - NEW E-COMMERCE ORDER*\n\n` +
+      `📋 *Order ID:* ${orderId}\n` +
+      `👤 *Customer Name:* ${formData.name}\n` +
+      `📱 *Customer Phone:* ${formData.phone}\n` +
+      `📍 *Delivery Address:* ${formData.deliveryMode === 'pickup' ? 'Self Pickup @ Counter' : `${formData.address}, ${formData.landmark ? formData.landmark + ', ' : ''}${formData.area}`}\n` +
+      `💳 *Payment Mode:* ${paymentMethod === 'upi' ? `Online UPI (UTR: ${finalUtrVal})` : 'Cash on Delivery (COD)'}\n` +
+      `💰 *Grand Total:* ₹${grandTotal}\n\n` +
+      `📦 *Medicines Ordered:*\n${itemsListText}\n\n` +
+      `Please check Admin Portal & confirm package dispatch.`;
+    
+    try {
+      const waUrl = `https://wa.me/${clinicInfo.whatsapp}?text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, '_blank');
+    } catch {
+      // Ignore popup block
+    }
+
     setConfirmedOrder(newOrder);
     setStep('confirmed');
     if (onOrderSuccess) {
@@ -905,13 +924,24 @@ export default function MedicineCartDrawer({
               </button>
 
               <a
-                href={`https://wa.me/${clinicInfo.whatsapp}?text=Hello%20Dr.%20Jerri%20Pharmacy,%20my%20order%20is%20${confirmedOrder.orderId}%20for%20Rs.${confirmedOrder.totalAmount}`}
+                href={`https://wa.me/${clinicInfo.whatsapp}?text=${encodeURIComponent(
+                  `🏥 *DR. JERRI CLINIC - ORDER RECEIPT*\n\n` +
+                  `📋 *Order ID:* ${confirmedOrder.orderId}\n` +
+                  `👤 *Customer Name:* ${confirmedOrder.customerName}\n` +
+                  `📱 *Phone:* ${confirmedOrder.phone}\n` +
+                  `📍 *Delivery Address:* ${confirmedOrder.address}\n` +
+                  `💳 *Payment Mode:* ${confirmedOrder.paymentMethod}\n` +
+                  `🔢 *UTR Reference:* ${confirmedOrder.utr || 'N/A'}\n` +
+                  `💰 *Total Amount:* ₹${confirmedOrder.totalAmount}\n\n` +
+                  `📦 *Medicines:*\n` +
+                  (confirmedOrder.items || []).map((i) => `• ${i.name} (x${i.qty}) - ₹${i.price * i.qty}`).join('\n')
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-white hover:bg-purple-50 text-royal-dark border border-purple-200 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-md shadow-emerald-600/20"
               >
-                <i className="fa-brands fa-whatsapp text-royal text-sm"></i>
-                <span>Send WhatsApp Receipt</span>
+                <i className="fa-brands fa-whatsapp text-white text-base"></i>
+                <span>Send WhatsApp Receipt to Clinic ({clinicInfo.phone})</span>
               </a>
             </div>
           </div>

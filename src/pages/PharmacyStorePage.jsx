@@ -16,54 +16,6 @@ export default function PharmacyStorePage({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // If patient is not logged in, enforce authentication before accessing medicines & payment
-  if (!currentUser) {
-    return (
-      <div className="bg-slate-50 min-h-screen py-12 px-4 flex items-center justify-center">
-        <div className="max-w-md w-full bg-white rounded-3xl p-6 sm:p-8 border border-purple-200 shadow-xl text-center space-y-5">
-          <div className="w-16 h-16 rounded-3xl bg-royal text-white flex items-center justify-center text-2xl mx-auto shadow-md">
-            <i className="fa-solid fa-lock"></i>
-          </div>
-          <div>
-            <span className="text-xs font-bold text-royal bg-purple-100 px-3 py-1 rounded-full uppercase tracking-wider">
-              Patient Authentication Required
-            </span>
-            <h2 className="text-2xl font-black text-royal-dark font-display mt-2">
-              Access Dr. Jerri Medicine Store
-            </h2>
-            <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-              To browse our licensed pharmaceutical inventory, view discounted clinic pricing, and order doorstep delivery with UPI payment, please sign in with your mobile number.
-            </p>
-          </div>
-
-          <div className="space-y-2.5 pt-2">
-            <button
-              onClick={() => onNavigate('login')}
-              className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
-            >
-              <i className="fa-regular fa-user"></i>
-              <span>Sign In to Your Account</span>
-            </button>
-
-            <button
-              onClick={() => onNavigate('signup')}
-              className="w-full bg-purple-50 hover:bg-purple-100 text-royal font-bold py-2.5 rounded-xl border border-purple-200 text-xs transition"
-            >
-              Create New Patient Account
-            </button>
-          </div>
-
-          <button
-            onClick={() => onNavigate('home')}
-            className="text-slate-400 hover:text-royal font-bold text-xs"
-          >
-            ← Return to Clinic Home
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const getCartQty = (id) => {
     const found = cart.find((i) => i.id === id);
     return found ? found.qty : 0;

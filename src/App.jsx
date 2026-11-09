@@ -17,15 +17,13 @@ import DoctorsPage from './pages/DoctorsPage';
 import DiagnosticsPage from './pages/DiagnosticsPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
-import AuthPage from './pages/AuthPage';
-import LandingPage from './pages/LandingPage';
 import AdminPortalPage from './pages/AdminPortalPage';
 
 import { doctors, clinicalServices } from './data/clinicData';
 import { medicinesList } from './data/medicinesData';
 
 export default function App() {
-  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact' | 'login' | 'signup' | 'admin'
+  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact' | 'admin'
   const getPageFromHash = () => {
     const hash = window.location.hash.replace('#/', '').replace('#', '').trim().toLowerCase();
     if (['store', 'pharmacy'].includes(hash)) return 'store';
@@ -34,8 +32,6 @@ export default function App() {
     if (['diagnostics', 'scans'].includes(hash)) return 'diagnostics';
     if (['services', 'procedures'].includes(hash)) return 'services';
     if (['contact', 'location'].includes(hash)) return 'contact';
-    if (['login', 'signin', 'auth'].includes(hash)) return 'login';
-    if (['signup', 'register'].includes(hash)) return 'signup';
     if (['admin', 'dashboard', 'portal'].includes(hash)) return 'admin';
     return 'home';
   };
@@ -285,16 +281,6 @@ export default function App() {
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
-  // If user is not authenticated and is NOT requesting the isolated internal staff portal (#/admin),
-  // require sign in and render the dedicated Landing Page with integrated Sign In and Sign Up!
-  if (!currentUser && currentPage !== 'admin') {
-    return (
-      <LandingPage
-        onLoginSuccess={handleLoginSuccess}
-      />
-    );
-  }
-
   return (
     <div className="min-h-screen bg-white w-full overflow-x-hidden text-slate-800 flex flex-col justify-between">
       
@@ -329,7 +315,7 @@ export default function App() {
           />
         )}
 
-        {/* PAGE 2: MEDICINE STORE (PROTECTED: REQUIRES LOGIN) */}
+        {/* PAGE 2: MEDICINE STORE */}
         {currentPage === 'store' && (
           <PharmacyStorePage
             medicines={allMedicines}
@@ -340,8 +326,6 @@ export default function App() {
             onOpenTracker={() => handleNavigate('logistics')}
             onOpenPharmacyModal={handleOpenPharmacy}
             onNavigate={handleNavigate}
-            currentUser={currentUser}
-            onLoginSuccess={handleLoginSuccess}
           />
         )}
 
@@ -385,27 +369,7 @@ export default function App() {
           />
         )}
 
-        {/* PAGE 8: PATIENT SIGN IN (SEPARATE PAGE, NO ADMIN ACCESS SHOWN) */}
-        {currentPage === 'login' && (
-          <AuthPage
-            initialMode="signin"
-            onLoginSuccess={handleLoginSuccess}
-            onNavigate={handleNavigate}
-            returnPage="store"
-          />
-        )}
-
-        {/* PAGE 9: PATIENT SIGN UP (SEPARATE PAGE, NO ADMIN ACCESS SHOWN) */}
-        {currentPage === 'signup' && (
-          <AuthPage
-            initialMode="signup"
-            onLoginSuccess={handleLoginSuccess}
-            onNavigate={handleNavigate}
-            returnPage="store"
-          />
-        )}
-
-        {/* PAGE 10: DEDICATED STAFF & ADMIN PORTAL */}
+        {/* PAGE 8: DEDICATED STAFF & ADMIN PORTAL */}
         {currentPage === 'admin' && (
           <AdminPortalPage
             currentUser={currentUser}
@@ -436,7 +400,7 @@ export default function App() {
         cartCount={cartCount}
       />
 
-      {/* Shopping Cart & UPI Payment Gateway Drawer (Secured with Login) */}
+      {/* Shopping Cart & UPI Payment Gateway Drawer */}
       <MedicineCartDrawer
         isOpen={cartDrawerOpen}
         onClose={() => setCartDrawerOpen(false)}

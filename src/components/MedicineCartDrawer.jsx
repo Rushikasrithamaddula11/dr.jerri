@@ -337,26 +337,13 @@ export default function MedicineCartDrawer({
                     </div>
                   </div>
 
-                  {currentUser ? (
-                    <button
-                      onClick={() => setStep('checkout')}
-                      className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
-                    >
-                      <span>Proceed to Delivery & Payment</span>
-                      <i className="fa-solid fa-arrow-right"></i>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        onClose();
-                        if (onNavigate) onNavigate('login');
-                      }}
-                      className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
-                    >
-                      <i className="fa-regular fa-user"></i>
-                      <span>Sign In to Checkout (Required)</span>
-                    </button>
-                  )}
+                  <button
+                    onClick={() => setStep('checkout')}
+                    className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
+                  >
+                    <span>Proceed to Delivery & Payment</span>
+                    <i className="fa-solid fa-arrow-right"></i>
+                  </button>
                 </div>
               </>
             )}

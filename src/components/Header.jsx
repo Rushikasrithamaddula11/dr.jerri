@@ -117,37 +117,6 @@ export default function Header({
             </button>
           )}
 
-          {/* User Auth Info / Login Button */}
-          {currentUser ? (
-            <div className="flex items-center gap-1.5 bg-purple-50 border border-purple-200 px-2.5 py-1.5 rounded-xl text-xs">
-              <div className="w-6 h-6 rounded-full bg-royal text-white flex items-center justify-center text-[10px] font-bold">
-                {currentUser.name ? currentUser.name.charAt(0) : 'P'}
-              </div>
-              <span className="font-bold text-royal-dark truncate max-w-[90px]">
-                {currentUser.name.split(' ')[0]}
-              </span>
-              <button
-                onClick={onLogout}
-                className="text-slate-400 hover:text-rose-600 transition ml-1 p-0.5"
-                title="Sign Out"
-              >
-                <i className="fa-solid fa-arrow-right-from-bracket text-[11px]"></i>
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => handleNavClick('login')}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition ${
-                activePage === 'login'
-                  ? 'bg-royal text-white border-royal'
-                  : 'text-royal-dark hover:bg-purple-50 border-purple-200'
-              }`}
-            >
-              <i className="fa-regular fa-user text-royal"></i>
-              <span>Sign In</span>
-            </button>
-          )}
-
           {/* Basket */}
           <button
             onClick={onOpenCart}
@@ -173,18 +142,6 @@ export default function Header({
 
         {/* Mobile Icons */}
         <div className="flex items-center gap-2 lg:hidden">
-          {/* Quick User / Auth Icon on Mobile */}
-          <button
-            onClick={() => handleNavClick(currentUser ? 'home' : 'login')}
-            className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs border ${
-              activePage === 'login' ? 'bg-royal text-white border-royal' : 'bg-purple-50 text-royal border-purple-200'
-            }`}
-            aria-label="Account"
-            title={currentUser ? currentUser.name : 'Sign In'}
-          >
-            <i className={`fa-solid ${currentUser ? 'fa-user-check' : 'fa-user'}`}></i>
-          </button>
-
           {/* Cart Icon on Mobile */}
           <button
             onClick={onOpenCart}
@@ -214,38 +171,6 @@ export default function Header({
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-purple-100 px-4 py-3 space-y-1 text-sm font-semibold shadow-lg animate-in slide-in-from-top-2">
-          
-          {/* User Status Bar in Mobile Menu */}
-          <div className="pb-2 mb-2 border-b border-purple-100 flex items-center justify-between">
-            {currentUser ? (
-              <div className="flex items-center justify-between w-full">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-royal text-white flex items-center justify-center font-bold text-xs">
-                    {currentUser.name.charAt(0)}
-                  </div>
-                  <div>
-                    <span className="text-xs font-bold text-slate-800 block leading-tight">{currentUser.name}</span>
-                    <span className="text-[10px] text-purple-700 uppercase font-black">{currentUser.role || 'Patient'}</span>
-                  </div>
-                </div>
-                <button
-                  onClick={onLogout}
-                  className="text-xs text-rose-600 font-bold bg-rose-50 px-2.5 py-1 rounded-lg"
-                >
-                  Sign Out
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => handleNavClick('login')}
-                className="w-full bg-purple-50 text-royal font-bold py-2 rounded-xl border border-purple-200 text-xs flex items-center justify-center gap-1.5"
-              >
-                <i className="fa-regular fa-user"></i>
-                <span>Sign In / Register Account</span>
-              </button>
-            )}
-          </div>
-
           {navItems.map((item) => (
             <button
               key={item.id}

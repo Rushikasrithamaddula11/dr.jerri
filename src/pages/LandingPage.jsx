@@ -167,19 +167,6 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
     }, 350);
   };
 
-  // Instant Guest Entry
-  const handleGuestEntry = () => {
-    const guestUser = {
-      id: 'guest-' + Date.now(),
-      name: 'Guest Patient',
-      phone: '',
-      area: 'ECIL South Kamala Nagar',
-      role: 'guest'
-    };
-    localStorage.setItem('drjerri_auth', JSON.stringify(guestUser));
-    onLoginSuccess(guestUser);
-  };
-
   return (
     <div className="min-h-screen bg-[#150a29] flex flex-col font-sans selection:bg-[#2e1a55] selection:text-white">
       {/* Top Clinic Alert Bar */}
@@ -267,17 +254,16 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
               </div>
             </div>
 
-            {/* Direct Browse as Guest Option */}
-            <div className="pt-2 flex flex-wrap items-center gap-3">
-              <button
-                onClick={handleGuestEntry}
-                className="inline-flex items-center gap-2 text-xs font-bold text-purple-200 hover:text-white bg-white/10 hover:bg-white/20 px-4 py-2.5 rounded-xl border border-white/10 transition"
-              >
-                <span>Browse Clinic & Store Directly</span>
-                <i className="fa-solid fa-arrow-right text-[10px]"></i>
-              </button>
-              <span className="text-[11px] text-slate-400">
-                Or sign in to unlock your medical history and auto-filled checkout.
+            {/* Patient Privacy Guarantee */}
+            <div className="pt-2 flex items-center gap-3 text-xs text-purple-200">
+              <span className="flex items-center gap-1.5 font-semibold">
+                <i className="fa-solid fa-lock text-[#00a651]"></i>
+                <span>Secure Patient Access</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 font-semibold">
+                <i className="fa-solid fa-shield-halved text-blue-400"></i>
+                <span>Prescription & Health Record Privacy</span>
               </span>
             </div>
           </div>
@@ -519,18 +505,6 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
                     </button>
                   </form>
                 )}
-
-                {/* Guest / Direct Entry Button */}
-                <div className="pt-2 border-t border-purple-100 text-center">
-                  <button
-                    type="button"
-                    onClick={handleGuestEntry}
-                    className="w-full py-2 px-3 text-xs font-extrabold text-slate-600 hover:text-royal hover:bg-purple-50 rounded-xl transition border border-dashed border-purple-200 flex items-center justify-center gap-1.5"
-                  >
-                    <i className="fa-solid fa-bolt text-amber-500"></i>
-                    <span>Quick Direct Entry (No Login Required) ➔</span>
-                  </button>
-                </div>
               </div>
 
               {/* Card Footer: Staff Link & Contact */}

@@ -17,15 +17,17 @@ import DoctorsPage from './pages/DoctorsPage';
 import DiagnosticsPage from './pages/DiagnosticsPage';
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
+import LandingPage from './pages/LandingPage';
 import AdminPortalPage from './pages/AdminPortalPage';
 
 import { doctors, clinicalServices } from './data/clinicData';
 import { medicinesList } from './data/medicinesData';
 
 export default function App() {
-  // Page routing helper: 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact' | 'admin'
+  // Page routing helper: 'landing' | 'home' | 'store' | 'logistics' | 'doctors' | 'diagnostics' | 'services' | 'contact' | 'admin'
   const getPageFromHash = () => {
     const hash = window.location.hash.replace('#/', '').replace('#', '').trim().toLowerCase();
+    if (['landing', 'welcome', 'login', 'signin'].includes(hash)) return 'landing';
     if (['store', 'pharmacy'].includes(hash)) return 'store';
     if (['logistics', 'track'].includes(hash)) return 'logistics';
     if (['doctors'].includes(hash)) return 'doctors';
@@ -75,7 +77,7 @@ export default function App() {
   const handleLogout = () => {
     localStorage.removeItem('drjerri_auth');
     setCurrentUser(null);
-    handleNavigate('home');
+    handleNavigate('landing');
   };
 
   // Custom Medicines State (added via Admin Portal)
@@ -281,6 +283,17 @@ export default function App() {
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
+  // If user is not authenticated and is NOT accessing the admin portal (#/admin),
+  // display the Landing Page with integrated Login & Registration so they can sign in and redirect to home / e-commerce!
+  if (!currentUser && currentPage !== 'admin') {
+    return (
+      <LandingPage
+        onLoginSuccess={handleLoginSuccess}
+        onNavigate={handleNavigate}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white w-full overflow-x-hidden text-slate-800 flex flex-col justify-between">
       
@@ -297,6 +310,14 @@ export default function App() {
 
       {/* Dynamic Dedicated Separate Pages */}
       <main className="flex-1">
+        {/* PAGE 0: LANDING PAGE (IF LOGGED IN USER EXPLICITLY NAVIGATES HERE) */}
+        {currentPage === 'landing' && (
+          <LandingPage
+            onLoginSuccess={handleLoginSuccess}
+            onNavigate={handleNavigate}
+          />
+        )}
+
         {/* PAGE 1: CLINIC HOME */}
         {currentPage === 'home' && (
           <HomePage

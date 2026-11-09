@@ -117,6 +117,24 @@ export default function Header({
             </button>
           )}
 
+          {/* Logged In Patient Badge & Logout */}
+          {currentUser && currentUser.role !== 'admin' && (
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-purple-50 border border-purple-200 text-xs">
+              <i className="fa-solid fa-circle-user text-royal"></i>
+              <span className="font-bold text-slate-800 max-w-[110px] truncate">
+                {currentUser.name || currentUser.phone || 'Patient'}
+              </span>
+              <button
+                type="button"
+                onClick={onLogout}
+                title="Log Out"
+                className="text-slate-400 hover:text-rose-600 transition ml-1"
+              >
+                <i className="fa-solid fa-arrow-right-from-bracket"></i>
+              </button>
+            </div>
+          )}
+
           {/* Basket */}
           <button
             onClick={onOpenCart}
@@ -194,6 +212,27 @@ export default function Header({
               <span>Admin Portal</span>
               <span className="text-[10px] bg-purple-200 px-2 py-0.5 rounded-full">Staff</span>
             </button>
+          )}
+
+          {/* Patient Account Pill & Logout Mobile */}
+          {currentUser && currentUser.role !== 'admin' && (
+            <div className="py-2.5 px-3 rounded-xl bg-purple-50 text-slate-800 text-xs flex items-center justify-between border border-purple-200 mt-2">
+              <div className="flex items-center gap-2 truncate">
+                <i className="fa-solid fa-circle-user text-royal text-sm"></i>
+                <span className="font-bold truncate">{currentUser.name || currentUser.phone || 'Patient'}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onLogout();
+                }}
+                className="text-rose-600 font-bold hover:underline text-xs flex items-center gap-1"
+              >
+                <i className="fa-solid fa-arrow-right-from-bracket text-[10px]"></i>
+                <span>Logout</span>
+              </button>
+            </div>
           )}
 
           <div className="pt-2 flex gap-2">

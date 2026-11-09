@@ -205,11 +205,13 @@ export default function MedicineCartDrawer({
       <div className="bg-white w-full max-w-lg h-full flex flex-col shadow-2xl border-l border-purple-200">
         
         {/* Top Header */}
-        <div className="bg-gradient-to-r from-royal-dark via-royal to-purple-800 text-white p-4 sm:p-5 flex items-center justify-between gap-3">
+        <div className="bg-gradient-to-r from-[#1f103b] via-[#2e1a55] to-[#0153a2] text-white p-4 sm:p-5 flex items-center justify-between gap-3 shadow-md">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center text-lg shrink-0">
-              <i className="fa-solid fa-basket-shopping"></i>
-            </div>
+            <img
+              src="/drjerri-emblem.png"
+              alt="Dr. Jerri Emblem"
+              className="w-10 h-10 object-contain shrink-0 drop-shadow-sm"
+            />
             <div>
               <h3 className="font-black text-base sm:text-lg font-display leading-tight">
                 {step === 'cart' && 'Your Medicine Basket'}
@@ -358,7 +360,7 @@ export default function MedicineCartDrawer({
 
                   <button
                     onClick={() => setStep('checkout')}
-                    className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2"
+                    className="w-full bg-[#00a651] hover:bg-[#00823f] active:scale-95 text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition shadow-md shadow-[#00a651]/25 flex items-center justify-center gap-2"
                   >
                     <span>Proceed to Delivery & Payment</span>
                     <i className="fa-solid fa-arrow-right"></i>

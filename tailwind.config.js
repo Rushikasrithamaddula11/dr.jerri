@@ -8,25 +8,39 @@ export default {
     extend: {
       colors: {
         purple: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7e22ce',
-          800: '#6b21a8',
-          900: '#581c87',
-          950: '#3b0764',
+          50: '#f7f4fb',
+          100: '#eee8f7',
+          200: '#dfd2f0',
+          300: '#c7b3e4',
+          400: '#a78bd2',
+          500: '#8663be',
+          600: '#6d48a6',
+          700: '#563687',
+          800: '#43266b',
+          900: '#2e1a55', // Exact Dr. Jerri Logo Primary Violet
+          950: '#1a0d33',
         },
         royal: {
-          light: '#5b32cc',
-          DEFAULT: '#3a2081',
-          dark: '#27135e',
-          deep: '#1b0c44',
-          subtle: '#f5f2fd',
-          border: '#e4dcfc',
+          light: '#45277f',
+          DEFAULT: '#2e1a55', // Exact Dr. Jerri Logo Brand Purple
+          dark: '#1f103b',
+          deep: '#140927',
+          subtle: '#f5f1fa',
+          border: '#e5daf2',
+        },
+        brandBlue: {
+          DEFAULT: '#0153a2', // Exact Dr. Jerri Medical Cross Blue
+          dark: '#013e79',
+          light: '#166fc4',
+          subtle: '#edf5fc',
+          border: '#c4dff7',
+        },
+        brandGreen: {
+          DEFAULT: '#00a651', // Exact Dr. Jerri Vitality Heart Green
+          dark: '#00823f',
+          light: '#05c462',
+          subtle: '#eafaf1',
+          border: '#b7edce',
         }
       },
       fontFamily: {

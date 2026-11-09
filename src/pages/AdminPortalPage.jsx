@@ -296,14 +296,18 @@ export default function AdminPortalPage({
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-purple-200 shadow-xl text-center space-y-4">
-          <div className="w-16 h-16 rounded-3xl bg-royal text-white flex items-center justify-center text-2xl mx-auto shadow-md">
-            <i className="fa-solid fa-shield-halved"></i>
+          <div className="flex justify-center">
+            <img
+              src="/drjerri-emblem.png"
+              alt="Dr. Jerri Emblem"
+              className="w-16 h-16 object-contain drop-shadow-sm"
+            />
           </div>
           <div>
-            <span className="text-xs font-bold text-royal bg-purple-100 px-3 py-1 rounded-full uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#0153a2] bg-blue-50 px-3 py-1 rounded-full uppercase tracking-wider border border-blue-200">
               Staff Authorization Required
             </span>
-            <h2 className="text-2xl font-black text-royal-dark font-display mt-2">
+            <h2 className="text-2xl font-black text-[#2e1a55] font-display mt-2">
               Dr. Jerri Admin Portal
             </h2>
             <p className="text-xs text-slate-600 mt-1">
@@ -344,7 +348,7 @@ export default function AdminPortalPage({
 
             <button
               type="submit"
-              className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2 mt-2"
+              className="w-full bg-[#0153a2] hover:bg-[#013e79] active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-[#0153a2]/30 flex items-center justify-center gap-2 mt-2"
             >
               <i className="fa-solid fa-lock text-xs"></i>
               <span>Sign In as Admin</span>
@@ -355,7 +359,7 @@ export default function AdminPortalPage({
             <button
               type="button"
               onClick={() => onNavigate('home')}
-              className="text-slate-400 hover:text-royal font-bold text-xs block mx-auto pt-1"
+              className="text-slate-400 hover:text-[#0153a2] font-bold text-xs block mx-auto pt-1"
             >
               ← Return to Clinic Home
             </button>
@@ -369,16 +373,18 @@ export default function AdminPortalPage({
     <div className="bg-slate-50 min-h-screen pb-20">
       
       {/* Admin Top Navigation Strip */}
-      <div className="bg-royal-dark text-white border-b border-purple-900 sticky top-0 z-30 shadow-md">
+      <div className="bg-[#1f103b] text-white border-b border-purple-950 sticky top-0 z-30 shadow-md">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-700 text-white flex items-center justify-center text-base">
-              <i className="fa-solid fa-shield-halved"></i>
-            </div>
+            <img
+              src="/drjerri-emblem.png"
+              alt="Dr. Jerri Emblem"
+              className="w-9 h-9 object-contain shrink-0"
+            />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-black text-sm sm:text-base font-display">Dr. Jerri Admin Portal</span>
-                <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold bg-[#00a651]/20 text-[#00a651] border border-[#00a651]/40 px-2 py-0.5 rounded-full">
                   Live Operations
                 </span>
               </div>

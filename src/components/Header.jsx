@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { clinicInfo } from '../data/clinicData';
+import BrandLogo from './BrandLogo';
 
 export default function Header({
   activePage = 'home',
@@ -32,9 +33,9 @@ export default function Header({
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-purple-100 shadow-xs transition-all">
       {/* Sleek Emergency Strip */}
-      <div className="bg-[#2a1662] text-white px-4 md:px-8 py-1.5 text-xs flex justify-between items-center">
+      <div className="bg-[#2e1a55] text-white px-4 md:px-8 py-1.5 text-xs flex justify-between items-center border-b border-purple-950">
         <div className="flex items-center gap-2 truncate">
-          <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span className="w-2 h-2 rounded-full bg-[#00a651] animate-pulse"></span>
           <span className="text-[11px] sm:text-xs text-purple-200 truncate">
             Open Daily • ECIL South Kamala Nagar, Hyderabad
           </span>
@@ -45,7 +46,7 @@ export default function Header({
           </span>
           <a
             href={`tel:${clinicInfo.phone}`}
-            className="text-[11px] font-bold text-white bg-purple-700 hover:bg-purple-600 px-2.5 py-0.5 rounded-full transition flex items-center gap-1"
+            className="text-[11px] font-bold text-white bg-[#0153a2] hover:bg-[#014282] px-2.5 py-0.5 rounded-full transition flex items-center gap-1 shadow-xs"
           >
             <i className="fa-solid fa-phone text-[9px]"></i>
             <span>{clinicInfo.phone}</span>
@@ -56,26 +57,11 @@ export default function Header({
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-4">
         
-        {/* Brand */}
-        <div
+        {/* Brand Logo with Real Fixed Identity */}
+        <BrandLogo
+          variant="light"
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-2.5 cursor-pointer select-none shrink-0"
-        >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-royal flex items-center justify-center text-white text-lg shadow-sm">
-            <i className="fa-solid fa-plus"></i>
-          </div>
-          <div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-lg sm:text-xl font-black text-royal-dark tracking-tight font-display">
-                Dr. Jerri
-              </span>
-              <span className="text-xs font-bold text-royal">Clinic</span>
-            </div>
-            <p className="text-[10px] text-slate-500 font-semibold -mt-0.5">
-              Diagnostics & 24/7 Pharmacy
-            </p>
-          </div>
-        </div>
+        />
 
         {/* Clean Nav Links */}
         <nav className="hidden lg:flex items-center gap-1 text-xs font-bold">
@@ -87,10 +73,10 @@ export default function Header({
                 onClick={() => handleNavClick(item.id)}
                 className={`px-3 py-2 rounded-xl transition ${
                   isActive
-                    ? 'bg-royal text-white shadow-xs'
+                    ? 'bg-[#2e1a55] text-white shadow-xs'
                     : item.highlight
-                    ? 'text-royal font-extrabold hover:bg-purple-50'
-                    : 'text-slate-600 hover:text-royal hover:bg-purple-50/50'
+                    ? 'text-[#0153a2] font-extrabold hover:bg-blue-50'
+                    : 'text-slate-600 hover:text-[#2e1a55] hover:bg-purple-50/50'
                 }`}
               >
                 {item.label}
@@ -138,12 +124,12 @@ export default function Header({
           {/* Basket */}
           <button
             onClick={onOpenCart}
-            className="relative flex items-center gap-1.5 px-3 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-royal-dark text-xs font-bold border border-purple-200 transition"
+            className="relative flex items-center gap-1.5 px-3 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#2e1a55] text-xs font-bold border border-purple-200 transition"
           >
-            <i className="fa-solid fa-basket-shopping text-royal"></i>
+            <i className="fa-solid fa-basket-shopping text-[#0153a2]"></i>
             <span>Basket</span>
             {cartCount > 0 && (
-              <span className="bg-royal text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+              <span className="bg-[#00a651] text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                 {cartCount}
               </span>
             )}
@@ -152,9 +138,10 @@ export default function Header({
           {/* Book Token */}
           <button
             onClick={() => onBookClick('General Consultation')}
-            className="bg-royal hover:bg-royal-dark active:scale-95 text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow-sm transition"
+            className="bg-[#00a651] hover:bg-[#008f45] active:scale-95 text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow-xs shadow-[#00a651]/20 transition flex items-center gap-1.5"
           >
-            Book Token
+            <i className="fa-solid fa-calendar-check text-[11px]"></i>
+            <span>Book Token</span>
           </button>
         </div>
 

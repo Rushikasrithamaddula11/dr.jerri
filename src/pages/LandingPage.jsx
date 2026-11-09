@@ -181,25 +181,25 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col font-sans selection:bg-royal selection:text-white">
+    <div className="min-h-screen bg-[#150a29] flex flex-col font-sans selection:bg-[#2e1a55] selection:text-white">
       {/* Top Clinic Alert Bar */}
-      <div className="bg-royal-dark text-white text-xs py-2 px-4 border-b border-purple-800/40">
+      <div className="bg-[#2e1a55] text-white text-xs py-2 px-4 border-b border-purple-950">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span className="w-2 h-2 rounded-full bg-[#00a651] animate-ping"></span>
             <span className="font-semibold text-purple-200">
               ECIL South Kamala Nagar, Hyderabad • 24/7 Pharmacy & OPD Open
             </span>
           </div>
           <div className="flex items-center gap-4 text-[11px] text-purple-200">
             <span>
-              <i className="fa-solid fa-truck-fast text-emerald-400 mr-1"></i> Fast Medicine Delivery
+              <i className="fa-solid fa-truck-fast text-[#00a651] mr-1"></i> Fast Medicine Delivery
             </span>
             <a
               href={`tel:${clinicInfo.phone}`}
               className="text-white hover:text-purple-200 font-bold flex items-center gap-1"
             >
-              <i className="fa-solid fa-phone text-xs"></i>
+              <i className="fa-solid fa-phone text-xs text-[#0153a2]"></i>
               <span>{clinicInfo.phone}</span>
             </a>
           </div>
@@ -207,37 +207,37 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
       </div>
 
       {/* Main Hero & Login Section */}
-      <div className="flex-1 flex items-center justify-center py-8 sm:py-12 px-4 sm:px-6 relative overflow-hidden">
-        {/* Ambient Gradient Background Glow */}
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-royal/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="flex-1 flex items-center justify-center py-8 sm:py-12 px-4 sm:px-6 relative overflow-hidden bg-gradient-to-b from-[#1f103b] via-[#150a29] to-[#0e061c]">
+        {/* Ambient Gradient Background Glow in Brand Colors */}
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#0153a2]/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#00a651]/15 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center z-10">
           {/* Left Column: Clinic Introduction & Value Highlights */}
-          <div className="lg:col-span-7 text-white space-y-6">
+          <div className="lg:col-span-7 text-white space-y-5">
+            {/* Real Official Fixed Brand Banner */}
+            <div className="rounded-2xl overflow-hidden shadow-2xl border border-purple-800/40 max-w-lg">
+              <img
+                src="/drjerri-logo-banner.png"
+                alt="Dr. Jerri Speciality Clinic & Diagnostics"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 bg-royal/40 border border-purple-400/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-purple-200 shadow-sm backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <div className="inline-flex items-center gap-2 bg-[#2e1a55]/60 border border-purple-400/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-purple-200 shadow-sm backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-[#00a651]"></span>
               <span>Trusted Family Healthcare & 24/7 Pharmacy in ECIL</span>
             </div>
 
-            {/* Clinic Title */}
-            <div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight font-display">
-                Dr. Jerri Poly Clinic <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-pink-200 to-amber-200">
-                  Diagnostics & Pharmacy
-                </span>
-              </h1>
-              <p className="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
-                Comprehensive multi-specialty care, instant doctor consultations, advanced lab tests, and 24/7 online medicine delivery at your fingertips.
-              </p>
-            </div>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+              Comprehensive multi-specialty care, senior specialist consultations, automated diagnostic lab tests, and 24/7 online medicine delivery with instant doorstep dispatch.
+            </p>
 
             {/* Key Service Highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5 backdrop-blur-sm">
-                <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-base mb-2">
+                <div className="w-9 h-9 rounded-xl bg-[#00a651]/20 text-[#00a651] flex items-center justify-center text-base mb-2">
                   <i className="fa-solid fa-pills"></i>
                 </div>
                 <h4 className="text-xs font-bold text-white">Online Pharmacy</h4>
@@ -247,7 +247,7 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
               </div>
 
               <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5 backdrop-blur-sm">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-base mb-2">
+                <div className="w-9 h-9 rounded-xl bg-[#0153a2]/20 text-blue-400 flex items-center justify-center text-base mb-2">
                   <i className="fa-solid fa-user-doctor"></i>
                 </div>
                 <h4 className="text-xs font-bold text-white">Top Specialists</h4>
@@ -257,7 +257,7 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
               </div>
 
               <div className="bg-white/5 border border-white/10 rounded-2xl p-3.5 backdrop-blur-sm">
-                <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-base mb-2">
+                <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-base mb-2">
                   <i className="fa-solid fa-flask-vial"></i>
                 </div>
                 <h4 className="text-xs font-bold text-white">Lab Diagnostics</h4>
@@ -286,12 +286,14 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
           <div className="lg:col-span-5">
             <div className="bg-white rounded-3xl shadow-2xl border border-purple-100 overflow-hidden">
               {/* Card Header with Tabs */}
-              <div className="bg-gradient-to-r from-royal-dark to-royal p-5 text-white">
+              <div className="bg-gradient-to-r from-[#1f103b] via-[#2e1a55] to-[#45277f] p-5 text-white">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-sm">
-                      <i className="fa-solid fa-heart-pulse"></i>
-                    </div>
+                    <img
+                      src="/drjerri-emblem.png"
+                      alt="Dr. Jerri Emblem"
+                      className="w-9 h-9 object-contain shrink-0"
+                    />
                     <div>
                       <h3 className="font-extrabold text-sm sm:text-base leading-tight">
                         Patient Portal Login
@@ -411,7 +413,7 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2 mt-2"
+                      className="w-full bg-[#0153a2] hover:bg-[#013e79] active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-[#0153a2]/30 flex items-center justify-center gap-2 mt-2"
                     >
                       {isLoading ? (
                         <>
@@ -501,7 +503,7 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-royal hover:bg-royal-dark active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-royal/30 flex items-center justify-center gap-2 mt-2"
+                      className="w-full bg-[#00a651] hover:bg-[#00823f] active:scale-95 text-white font-black py-3 rounded-xl text-xs sm:text-sm transition shadow-md shadow-[#00a651]/30 flex items-center justify-center gap-2 mt-2"
                     >
                       {isLoading ? (
                         <>

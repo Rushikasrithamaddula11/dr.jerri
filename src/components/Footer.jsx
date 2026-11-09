@@ -1,5 +1,6 @@
 import React from 'react';
 import { clinicInfo, doctors } from '../data/clinicData';
+import BrandLogo from './BrandLogo';
 
 export default function Footer({
   onBookClick,
@@ -21,15 +22,10 @@ export default function Footer({
           
           {/* Brand Col */}
           <div className="space-y-3">
-            <div
-              className="flex items-center gap-2.5 cursor-pointer"
+            <BrandLogo
+              variant="dark"
               onClick={() => handleNav('home')}
-            >
-              <div className="w-10 h-10 rounded-2xl bg-royal-light flex items-center justify-center text-white text-xl">
-                <i className="fa-solid fa-notes-medical"></i>
-              </div>
-              <span className="text-xl font-black text-white font-display">{clinicInfo.name}</span>
-            </div>
+            />
             <p className="text-purple-300 text-xs leading-relaxed">
               Multi-Speciality Clinic, Advanced Diagnostic Lab, Ultrasound Scanning, and 24/7 In-House Pharmacy & Online Medicine Store serving ECIL and South Kamala Nagar.
             </p>

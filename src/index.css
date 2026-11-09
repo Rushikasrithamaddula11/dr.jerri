@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-brand-purple: #2e1a55;
+  --color-brand-purple-dark: #1f103b;
+  --color-brand-purple-light: #45277f;
+  --color-brand-purple-subtle: #f5f1fa;
+  --color-brand-blue: #0153a2;
+  --color-brand-green: #00a651;
+}
+
 html, body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-tap-highlight-color: transparent;

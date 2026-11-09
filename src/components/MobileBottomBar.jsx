@@ -35,7 +35,7 @@ export default function MobileBottomBar({
         <i className="fa-solid fa-store text-sm mb-0.5"></i>
         <span className="text-[10px]">Store</span>
         {cartCount > 0 && (
-          <span className="absolute top-0 right-2 w-2 h-2 rounded-full bg-pink-500"></span>
+          <span className="absolute top-0 right-2 w-2 h-2 rounded-full bg-[#00a651]"></span>
         )}
       </button>
 
@@ -68,7 +68,7 @@ export default function MobileBottomBar({
       {/* Book Token Primary Button */}
       <button
         onClick={() => onBookClick('General Consultation')}
-        className="flex-[1.2] flex items-center justify-center gap-1 py-2.5 rounded-xl bg-gradient-to-r from-royal via-purple-700 to-royal-dark active:scale-95 text-white font-black text-xs shadow-md shadow-royal/30 transition"
+        className="flex-[1.2] flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#00a651] hover:bg-[#00823f] active:scale-95 text-white font-black text-xs shadow-md shadow-[#00a651]/25 transition"
       >
         <i className="fa-regular fa-calendar-check text-[11px]"></i>
         <span>Book</span>

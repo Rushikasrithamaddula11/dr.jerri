@@ -18,7 +18,7 @@ export default function BrandLogo({
     return (
       <img
         src="/drjerri-logo-banner.png"
-        alt="Dr. Jerri Speciality Clinic & Diagnostics"
+        alt="DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS"
         className={`h-auto max-w-full object-contain select-none rounded-xl ${className}`}
         onClick={onClick}
       />
@@ -54,8 +54,8 @@ export default function BrandLogo({
             </span>
           </div>
           {showSubtext && (
-            <p className="text-[10px] sm:text-[11px] font-semibold text-purple-200 tracking-wide mt-0.5">
-              Speciality Clinic & Diagnostics
+            <p className="text-[10px] sm:text-[11px] font-extrabold text-purple-200 tracking-wide mt-0.5 uppercase">
+              Speciality Clinic and Diagnostics
             </p>
           )}
         </div>
@@ -79,13 +79,10 @@ export default function BrandLogo({
           <span className="text-xl sm:text-2xl font-black tracking-tight font-display text-[#2e1a55]">
             Dr. JERRI
           </span>
-          <span className="text-[10px] font-black uppercase tracking-wider text-[#00a651] bg-[#00a651]/10 px-1.5 py-0.5 rounded">
-            Clinic
-          </span>
         </div>
         {showSubtext && (
-          <p className="text-[10px] sm:text-[11px] font-bold text-slate-600 tracking-wide mt-0.5">
-            Speciality Clinic & Diagnostics
+          <p className="text-[10px] sm:text-[11px] font-black text-[#2e1a55] tracking-wide mt-0.5 uppercase">
+            Speciality Clinic and Diagnostics
           </p>
         )}
       </div>

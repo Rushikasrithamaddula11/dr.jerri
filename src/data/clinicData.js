@@ -1,6 +1,7 @@
 export const clinicInfo = {
-  name: "Dr. Jerri",
-  fullName: "Dr. Jerri Poly Clinic, Diagnostics & Pharmacy",
+  name: "Dr. Jerri Speciality Clinic and Diagnostics",
+  fullName: "Dr. Jerri Speciality Clinic and Diagnostics",
+  shortName: "Dr. Jerri Speciality Clinic",
   tagline: "Your Health Our Priority",
   subtagline: "Multi-Speciality Care, Advanced Diagnostics, In-House Pharmacy & Fast Delivery",
   address: "@ ECIL South Kamala Nagar, Secunderabad / Hyderabad - 500062",
@@ -335,7 +336,7 @@ export const reviews = [
 export const faqs = [
   {
     question: "Do you have an in-house Pharmacy and Diagnostics lab?",
-    answer: "Yes! Dr. Jerri Poly Clinic has a complete in-house Pharmacy and Diagnostics facility. You can consult our specialist doctors, get blood tests/scans done, and collect or order all prescribed medicines online with instant UPI payment and doorstep delivery."
+    answer: "Yes! Dr. Jerri Speciality Clinic and Diagnostics has a complete in-house Pharmacy and Diagnostics facility. You can consult our specialist doctors, get blood tests/scans done, and collect or order all prescribed medicines online with instant UPI payment and doorstep delivery."
   },
   {
     question: "How does the Online Medicine Store & UPI Payment work?",
@@ -351,10 +352,10 @@ export const faqs = [
   },
   {
     question: "Do I need an appointment for Saline, Injections, or Blood Tests?",
-    answer: "No prior appointment is needed! You can walk in directly to Dr. Jerri Poly Clinic during working hours for Saline IV infusion, doctor-prescribed injections, dressing, and lab sample collection."
+    answer: "No prior appointment is needed! You can walk in directly to Dr. Jerri Speciality Clinic and Diagnostics during working hours for Saline IV infusion, doctor-prescribed injections, dressing, and lab sample collection."
   },
   {
     question: "Where exactly is the clinic located?",
-    answer: "Dr. Jerri Poly Clinic, Diagnostics & Pharmacy is located at ECIL South Kamala Nagar, Secunderabad / Hyderabad. You can click 'Get Directions' on the site to navigate directly via Google Maps."
+    answer: "Dr. Jerri Speciality Clinic and Diagnostics is located at ECIL South Kamala Nagar, Secunderabad / Hyderabad. You can click 'Get Directions' on the site to navigate directly via Google Maps."
   }
 ];

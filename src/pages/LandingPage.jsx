@@ -206,7 +206,7 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
             <div className="rounded-2xl overflow-hidden shadow-2xl border border-purple-800/40 max-w-lg">
               <img
                 src="/drjerri-logo-banner.png"
-                alt="Dr. Jerri Speciality Clinic & Diagnostics"
+                alt="DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS"
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -532,7 +532,7 @@ export default function LandingPage({ onLoginSuccess, onNavigate }) {
       {/* Footer */}
       <footer className="bg-slate-950 border-t border-purple-900/40 text-slate-400 text-xs py-4 px-4 text-center">
         <p>
-          © 2026 Dr. Jerri Poly Clinic & Pharmacy • Plot 42, South Kamala Nagar, ECIL, Hyderabad • Phone: {clinicInfo.phone}
+          © 2026 DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS • Plot 42, South Kamala Nagar, ECIL, Hyderabad • Phone: {clinicInfo.phone}
         </p>
       </footer>
     </div>

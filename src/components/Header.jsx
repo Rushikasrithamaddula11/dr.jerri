@@ -36,8 +36,8 @@ export default function Header({
       <div className="bg-[#2e1a55] text-white px-4 md:px-8 py-1.5 text-xs flex justify-between items-center border-b border-purple-950">
         <div className="flex items-center gap-2 truncate">
           <span className="w-2 h-2 rounded-full bg-[#00a651] animate-pulse"></span>
-          <span className="text-[11px] sm:text-xs text-purple-200 truncate">
-            Open Daily • ECIL South Kamala Nagar, Hyderabad
+          <span className="text-[11px] sm:text-xs text-purple-200 truncate font-semibold">
+            DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS • ECIL South Kamala Nagar, Hyderabad
           </span>
         </div>
         <div className="flex items-center gap-3 shrink-0">

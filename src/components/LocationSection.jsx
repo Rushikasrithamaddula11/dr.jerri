@@ -18,7 +18,7 @@ export default function LocationSection() {
             </h2>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Dr. Jerri Poly Clinic, Diagnostics & Pharmacy is easily accessible for patients and families from South Kamala Nagar, Moula Ali, Kushaiguda, A.S. Rao Nagar, and surrounding Hyderabad localities.
+              DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS is easily accessible for patients and families from South Kamala Nagar, Moula Ali, Kushaiguda, A.S. Rao Nagar, and surrounding Hyderabad localities.
             </p>
 
             <div className="bg-purple-50/70 rounded-3xl p-5 border border-purple-200 space-y-3.5 text-xs sm:text-sm">
@@ -82,7 +82,7 @@ export default function LocationSection() {
             <div className="bg-white rounded-3xl p-3 border border-purple-200 shadow-xl overflow-hidden">
               <div className="rounded-2xl overflow-hidden h-72 sm:h-80 w-full relative bg-purple-50">
                 <iframe
-                  title="Dr. Jerri Poly Clinic Location"
+                  title="DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS Location"
                   src="https://maps.google.com/maps?q=ECIL+South+Kamala+Nagar+Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   className="w-full h-full border-0"
                   loading="lazy"

@@ -307,9 +307,10 @@ export default function AdminPortalPage({
             <span className="text-xs font-bold text-[#0153a2] bg-blue-50 px-3 py-1 rounded-full uppercase tracking-wider border border-blue-200">
               Staff Authorization Required
             </span>
-            <h2 className="text-2xl font-black text-[#2e1a55] font-display mt-2">
-              Dr. Jerri Admin Portal
+            <h2 className="text-xl sm:text-2xl font-black text-[#2e1a55] font-display mt-2 uppercase">
+              DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS
             </h2>
+            <p className="text-xs font-bold text-slate-500">Admin Desk & Management Portal</p>
             <p className="text-xs text-slate-600 mt-1">
               Internal clinic management: stock inventory, verify payments, assign riders, and view patient database.
             </p>
@@ -383,7 +384,9 @@ export default function AdminPortalPage({
             />
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-black text-sm sm:text-base font-display">Dr. Jerri Admin Portal</span>
+                <span className="font-black text-xs sm:text-sm font-display tracking-wide uppercase">
+                  DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS
+                </span>
                 <span className="text-[10px] font-bold bg-[#00a651]/20 text-[#00a651] border border-[#00a651]/40 px-2 py-0.5 rounded-full">
                   Live Operations
                 </span>

@@ -18,7 +18,7 @@ export default function ContactPage({ onBookClick, onNavigate }) {
               Contact & Location @ ECIL
             </h1>
             <p className="text-xs sm:text-sm text-purple-100 max-w-2xl leading-relaxed">
-              Dr. Jerri Poly Clinic, Diagnostics & Pharmacy is situated in the heart of South Kamala Nagar, ECIL, Hyderabad. Walk in daily or connect directly with our front desk.
+              DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS is situated in the heart of South Kamala Nagar, ECIL, Hyderabad. Walk in daily or connect directly with our front desk.
             </p>
           </div>
         </div>

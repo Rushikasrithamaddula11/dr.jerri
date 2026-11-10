@@ -631,8 +631,8 @@ export default function MedicineCartDrawer({
                       <span className="text-[10px] font-black uppercase tracking-wider text-royal bg-purple-100 px-2 py-0.5 rounded-md">
                         Official Payment Gateway
                       </span>
-                      <h4 className="font-black text-sm text-royal-dark mt-1">
-                        Dr. Jerri Poly Clinic & Pharmacy
+                      <h4 className="font-black text-sm text-[#2e1a55] mt-1">
+                        DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS
                       </h4>
                       <p className="text-[11px] text-slate-500">ECIL South Kamala Nagar Desk</p>
                     </div>

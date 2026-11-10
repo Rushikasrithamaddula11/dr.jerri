@@ -12,16 +12,16 @@ export default function Hero({ onBookClick, onNavigate, onSearch, searchQuery })
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 text-center">
         
         {/* Official Brand Badge */}
-        <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-xs font-semibold text-purple-200 mb-4 border border-white/15 backdrop-blur-md">
+        <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-purple-200 mb-4 border border-white/15 backdrop-blur-md uppercase tracking-wider">
           <img src="/drjerri-emblem.png" alt="Dr. Jerri" className="w-4 h-4 object-contain" />
-          <span>Speciality Clinic & Diagnostics • 24/7 Pharmacy</span>
+          <span>DR. JERRI SPECIALITY CLINIC AND DIAGNOSTICS</span>
           <span className="w-2 h-2 rounded-full bg-[#00a651] animate-pulse"></span>
         </div>
 
         {/* Clean, Crisp Headline */}
         <h1 className="text-2xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-white max-w-3xl mx-auto leading-tight">
-          Complete Clinic, Diagnostics & <br className="hidden sm:inline" />
-          <span className="text-purple-200">Online Medicine Delivery</span>
+          DR. JERRI <br className="hidden sm:inline" />
+          <span className="text-purple-200">SPECIALITY CLINIC AND DIAGNOSTICS</span>
         </h1>
 
         <p className="text-xs sm:text-base text-purple-100/90 max-w-xl mx-auto mt-3 leading-relaxed">
